@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 // Set up the express app
 const app = express();
+const ENVIRONMENT = process.env.NODE_ENV || "development";
 
 // Log requests to the console.
 app.use(logger('dev'));
@@ -16,6 +17,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 require('./routes')(app);
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
-app.get('*', (req, res) => res.status(200).send("Software Design - 2021 - Group 22 - API (" + process.env.NODE_ENV | "development" + ")"));
+app.get('*', (req, res) => res.status(200).send("API Environment: " + ENVIRONMENT));
 
 module.exports = app;
