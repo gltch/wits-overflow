@@ -32,6 +32,32 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Install dependencies
+      - run: npm install
+
+      # Run unit tests
+      - run: npm run test
+      #- run: ls -R
+
+      # Code coverage
+      - name: Deploy code coverage to codecov.io
+        uses: codecov/codecov-action@v1 
+        with: 
+          token: ${{ secrets.CODECOV_TOKEN }} 
+          file: ./api/coverage.lcov
+
+      #Deploy API to Heroku
+      - name: Deploy Api to Heroku (Pre-Release Environment)
+        uses: gonuit/heroku-docker-deploy@v1.3.2
+        with:
+          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_API_NAME }}
+          dockerfile_directory: ./api
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+
   # PostgreSql Database
   db:
     name: Pre-Release Database
