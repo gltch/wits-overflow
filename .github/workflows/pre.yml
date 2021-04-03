@@ -3,6 +3,8 @@
 name: Pre-Release Workflow
 
 on:
+  push:
+    branches: [ pre ]
   pull_request:
     branches: [ pre ]
 
