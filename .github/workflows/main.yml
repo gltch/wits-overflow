@@ -100,12 +100,13 @@ jobs:
       #   working-directory: app/release
 
       # Create a release with the APK files
-      # - name: Generate a pre-release
-      #   uses: "marvinpinto/action-automatic-releases@latest"
-      #   with:
-      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-      #     prerelease: false
-      #     files: app/build/app/outputs/flutter-apk/*
+      - name: Generate a production release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          files: app/build/app/outputs/flutter-apk/*
 
   # NodeJs Api
   api:
