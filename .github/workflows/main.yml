@@ -80,7 +80,7 @@ jobs:
 
   # Flutter Client Application
   app:
-    if: github.event.pull_request.merged == 'true'
+    if: github.event.pull_request.merged == true
     name: Production Release App
     needs: [app-test, api-test]
     runs-on: ubuntu-latest
@@ -160,7 +160,7 @@ jobs:
 
   # NodeJs Api
   api:
-    if: github.event.pull_request.merged == 'true'
+    if: github.event.pull_request.merged == true
     name: Production Release Api
     needs: [app-test, api-test]
     runs-on: ubuntu-latest
@@ -189,7 +189,7 @@ jobs:
 
   # PostgreSql Database
   db:
-    if: github.event.pull_request.merged == 'true'
+    if: github.event.pull_request.merged == true
     name: Production Release Database
     needs: [app-test, api-test]
     runs-on: ubuntu-latest
