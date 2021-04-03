@@ -21,6 +21,107 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Setup the flutter environment.
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+          # flutter-version: '1.12.x' # you can also specify exact version of flutter
+
+      # Enable web build
+      #- run: flutter config --enable-web
+
+       # Get flutter dependencies.
+      - run: flutter pub get
+
+      #  # Check for any formatting issues in the code.
+      # - run: flutter format --set-exit-if-changed .
+
+      # # Statically analyze the code for any errors.
+      # - run: flutter analyze .
+
+      # # Run widget tests for our flutter project.
+      # - run: flutter test --coverage
+
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+
+      # # Upload coverage to https://app.codecov.io/
+      # - uses: codecov/codecov-action@v1 
+      #   with: 
+      #     token: ${{ secrets.CODECOV_TOKEN }} 
+      #     file: ./app/coverage/lcov.info
+
+      # # Build web 
+      # - run: flutter build web
+      
+      # - name: Deploy Flutter Web App to Heroku
+      #   uses: gonuit/heroku-docker-deploy@v1.3.2
+      #   with:
+      #     # Below you must provide variables for your Heroku app.
+
+      #     # The email address associated with your Heroku account.
+      #     # If you don't want to use repository secrets (which is recommended) you can do:
+      #     # email: my.email@example.com
+      #     email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
+          
+      #     # Heroku API key associated with provided user's email.
+      #     # Api Key is available under your Heroku account settings.
+      #     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          
+      #     # Name of the heroku application to which the build is to be sent.
+      #     heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+
+      #     # (Optional, default: "./")
+      #     # Dockerfile directory.
+      #     # For example, if you have a Dockerfile in the root of your project, leave it as follows:
+      #     dockerfile_directory: ./app
+
+      #     # (Optional, default: "Dockerfile")
+      #     # Dockerfile name.
+      #     dockerfile_name: Dockerfile
+
+      #     # (Optional, default: "")
+      #     # Additional options of docker build command.
+      #     docker_options: "--no-cache"
+
+      #     # (Optional, default: "web")
+      #     # Select the process type for which you want the docker container to be uploaded.
+      #     # By default, this argument is set to "web".
+      #     # For more information look at https://devcenter.heroku.com/articles/process-model
+      #     process_type: web
+
+      # Setup Java environment in order to build the Android app.
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+    
+      # Build android apk 
+      - run: flutter build apk --split-per-abi
+
+      # Upload output to artifacts
+      - uses: actions/upload-artifact@v2
+        with:
+          name: release-apk
+          #path: app/build/app/outputs/flutter-apk/*.apk
+          path: |
+            app/build/app/outputs/flutter-apk/*
+
+      # - uses: actions/download-artifact@v2
+      #   with:
+      #     name: release-apk
+      #     path: app/release
+
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: app/release
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: true
+          automatic_release_tag: "v_${{ github.run_id }}_${{ github.run_number }}"
+          files: app/build/app/outputs/flutter-apk/*
+
   # NodeJs Api
   api:
     name: Pre-Release Api
