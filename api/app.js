@@ -16,6 +16,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 require('./routes')(app);
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
-app.get('*', (req, res) => res.status(200).send("Software Design - 2021 - Group 22 - API"));
+app.get('*', (req, res) => res.status(200).send("Software Design - 2021 - Group 22 - API (" + process.env.NODE_ENV | "development" + ")"));
 
 module.exports = app;
