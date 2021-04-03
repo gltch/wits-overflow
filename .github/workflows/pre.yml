@@ -134,11 +134,12 @@ jobs:
       - uses: actions/checkout@v2
 
       # Install dependencies
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
 
       # Run unit tests
-      - run: npm run test
-      #- run: ls -R
+      - name: Run unit tests
+        run: npm run test
 
       # Code coverage
       - name: Deploy code coverage to codecov.io
@@ -169,13 +170,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      # Install dependencies
       - name: Install dependencies
+        run: npm install
+
+      # Migrage database changes
+      - name: Migrate database changes
         env:
           DB_PRE_HOST: ${{ secrets.DB_PRE_HOST }}
           DB_PRE_NAME: ${{ secrets.DB_PRE_NAME }}
           DB_PRE_USER: ${{ secrets.DB_PRE_USER }}
           DB_PRE_PASSWORD: ${{ secrets.DB_PRE_PASSWORD }}
-        run: |
-          npm install
-          npx sequelize-cli db:migrate --env pre
+        run: npx sequelize-cli db:migrate --env pre
 
