@@ -12,7 +12,7 @@ jobs:
 
   # Flutter Client Application
   app:
-
+    name: Pre-Release App
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -23,7 +23,7 @@ jobs:
 
   # NodeJs Api
   api:
-
+    name: Pre-Release Api
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -34,7 +34,7 @@ jobs:
 
   # PostgreSql Database
   db:
-
+    name: Pre-Release Database
     runs-on: ubuntu-latest
     defaults:
       run:
