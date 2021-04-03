@@ -1,9 +1,13 @@
 # wits-overflow
 Software Design Project - 2021 - University of the Witwatersrand
 
-[![Production Workflow](https://github.com/gltch/wits-overflow/actions/workflows/main.yml/badge.svg)](https://github.com/gltch/wits-overflow/actions)
-[![Pre-Release Workflow](https://github.com/gltch/wits-overflow/actions/workflows/pre.yml/badge.svg)](https://github.com/gltch/wits-overflow/actions)
 [![Code Coverage](https://codecov.io/gh/gltch/wits-overflow/branch/main/graph/badge.svg?token=9YEAI4PK0V)](https://codecov.io/gh/gltch/wits-overflow)
+
+[![Production Testing Workflow](https://github.com/gltch/wits-overflow/actions/workflows/main-test.yml/badge.svg)](https://github.com/gltch/wits-overflow/actions)
+[![Pre-Release Testing Workflow](https://github.com/gltch/wits-overflow/actions/workflows/pre-test.yml/badge.svg)](https://github.com/gltch/wits-overflow/actions)
+
+[![Production Deploy Workflow](https://github.com/gltch/wits-overflow/actions/workflows/main-deploy.yml/badge.svg)](https://github.com/gltch/wits-overflow/actions)
+[![Pre-Release Deploy Workflow](https://github.com/gltch/wits-overflow/actions/workflows/pre-deploy.yml/badge.svg)](https://github.com/gltch/wits-overflow/actions)
 
 ## Getting Started
 
