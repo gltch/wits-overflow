@@ -3,7 +3,7 @@
 name: Production Release Workflow
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
 
   workflow_dispatch:
@@ -35,26 +35,6 @@ jobs:
       # Get flutter dependencies.
       - name: Get Flutter dependencies
         run: flutter pub get
-
-      # Check for any formatting issues in the code.
-      - name: Check for any formatting issues in the code
-        run: flutter format --set-exit-if-changed .
-
-      # Statically analyze the code for any errors.
-      - name: Analyse the code for any errors
-        run: flutter analyze .
-
-      # Run widget tests for our flutter project.
-      - name: Run widget tests 
-        run: flutter test --coverage
-      #   run: ls -R
-
-      # Upload coverage to https://app.codecov.io/
-      - name: Upload code coverage to codecov.io
-        uses: codecov/codecov-action@v1 
-        with: 
-          token: ${{ secrets.CODECOV_TOKEN }} 
-          file: ./app/coverage/lcov.info
 
       # Build web 
       - name: Build the web app
@@ -122,17 +102,6 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: npm install
-
-      # Run unit tests
-      - name: Run unit tests
-        run: npm run test
-
-      # Code coverage
-      - name: Deploy code coverage to codecov.io
-        uses: codecov/codecov-action@v1 
-        with: 
-          token: ${{ secrets.CODECOV_TOKEN }} 
-          file: ./api/coverage.lcov
 
       #Deploy API to Heroku
       - name: Deploy Api to Heroku (Production Environment)
