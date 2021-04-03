@@ -49,6 +49,6 @@ jobs:
           DB_PRE_USER: ${{ secrets.DB_PRE_USER }}
           DB_PRE_PASSWORD: ${{ secrets.DB_PRE_PASSWORD }}
         run: |
-          npm Install
+          npm install
           npx sequelize-cli db:migrate --env pre
 
