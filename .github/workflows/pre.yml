@@ -52,7 +52,7 @@ jobs:
         with:
           email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_API_NAME }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API_PRE }}
           dockerfile_directory: ./api
           dockerfile_name: Dockerfile
           docker_options: "--no-cache"
