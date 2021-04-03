@@ -1,88 +1,18 @@
-# Production release workflow
+# Pre-release workflow
 
-name: Production Release Workflow
+name: Pre-Release Workflow
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ pre ]
 
   workflow_dispatch:
 
 jobs:
 
-  app-test:
-    name: App Testing (Production)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./app
-
-    steps:
-      - uses: actions/checkout@v2
-
-      # Setup the flutter environment.
-      - name: Setup the flutter environment
-        uses: subosito/flutter-action@v1
-        with:
-          channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-          # flutter-version: '1.12.x' # you can also specify exact version of flutter
-
-      # Get flutter dependencies.
-      - name: Get Flutter dependencies
-        run: flutter pub get
-
-      # Check for any formatting issues in the code.
-      - name: Check for any formatting issues in the code
-        run: flutter format --set-exit-if-changed .
-
-      # Statically analyze the code for any errors.
-      - name: Analyse the code for any errors
-        run: flutter analyze .
-
-      # Run widget tests for our flutter project.
-      - name: Run widget tests 
-        run: flutter test --coverage
-      #   run: ls -R
-
-      # Upload coverage to https://app.codecov.io/
-      - name: Upload code coverage to codecov.io
-        uses: codecov/codecov-action@v1 
-        with: 
-          token: ${{ secrets.CODECOV_TOKEN }} 
-          file: ./app/coverage/lcov.info
-
-  api-test:
-    name: Api Testing (Production)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./api
-
-    steps:
-      - uses: actions/checkout@v2
-
-      # Install dependencies
-      - name: Install dependencies
-        run: npm install
-
-      # Run unit tests
-      - name: Run unit tests
-        run: npm run test
-
-      # Code coverage
-      - name: Deploy code coverage to codecov.io
-        uses: codecov/codecov-action@v1 
-        with: 
-          token: ${{ secrets.CODECOV_TOKEN }} 
-          file: ./api/coverage.lcov
-
   # Flutter Client Application
   app:
-    if: github.event.pull_request.merged == true
-    name: Production Release App
-    needs: [app-test, api-test]
+    name: Pre-Release App
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -111,12 +41,12 @@ jobs:
         run: flutter build web
       
       # Deploy to Heroku
-      - name: Deploy Web App to Heroku (Production Environment)
+      - name: Deploy Web App to Heroku (Pre-Release Environment)
         uses: gonuit/heroku-docker-deploy@v1.3.2
         with:
           email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_WEB }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_WEB_PRE }}
           dockerfile_directory: ./app
           dockerfile_name: Dockerfile
           docker_options: "--no-cache"
@@ -150,19 +80,17 @@ jobs:
       #   working-directory: app/release
 
       # Create a release with the APK files
-      - name: Generate a production release
+      - name: Generate a pre-release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: false
+          prerelease: true
+          automatic_release_tag: "v_${{ github.run_id }}_${{ github.run_number }}"
           files: app/build/app/outputs/flutter-apk/*
 
   # NodeJs Api
   api:
-    if: github.event.pull_request.merged == true
-    name: Production Release Api
-    needs: [app-test, api-test]
+    name: Pre-Release Api
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -176,12 +104,12 @@ jobs:
         run: npm install
 
       #Deploy API to Heroku
-      - name: Deploy Api to Heroku (Production Environment)
+      - name: Deploy Api to Heroku (Pre-Release Environment)
         uses: gonuit/heroku-docker-deploy@v1.3.2
         with:
           email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API_PRE }}
           dockerfile_directory: ./api
           dockerfile_name: Dockerfile
           docker_options: "--no-cache"
@@ -189,9 +117,7 @@ jobs:
 
   # PostgreSql Database
   db:
-    if: github.event.pull_request.merged == true
-    name: Production Release Database
-    needs: [app-test, api-test]
+    name: Pre-Release Database
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -207,8 +133,9 @@ jobs:
       # Migrage database changes
       - name: Migrate database changes
         env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: npx sequelize-cli db:migrate --env prod
+          DB_PRE_HOST: ${{ secrets.DB_PRE_HOST }}
+          DB_PRE_NAME: ${{ secrets.DB_PRE_NAME }}
+          DB_PRE_USER: ${{ secrets.DB_PRE_USER }}
+          DB_PRE_PASSWORD: ${{ secrets.DB_PRE_PASSWORD }}
+        run: npx sequelize-cli db:migrate --env pre
+
