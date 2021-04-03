@@ -22,16 +22,16 @@ jobs:
       - uses: actions/checkout@v2
 
       # Setup the flutter environment.
-      - uses: subosito/flutter-action@v1
-        with:
-          channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-          # flutter-version: '1.12.x' # you can also specify exact version of flutter
+      # - uses: subosito/flutter-action@v1
+      #   with:
+      #     channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+      #     # flutter-version: '1.12.x' # you can also specify exact version of flutter
 
       # Enable web build
       #- run: flutter config --enable-web
 
        # Get flutter dependencies.
-      - run: flutter pub get
+     # - run: flutter pub get
 
       #  # Check for any formatting issues in the code.
       # - run: flutter format --set-exit-if-changed .
@@ -90,37 +90,37 @@ jobs:
       #     # For more information look at https://devcenter.heroku.com/articles/process-model
       #     process_type: web
 
-      # Setup Java environment in order to build the Android app.
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '12.x'
+      # # Setup Java environment in order to build the Android app.
+      # - uses: actions/setup-java@v1
+      #   with:
+      #     java-version: '12.x'
     
-      # Build android apk 
-      - run: flutter build apk --split-per-abi
+      # # Build android apk 
+      # - run: flutter build apk --split-per-abi
 
-      # Upload output to artifacts
-      - uses: actions/upload-artifact@v2
-        with:
-          name: release-apk
-          #path: app/build/app/outputs/flutter-apk/*.apk
-          path: |
-            app/build/app/outputs/flutter-apk/*
-
-      # - uses: actions/download-artifact@v2
+      # # Upload output to artifacts
+      # - uses: actions/upload-artifact@v2
       #   with:
       #     name: release-apk
-      #     path: app/release
+      #     #path: app/build/app/outputs/flutter-apk/*.apk
+      #     path: |
+      #       app/build/app/outputs/flutter-apk/*
 
-      # - name: Display structure of downloaded files
-      #   run: ls -R
-      #   working-directory: app/release
+      # # - uses: actions/download-artifact@v2
+      # #   with:
+      # #     name: release-apk
+      # #     path: app/release
 
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: true
-          automatic_release_tag: "v_${{ github.run_id }}_${{ github.run_number }}"
-          files: app/build/app/outputs/flutter-apk/*
+      # # - name: Display structure of downloaded files
+      # #   run: ls -R
+      # #   working-directory: app/release
+
+      # - uses: "marvinpinto/action-automatic-releases@latest"
+      #   with:
+      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+      #     prerelease: true
+      #     automatic_release_tag: "v_${{ github.run_id }}_${{ github.run_number }}"
+      #     files: app/build/app/outputs/flutter-apk/*
 
   # NodeJs Api
   api:
