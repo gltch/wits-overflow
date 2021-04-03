@@ -42,3 +42,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Install dependencies
+        env:
+          DB_PRE_HOST: ${{ secrets.DB_PRE_HOST }}
+          DB_PRE_NAME: ${{ secrets.DB_PRE_NAME }}
+          DB_PRE_USER: ${{ secrets.DB_PRE_USER }}
+          DB_PRE_PASSWORD: ${{ secrets.DB_PRE_PASSWORD }}
+        run: npm Install
+        run: npx sequelize-cli db:migrate --env pre
+
