@@ -42,6 +42,51 @@ jobs:
       
       # Deploy to Heroku
       - name: Deploy Web App to Heroku (Pre-Release Environment)
+        id: deploy1
+        continue-on-error: true
+        uses: gonuit/heroku-docker-deploy@v1.3.2
+        with:
+          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_WEB_PRE }}
+          dockerfile_directory: ./app
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+
+      # Deploy to Heroku
+      - name: Deploy Web App to Heroku (Pre-Release Environment) - Retry 1
+        if: steps.deploy1.outcome=='failure'
+        id: retry1
+        continue-on-error: true
+        uses: gonuit/heroku-docker-deploy@v1.3.2
+        with:
+          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_WEB_PRE }}
+          dockerfile_directory: ./app
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+
+      # Deploy to Heroku
+      - name: Deploy Web App to Heroku (Pre-Release Environment) - Retry 2
+        if: steps.retry1.outcome=='failure'
+        id: retry2
+        continue-on-error: true
+        uses: gonuit/heroku-docker-deploy@v1.3.2
+        with:
+          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_WEB_PRE }}
+          dockerfile_directory: ./app
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+
+      # Deploy to Heroku
+      - name: Deploy Web App to Heroku (Pre-Release Environment) - Final Retry
+        if: steps.retry2.outcome=='failure'
         uses: gonuit/heroku-docker-deploy@v1.3.2
         with:
           email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
@@ -105,6 +150,51 @@ jobs:
 
       #Deploy API to Heroku
       - name: Deploy Api to Heroku (Pre-Release Environment)
+        id: deploy1
+        continue-on-error: true
+        uses: gonuit/heroku-docker-deploy@v1.3.2
+        with:
+          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API_PRE }}
+          dockerfile_directory: ./api
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+
+      #Deploy API to Heroku
+      - name: Deploy Api to Heroku (Pre-Release Environment) - Retry 1
+        if: steps.deploy1.outcome=='failure'
+        id: retry1
+        continue-on-error: true
+        uses: gonuit/heroku-docker-deploy@v1.3.2
+        with:
+          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API_PRE }}
+          dockerfile_directory: ./api
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+
+      #Deploy API to Heroku
+      - name: Deploy Api to Heroku (Pre-Release Environment) - Retry 2
+        if: steps.retry1.outcome=='failure'
+        id: retry2
+        continue-on-error: true
+        uses: gonuit/heroku-docker-deploy@v1.3.2
+        with:
+          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API_PRE }}
+          dockerfile_directory: ./api
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+
+      #Deploy API to Heroku
+      - name: Deploy Api to Heroku (Pre-Release Environment) - Final Retry
+        if: steps.retry2.outcome=='failure'
         uses: gonuit/heroku-docker-deploy@v1.3.2
         with:
           email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
