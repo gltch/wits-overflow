@@ -2,28 +2,40 @@ require('dotenv').config();
 
 module.exports = {
 
-  "development": {
-      "username": "ApiUser",
-      "password": "admin",
-      "database": "wits-overflow",
-      "host": "127.0.0.1",
-      "dialect": "postgres"
-  },
+    "development": {
+        "username": "ApiUser",
+        "password": "admin",
+        "database": "wits-overflow",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    },
 
-  "test": {
-      "username": "root",
-      "password": null,
-      "database": "database_test",
-      "host": "127.0.0.1",
-      "dialect": "mysql"
-  },
+    "pre": {
+        "username": process.env.DB_PRE_USER,
+        "password": process.env.DB_PRE_PASSWORD,
+        "database": process.env.DB_PRE_NAME,
+        "host": process.env.DB_PRE_HOST,
+        "dialect": "postgres",
+            "ssl": true,
+            "dialectOptions": {
+                "ssl": {
+                    "rejectUnauthorized": false
+                }
+            }
+    },
 
-  "production": {
-      "username": "root",
-      "password": null,
-      "database": "database_production",
-      "host": "127.0.0.1",
-      "dialect": "mysql"
-  }
+    "prod": {
+        "username": process.env.DB_USER,
+        "password": process.env.DB_PASSWORD,
+        "database": process.env.DB_NAME,
+        "host": process.env.DB_HOST,
+        "dialect": "postgres",
+            "ssl": true,
+            "dialectOptions": {
+                "ssl": {
+                    "rejectUnauthorized": false
+                }
+            }
+    },
   
 };
