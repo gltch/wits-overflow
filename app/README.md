@@ -2,6 +2,11 @@
 
 This is the client application for the Wits Software Design project 2021.
 
+#### Getting started
+
+For a description on how to get up and running, see the wiki article:
+[https://github.com/gltch/wits-overflow/wiki/Getting-Started](https://github.com/gltch/wits-overflow/wiki/Getting-Started)
+
 #### Flutter commands:
 
 - Check that Flutter is installed correctly
