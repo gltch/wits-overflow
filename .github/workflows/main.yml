@@ -21,6 +21,92 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Setup the flutter environment.
+      - name: Setup the flutter environment
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+          # flutter-version: '1.12.x' # you can also specify exact version of flutter
+
+      # Enable web build
+      - name: Enable web build for Flutter
+        run: flutter config --enable-web
+
+      # Get flutter dependencies.
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      # Check for any formatting issues in the code.
+      - name: Check for any formatting issues in the code
+        run: flutter format --set-exit-if-changed .
+
+      # Statically analyze the code for any errors.
+      - name: Analyse the code for any errors
+        run: flutter analyze .
+
+      # Run widget tests for our flutter project.
+      - name: Run widget tests 
+        run: flutter test --coverage
+      #   run: ls -R
+
+      # Upload coverage to https://app.codecov.io/
+      - name: Upload code coverage to codecov.io
+        uses: codecov/codecov-action@v1 
+        with: 
+          token: ${{ secrets.CODECOV_TOKEN }} 
+          file: ./app/coverage/lcov.info
+
+      # Build web 
+      - name: Build the web app
+        run: flutter build web
+      
+      # Deploy to Heroku
+      - name: Deploy Web App to Heroku (Production Environment)
+        uses: gonuit/heroku-docker-deploy@v1.3.2
+        with:
+          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_WEB }}
+          dockerfile_directory: ./app
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+
+      # Setup Java environment in order to build the Android app.
+      - name: Setup the Java environment to build the Android app
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+    
+      # Build android apk 
+      - name: Build the Android app
+        run: flutter build apk --split-per-abi
+
+      # Upload output to artifacts
+      - name: Upload the APK files as build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-apk
+          path: |
+            app/build/app/outputs/flutter-apk/*
+
+      # - uses: actions/download-artifact@v2
+      #   with:
+      #     name: release-apk
+      #     path: app/release
+
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: app/release
+
+      # Create a release with the APK files
+      # - name: Generate a pre-release
+      #   uses: "marvinpinto/action-automatic-releases@latest"
+      #   with:
+      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+      #     prerelease: false
+      #     files: app/build/app/outputs/flutter-apk/*
+
   # NodeJs Api
   api:
     name: Production Release Api
@@ -32,6 +118,33 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run unit tests
+      - name: Run unit tests
+        run: npm run test
+
+      # Code coverage
+      - name: Deploy code coverage to codecov.io
+        uses: codecov/codecov-action@v1 
+        with: 
+          token: ${{ secrets.CODECOV_TOKEN }} 
+          file: ./api/coverage.lcov
+
+      #Deploy API to Heroku
+      - name: Deploy Api to Heroku (Production Environment)
+        uses: gonuit/heroku-docker-deploy@v1.3.2
+        with:
+          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API }}
+          dockerfile_directory: ./api
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+
   # PostgreSql Database
   db:
     name: Production Release Database
@@ -42,12 +155,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      # Install dependencies
       - name: Install dependencies
+        run: npm install
+
+      # Migrage database changes
+      - name: Migrate database changes
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_NAME: ${{ secrets.DB_NAME }}
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: |
-          npm install
-          npx sequelize-cli db:migrate --env prod
+        run: npx sequelize-cli db:migrate --env prod
