@@ -1,0 +1,44 @@
+# Production release workflow
+
+name: Production Release Workflow
+
+on:
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+
+  # Flutter Client Application
+  app:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
+
+    steps:
+      - uses: actions/checkout@v2
+
+  # NodeJs Api
+  api:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
+
+    steps:
+      - uses: actions/checkout@v2
+
+  # PostgreSql Database
+  db:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api/data
+
+    steps:
+      - uses: actions/checkout@v2
