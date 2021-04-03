@@ -2,7 +2,7 @@
   "name": "wits-overflow-api",
   "version": "0.0.1",
   "description": "API for Wits Software Design Project 2021",
-  "main": "./bin/server.js",
+  "main": "./www/server.js",
   "scripts": {
     "start:dev": "nodemon ./bin/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
