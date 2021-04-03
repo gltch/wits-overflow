@@ -10,9 +10,8 @@ on:
 
 jobs:
 
-  # Flutter Client Application
-  app:
-    name: Pre-Release App
+  app-test:
+    name: App Testing (Pre-Release)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -27,10 +26,6 @@ jobs:
         with:
           channel: 'stable' # 'dev', 'alpha', default to: 'stable'
           # flutter-version: '1.12.x' # you can also specify exact version of flutter
-
-      # Enable web build
-      - name: Enable web build for Flutter
-        run: flutter config --enable-web
 
       # Get flutter dependencies.
       - name: Get Flutter dependencies
@@ -55,6 +50,59 @@ jobs:
         with: 
           token: ${{ secrets.CODECOV_TOKEN }} 
           file: ./app/coverage/lcov.info
+
+  api-test:
+    name: Api Testing (Pre-Release)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run unit tests
+      - name: Run unit tests
+        run: npm run test
+
+      # Code coverage
+      - name: Deploy code coverage to codecov.io
+        uses: codecov/codecov-action@v1 
+        with: 
+          token: ${{ secrets.CODECOV_TOKEN }} 
+          file: ./api/coverage.lcov
+  
+  
+  # Flutter Client Application
+  app:
+    name: Pre-Release App
+    needs: [app-test, api-test]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Setup the flutter environment.
+      - name: Setup the flutter environment
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+          # flutter-version: '1.12.x' # you can also specify exact version of flutter
+
+      # Enable web build
+      - name: Enable web build for Flutter
+        run: flutter config --enable-web
+
+      # Get flutter dependencies.
+      - name: Get Flutter dependencies
+        run: flutter pub get
 
       # Build web 
       - name: Build the web app
@@ -111,6 +159,7 @@ jobs:
   # NodeJs Api
   api:
     name: Pre-Release Api
+    needs: [app-test, api-test]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -122,17 +171,6 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: npm install
-
-      # Run unit tests
-      - name: Run unit tests
-        run: npm run test
-
-      # Code coverage
-      - name: Deploy code coverage to codecov.io
-        uses: codecov/codecov-action@v1 
-        with: 
-          token: ${{ secrets.CODECOV_TOKEN }} 
-          file: ./api/coverage.lcov
 
       #Deploy API to Heroku
       - name: Deploy Api to Heroku (Pre-Release Environment)
@@ -149,6 +187,7 @@ jobs:
   # PostgreSql Database
   db:
     name: Pre-Release Database
+    needs: [app-test, api-test]
     runs-on: ubuntu-latest
     defaults:
       run:
