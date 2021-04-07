@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-04-07T12:28:54.219Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36" etag="Mcxcqc6wcsC7JsUhiTvo" version="14.5.8" type="github" pages="5">
+<mxfile host="app.diagrams.net" modified="2021-04-07T12:29:13.787Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36" etag="PocYhbHe2_WV_EXI9Zfa" version="14.5.8" type="github" pages="5">
   <diagram id="xGYEN_YDBd0MPvYQTCn3" name="Log in">
     <mxGraphModel dx="2062" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -27,9 +27,6 @@
       <root>
         <mxCell id="IKgI7aEOmFhG3yRgOAxm-0" />
         <mxCell id="IKgI7aEOmFhG3yRgOAxm-1" parent="IKgI7aEOmFhG3yRgOAxm-0" />
-        <mxCell id="h-pM8wiKhdDk-ymCtJ5F-1" value="First time use" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fontSize=28;" parent="IKgI7aEOmFhG3yRgOAxm-1" vertex="1">
-          <mxGeometry x="10" y="10" width="180" height="40" as="geometry" />
-        </mxCell>
         <mxCell id="1_PBgK9wySVyO0oEIULW-0" value="" style="group" parent="IKgI7aEOmFhG3yRgOAxm-1" vertex="1" connectable="0">
           <mxGeometry x="240" y="30" width="370" height="700" as="geometry" />
         </mxCell>
