@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-04-07T12:29:13.787Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36" etag="PocYhbHe2_WV_EXI9Zfa" version="14.5.8" type="github" pages="5">
+<mxfile host="app.diagrams.net" modified="2021-04-07T12:35:32.648Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36" etag="KpHq9l5c2i5pmsphgDsw" version="14.5.8" type="github" pages="5">
   <diagram id="xGYEN_YDBd0MPvYQTCn3" name="Log in">
     <mxGraphModel dx="2062" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -96,6 +96,9 @@
         </mxCell>
         <mxCell id="9J6SxrDEwlrWU5JxHQgu-0" value="Search" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.forms.searchBox;strokeColor=#999999;mainText=;strokeColor2=#008cff;fontColor=#666666;fontSize=17;align=left;spacingLeft=3;" parent="FWLkKUj0DHl-37oGhchk-0" vertex="1">
           <mxGeometry x="200" y="280" width="145" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0AejdfsHVGI9VEglGskV-0" value="Ask a question" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="FWLkKUj0DHl-37oGhchk-0">
+          <mxGeometry x="120" y="230" width="140" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
