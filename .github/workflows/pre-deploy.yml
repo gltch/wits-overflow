@@ -1,6 +1,6 @@
-# Pre-release workflow
+# Pre-production deployment workflow
 
-name: Pre-Release Workflow
+name: Pre-Production Deployment Workflow
 
 on:
   push:
