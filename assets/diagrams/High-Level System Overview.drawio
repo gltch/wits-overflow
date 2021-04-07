@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net" modified="2021-04-07T11:51:39.741Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36" etag="F-erZy1zBEnzjqP8jmSC" version="14.5.8" type="github">
+  <diagram id="U-swUkSLL4hSnKlAHig4" name="Page-1">
+    <mxGraphModel dx="2062" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="uuoCzFLoCog_ADUmBHbz-1" value="&lt;b&gt;High-Level System Overview&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="180" width="440" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="bVrPOfwBORDtt6yFGAg--6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=classic;startFill=1;" parent="1" source="bVrPOfwBORDtt6yFGAg--1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="280" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bVrPOfwBORDtt6yFGAg--1" value="&lt;b&gt;Web Application&lt;/b&gt;&lt;br&gt;(Flutter)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="240" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="bVrPOfwBORDtt6yFGAg--7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=classic;startFill=1;" parent="1" source="bVrPOfwBORDtt6yFGAg--2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bVrPOfwBORDtt6yFGAg--2" value="&lt;b&gt;Mobile Apps&lt;/b&gt;&lt;br&gt;(Android / iOS)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="240" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="bVrPOfwBORDtt6yFGAg--8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=classic;startFill=1;" parent="1" source="bVrPOfwBORDtt6yFGAg--3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bVrPOfwBORDtt6yFGAg--3" value="&lt;b&gt;API&lt;br&gt;&lt;/b&gt;(NodeJs)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="320" width="360" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="bVrPOfwBORDtt6yFGAg--4" value="&lt;b&gt;Database&lt;/b&gt;&lt;br&gt;(PostgreSql)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="400" width="360" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
