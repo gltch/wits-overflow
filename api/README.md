@@ -18,6 +18,10 @@ For a description on how to get up and running, see the wiki article:
 
 > These are useful for doing the database setup and migrations.
 
+First things first, I suggest using a local installation of PostgreSql while
+you are doing this, because it will be a lot easier to test and you can mess
+around with it without affecting any other environment.
+
 You shouldn't need to install the CLI, because it's part of the development
 dependencies.
 
