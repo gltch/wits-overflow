@@ -4,6 +4,7 @@
   "description": "API for Wits Software Design Project 2021",
   "main": "./www/server.js",
   "scripts": {
+    "init": "npm install && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "start:dev": "nodemon ./bin/server.js",
     "test": "nyc mocha --reporter spec && nyc report --reporter=text-lcov > coverage.lcov"
   },

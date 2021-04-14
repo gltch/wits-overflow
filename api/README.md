@@ -3,40 +3,38 @@
 For a description on how to get up and running, see the wiki article:
 [https://github.com/gltch/wits-overflow/wiki/Getting-Started](https://github.com/gltch/wits-overflow/wiki/Getting-Started)
 
-### Getting the local database up and running
 
-Run the following commands when you initially clone the repo:
+### Getting the API up and running locally
 
-````
-npx sequelize-cli db:migrate
-npx sequelize-cli db:seed:all
-````
-
-This will create a new sqlite database in the following location:
-
-``/api/data/db/wits-overflow.sqlite3``
-
-and populate it with the test data.  You shouldn't need to do anything else
-to get it up and running.  
-
-If you want to browse the database, I suggest the following applicaton:
-
-https://sqlitebrowser.org/dl/
-
-### Starting the API
-
-To debug the api, run the following commands:
+Navigate to the /api directory and run the following command:
 
 ````
-npm install
+npm run init
+````
+
+This will install any dependencies, generate the local Sqlite3 database 
+(if it doesn't exist already) and seed the database with data.
+
+Once this is done, run the following command to start the development 
+API server (with hot reloading):
+
+````
 npm run start:dev
 ````
 
-and then open your browser at http://localhost:8000/
+The API should then be running at the following location:
+
+http://localhost:8000
+
+You can try out the following endpoint to check that it is returning
+data correctly:
+
+http://localhost:8000/questions
+
 
 ### Sequelize CLI commands:
 
-> These are useful for doing the database setup and migrations.
+> These are useful for doing database setup and migrations.
 
 First things first, I suggest using a local installation of PostgreSql while
 you are doing this, because it will be a lot easier to test and you can mess
