@@ -15,6 +15,12 @@ npm run init
 This will install any dependencies, generate the local Sqlite3 database 
 (if it doesn't exist already) and seed the database with data.
 
+The database can be found here:
+
+````
+/api/data/db/wits-overflow.sqlite3
+````
+
 Once this is done, run the following command to start the development 
 API server (with hot reloading):
 
