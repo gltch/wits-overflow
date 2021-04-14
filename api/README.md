@@ -110,13 +110,13 @@ See these links for more information:
 
 ### Docker commands:
 
-- Create the docker image: 
+#### Create the docker image: 
 
     ````
     docker build -t wits-overflow-api:v0.0.1 .
     ````
 
-- Create the docker container: 
+#### Create the docker container: 
 
     ````
     docker run --name wits-overflow-api -d -p 5545:8080 wits-overflow-api:v0.0.1
