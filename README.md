@@ -1,4 +1,9 @@
-# wits-overflow
+<p align="center">
+  <img style="width: 200px" src="assets/images/logo_square.jpg?raw=true" alt="Wits University"/>
+</p>
+
+# Wits Overflow
+
 Software Design Project - 2021 - University of the Witwatersrand
 
 [![Code Coverage](https://codecov.io/gh/gltch/wits-overflow/branch/main/graph/badge.svg?token=9YEAI4PK0V)](https://codecov.io/gh/gltch/wits-overflow)
