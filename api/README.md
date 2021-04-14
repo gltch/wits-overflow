@@ -1,5 +1,5 @@
 <p align="center">
-  <img style="max-width: 100px" src="../assets/images/logo_square.jpg?raw=true" alt="Wits University"/>
+  <img src="../assets/images/logo_square_small.jpg?raw=true" alt="Wits University"/>
 </p>
 
 # Wits Overflow API
