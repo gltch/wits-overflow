@@ -2,7 +2,7 @@
   <img src="../assets/images/logo_square_small.jpg?raw=true" alt="Wits University"/>
 </p>
 
-# Wits Overflow Web & App
+# Wits Overflow (Website & Mobile App)
 
 This is the client application for the Wits Software Design project 2021.
 
