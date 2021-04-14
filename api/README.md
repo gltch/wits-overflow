@@ -20,6 +20,7 @@ The database can be found here:
 ````
 /api/data/db/wits-overflow.sqlite3
 ````
+> You can use https://sqlitebrowser.org/dl/ to browse the database.
 
 Once this is done, run the following command to start the development 
 API server (with hot reloading):
@@ -30,12 +31,12 @@ npm run start:dev
 
 The API should then be running at the following location:
 
-http://localhost:8000
+http://localhost:8080
 
 You can try out the following endpoint to check that it is returning
 data correctly:
 
-http://localhost:8000/questions
+http://localhost:8080/questions
 
 
 ### Sequelize CLI commands:
