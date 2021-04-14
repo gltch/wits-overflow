@@ -1,3 +1,5 @@
+# Wits Overflow API
+
 ## Getting Started
 
 For a description on how to get up and running, see the wiki article:
@@ -38,6 +40,8 @@ data correctly:
 
 http://localhost:8080/questions
 
+
+## Useful Information
 
 ### Sequelize CLI commands:
 
