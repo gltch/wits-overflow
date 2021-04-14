@@ -1,4 +1,6 @@
-![](../assets/images/logo_square.jpg)
+<p align="center">
+  <img src="../assets/images/logo_square.jpg?raw=true" alt="Wits University"/>
+</p>
 
 # Wits Overflow API
 
