@@ -3,15 +3,6 @@
 For a description on how to get up and running, see the wiki article:
 [https://github.com/gltch/wits-overflow/wiki/Getting-Started](https://github.com/gltch/wits-overflow/wiki/Getting-Started)
 
-### Docker commands:
-
-- Create the docker image: 
-
-    ``docker build -t wits-overflow-api:v0.0.1 .``
-
-- Create the docker container: 
-
-    ``docker run --name wits-overflow-api -d -p 5545:8080 wits-overflow-api:v0.0.1``
 
 
 ### Sequelize CLI commands:
@@ -78,3 +69,17 @@ See these links for more information:
 - https://sequelize.org/master/manual/migrations.html
 - https://levelup.gitconnected.com/creating-sequelize-associations-with-the-sequelize-cli-tool-d83caa902233
 
+
+### Docker commands:
+
+- Create the docker image: 
+
+    ``
+    docker build -t wits-overflow-api:v0.0.1 .
+    ``
+
+- Create the docker container: 
+
+    ``
+    docker run --name wits-overflow-api -d -p 5545:8080 wits-overflow-api:v0.0.1
+    ``
