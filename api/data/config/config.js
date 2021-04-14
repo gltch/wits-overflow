@@ -2,12 +2,16 @@ require('dotenv').config();
 
 module.exports = {
 
-    "development": {
-        "username": "ApiUser",
-        "password": "admin",
-        "database": "wits-overflow",
-        "host": "127.0.0.1",
-        "dialect": "postgres"
+    // "development": {
+    //     "username": "ApiUser",
+    //     "password": "admin",
+    //     "database": "wits-overflow",
+    //     "host": "127.0.0.1",
+    //     "dialect": "postgres"
+    // },
+    development: {
+        "dialect": "sqlite",
+        "storage": "./data/db/wits-overflow.sqlite3"
     },
 
     "pre": {

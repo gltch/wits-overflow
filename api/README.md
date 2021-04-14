@@ -3,7 +3,36 @@
 For a description on how to get up and running, see the wiki article:
 [https://github.com/gltch/wits-overflow/wiki/Getting-Started](https://github.com/gltch/wits-overflow/wiki/Getting-Started)
 
+### Getting the local database up and running
 
+Run the following commands when you initially clone the repo:
+
+````
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+````
+
+This will create a new sqlite database in the following location:
+
+``/api/data/db/wits-overflow.sqlite3``
+
+and populate it with the test data.  You shouldn't need to do anything else
+to get it up and running.  
+
+If you want to browse the database, I suggest the following applicaton:
+
+https://sqlitebrowser.org/dl/
+
+### Starting the API
+
+To debug the api, run the following commands:
+
+````
+npm install
+npm run start:dev
+````
+
+and then open your browser at http://localhost:8000/
 
 ### Sequelize CLI commands:
 
@@ -23,35 +52,35 @@ to go!
 
 > Note that the model name is upper camel case and the column names are lower camel case! Also note the lack of space betwen the column names and the comma seperating them!
 
-   ``
+   ````
    npx sequelize-cli model:generate --name ModelName --attributes columnName1:string,columnName2:integer
-   ``
+   ````
 
 #### Creating a new seed file (you will need to fill this out):
 
-``
+````
 npx sequelize-cli seed:generate --name example-file-name
-``
+````
 
 #### To run the migration:
 
-``
+````
 npx sequelize-cli db:migrate
-``
+````
 
 #### To roll back a particular migration:
 
 > You can run the migrations and undo the migrations as many times as you want.
 
-``
+````
 npx sequelize-cli db:migrate:undo
-``
+````
 
 #### To seed the database:
 
-``
+````
 npx sequelize-cli db:seed:all
-``
+````
 
 #### To create associations (foreign keys):
 
@@ -74,12 +103,12 @@ See these links for more information:
 
 - Create the docker image: 
 
-    ``
+    ````
     docker build -t wits-overflow-api:v0.0.1 .
-    ``
+    ````
 
 - Create the docker container: 
 
-    ``
+    ````
     docker run --name wits-overflow-api -d -p 5545:8080 wits-overflow-api:v0.0.1
-    ``
+    ````
