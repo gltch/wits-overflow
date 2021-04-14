@@ -1,36 +1,62 @@
-# wits_overflow
+<p align="center">
+  <img src="../assets/images/logo_square_small.jpg?raw=true" alt="Wits University"/>
+</p>
+
+# Wits Overflow Web & App
 
 This is the client application for the Wits Software Design project 2021.
 
-#### Getting started
+## Getting started
 
 For a description on how to get up and running, see the wiki article:
 [https://github.com/gltch/wits-overflow/wiki/Getting-Started](https://github.com/gltch/wits-overflow/wiki/Getting-Started)
 
-#### Flutter commands:
+## Useful Information
 
-- Check that Flutter is installed correctly
+### Flutter commands:
 
-    ``flutter doctor``
+#### Check that Flutter is installed correctly
 
-- Run tests:
+````
+flutter doctor
+````
 
-    ``flutter test``
+#### Install Flutter dependencies
+
+````
+flutter pub get
+````
+
+#### Run tests:
+
+````
+flutter test
+````
     
-- Build the website: 
+#### Build the website: 
 
-    ``flutter build web``
+````
+flutter build web
+````
 
-- Build android apk:
+#### Build android apk:
 
-    ``flutter build apk --split-per-abi``
+````
+flutter build apk --split-per-abi
+````
 
-#### Docker commands:
+### Docker commands:
 
-- Create the docker image: 
+#### Create the docker image: 
 
-    ``docker build -t wits-overflow:v0.0.1 .``
+> Note the final "."
 
-- Create and run the docker container: 
+````
+docker build -t wits-overflow:v0.0.1 .
+````
 
-    ``docker run --name wits-overflow -e PORT=80 -d -p 5555:80 wits-overflow:v0.0.1``
+#### Create and run the docker container: 
+
+````
+docker run --name wits-overflow -e PORT=80 -d -p 5555:80 wits-overflow:v0.0.1
+````
