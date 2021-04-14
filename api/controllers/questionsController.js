@@ -25,9 +25,31 @@ module.exports = {
 
     listFiltered(req, res) {
 
-        console.log(req.query.course)
-        console.log(req.query.year)
-        console.log(req.query.module)
+        //
+        // Build the filters
+
+        userWhereCondition = {};
+        courseWhereCondition = {};
+        moduleWhereCondition = {};
+
+        if (req.query.course) {
+            courseWhereCondition.name = req.query.course;
+        }
+
+        if (req.query.user) {
+            userWhereCondition.name = req.query.user;
+        }
+
+        if (req.query.module) {
+            moduleWhereCondition.code = req.query.module;
+        }
+
+        if (req.query.year) {
+            moduleWhereCondition.year = req.query.year;
+        }
+
+        //
+        // Return the filtered results
 
         return QuestionModel
         .findAll(
@@ -35,19 +57,17 @@ module.exports = {
                 include: [
                     {
                         model: UserModel
+                        ,where: userWhereCondition
                     },
                     {
                         model: ModuleModel
                         ,include: [ 
                             { 
                                 model: CourseModel
-                                ,where: { name: req.query.course }
+                                ,where: courseWhereCondition
                             }
                         ]
-                        ,where: { 
-                            year: req.query.year
-                            ,code: req.query.module 
-                        }
+                        ,where: moduleWhereCondition
                     }
                 ] 
             })
