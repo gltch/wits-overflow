@@ -1,3 +1,5 @@
+![](../assets/images/logo_square.jpg)
+
 # Wits Overflow API
 
 ## Getting Started
