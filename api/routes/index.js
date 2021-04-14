@@ -1,7 +1,7 @@
-const testDataController = require('../controllers').testData;
+const questionsController = require('../controllers').questionsController;
 
 module.exports = (app) => {
 
-    app.get('/data', testDataController.list);
+    app.get('/questions', questionsController.listFiltered);
 
 };
