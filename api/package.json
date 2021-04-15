@@ -4,6 +4,7 @@
   "description": "API for Wits Software Design Project 2021",
   "main": "./www/server.js",
   "scripts": {
+    "init": "npm install && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "start:dev": "nodemon ./bin/server.js",
     "test": "nyc mocha --reporter spec && nyc report --reporter=text-lcov > coverage.lcov"
   },
@@ -28,7 +29,9 @@
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.6.2"
+    "save-dev": "0.0.1-security",
+    "sequelize": "^6.6.2",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "chai": "^4.3.4",

@@ -1,5 +1,5 @@
-const testData = require('./testData');
+const questionsController = require('./questionsController.js');
 
 module.exports = {
-    testData,
+    questionsController,
 };
