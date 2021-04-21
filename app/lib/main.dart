@@ -1,34 +1,76 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Wits Overflow',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    // On tap handler to dimiss keyboard when focus is shifted away from current widget.
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: MaterialApp(
+        title: 'Wits Overflow',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        // Remove red debug banner
+        debugShowCheckedModeBanner: false,
+        home: MyPostQuestionsPage(title: 'Wits Overflow'),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+// Sidebar Code
+class SideDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 25),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Courses'),
+            // On tap should open a dropdown menu of ...
+            onTap: () => {},
+          ),
+          Spacer(flex: 4),
+          Expanded(
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text('Logout'),
+                  onTap: () => {Navigator.of(context).pop()},
+                ),
+                ListTile(
+                  leading: Icon(Icons.account_circle_outlined),
+                  title: Text('Profile'),
+                  onTap: () => {Navigator.of(context).pop()},
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MyPostQuestionsPage extends StatefulWidget {
+  MyPostQuestionsPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -42,21 +84,63 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyPostQuestionsPageState createState() => _MyPostQuestionsPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _MyPostQuestionsPageState extends State<MyPostQuestionsPage> {
+  String text = "";
 
-  void _incrementCounter() {
+  // Controllers for text fields, functions such as clear text fields & get text from text fields.
+  TextEditingController questionController = new TextEditingController();
+  TextEditingController titleController = new TextEditingController();
+
+  void _postQuestion() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+
+      // Do database stuff here
+      String questionBody = questionController.text;
+      String questionTitle = titleController.text;
+      questionController.clear();
+      titleController.clear();
     });
+  }
+
+  // Question Title SingleText Field
+  Widget _buildTitleTextField() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        controller: titleController,
+        decoration: InputDecoration(
+            labelText: 'Title',
+            hintText: 'Enter title here',
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(35))),
+      ),
+    );
+  }
+
+  // Main Question MultipleText Field
+  Widget _buildMultipleTextField() {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+          controller: questionController,
+          decoration: InputDecoration(
+              labelText: 'Question',
+              alignLabelWithHint: true,
+              hintText: 'Enter question here',
+              border: OutlineInputBorder()),
+          maxLines: 20,
+        ),
+      ),
+    );
   }
 
   @override
@@ -68,8 +152,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      drawer: SideDrawer(),
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
+        // Here we take the value from the MyPostQuestionsPage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
@@ -91,22 +176,20 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            SizedBox(height: 10),
+            _buildTitleTextField(),
+            SizedBox(height: 10),
+            _buildMultipleTextField(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _postQuestion,
+        tooltip: 'Post Question',
+        label: Text('Post'),
+        icon: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
