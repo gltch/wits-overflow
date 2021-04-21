@@ -103,8 +103,8 @@ class _MyPostQuestionsPageState extends State<MyPostQuestionsPage> {
       // called again, and so nothing would appear to happen.
 
       // Do database stuff here
-      String questionBody = questionController.text;
-      String questionTitle = titleController.text;
+      // String questionBody = questionController.text;
+      // String questionTitle = titleController.text;
       questionController.clear();
       titleController.clear();
     });
