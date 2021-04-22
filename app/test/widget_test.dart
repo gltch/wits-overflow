@@ -13,8 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wits_overflow/main.dart';
 
 void main() {
-  testWidgets(
-      'Enter title and question body, then press post and cclear fields',
+  testWidgets('Enter title and question body, then press post and clear fields',
       (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
