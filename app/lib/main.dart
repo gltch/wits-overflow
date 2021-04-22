@@ -113,6 +113,7 @@ class _MyPostQuestionsPageState extends State<MyPostQuestionsPage> {
   // Question Title SingleText Field
   Widget _buildTitleTextField() {
     return Padding(
+      key: ValueKey(1),
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         controller: titleController,
@@ -129,6 +130,7 @@ class _MyPostQuestionsPageState extends State<MyPostQuestionsPage> {
   Widget _buildMultipleTextField() {
     return Expanded(
       child: Padding(
+        key: ValueKey(2),
         padding: const EdgeInsets.all(8.0),
         child: TextField(
           controller: questionController,
