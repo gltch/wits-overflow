@@ -31,7 +31,7 @@ module.exports = {
         userWhereCondition = {};
         courseWhereCondition = {};
         moduleWhereCondition = {};
-
+        
         if (req.query.course) {
             courseWhereCondition.name = req.query.course;
         }
@@ -73,6 +73,22 @@ module.exports = {
             })
             .then(questionData => res.status(200).send(questionData))
             .catch(error => res.status(400).send(error));
+    },
+
+    insertIntoDataBase(req,response){
+
+        QuestionModel.create({
+
+            title: req.body.title,
+            body: req.body.body,
+            score: req.body.score,
+            authorId: req.body.authorId,
+            moduleId: req.body.moduleId
+             
+
+        }).then(result => response.status(200).send(result))
+        .catch(error => response.status(400).send(error));
+
     },
 
 };
