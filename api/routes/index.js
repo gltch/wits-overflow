@@ -24,6 +24,8 @@ module.exports = (app) => {
     - /questions?user=John%20Smith&course=Computer%20Science
 
     */
+
     app.get('/questions', questionsController.listFiltered);
 
+    app.post('/questions', questionsController.insertIntoDataBase);
 };
