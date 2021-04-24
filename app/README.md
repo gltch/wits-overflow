@@ -4,59 +4,39 @@
 
 # Wits Overflow (Website & Mobile App)
 
-This is the client application for the Wits Software Design project 2021.
+This section contains the code for the client application(s) of the Wits Software Design project 2021.
 
 ## Getting started
 
-For a description on how to get up and running, see the wiki article:
-[https://github.com/gltch/wits-overflow/wiki/Getting-Started](https://github.com/gltch/wits-overflow/wiki/Getting-Started)
+> This section is also available [here](https://github.com/gltch/wits-overflow/wiki/Getting-Started#app).
 
-## Useful Information
+### Getting the Flutter app up and running.
 
-### Flutter commands:
+Follow the Flutter installation guide here: https://flutter.dev/docs/get-started/install.
 
-#### Check that Flutter is installed correctly
+> Note you will probably have to open the Flutter app directory as the root directory in your IDE because at this time Flutter doesn't support launching apps from sub-directories...
+
+Run the following command to check that everything installed correctly:
 
 ````
 flutter doctor
 ````
 
-#### Install Flutter dependencies
+In the app directory, run the following command to install the Flutter dependencies:
 
 ````
 flutter pub get
 ````
 
-#### Run tests:
+Run the following command to test the app:
 
 ````
 flutter test
 ````
-    
-#### Build the website: 
 
-````
-flutter build web
-````
+Once this is done you should be able to debug the flutter app by pressing F5 as usual.
 
-#### Build android apk:
+## Useful Information
 
-````
-flutter build apk --split-per-abi
-````
-
-### Docker commands:
-
-#### Create the docker image: 
-
-> Note the final "."
-
-````
-docker build -t wits-overflow:v0.0.1 .
-````
-
-#### Create and run the docker container: 
-
-````
-docker run --name wits-overflow -e PORT=80 -d -p 5555:80 wits-overflow:v0.0.1
-````
+- https://github.com/gltch/wits-overflow/wiki/Useful-Links
+- https://github.com/gltch/wits-overflow/wiki/Useful-Commands
