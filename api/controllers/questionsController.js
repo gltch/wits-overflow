@@ -75,7 +75,9 @@ module.exports = {
             .catch(error => res.status(400).send(error));
     },
 
-    insertIntoDataBase(req,response){
+    createQuestion(req,response) {
+
+        // TODO: Add some validation here.
 
         QuestionModel.create({
 
@@ -84,9 +86,9 @@ module.exports = {
             score: req.body.score,
             authorId: req.body.authorId,
             moduleId: req.body.moduleId
-             
 
-        }).then(result => response.status(200).send(result))
+        })
+        .then(result => response.status(200).send(result))
         .catch(error => response.status(400).send(error));
 
     },
