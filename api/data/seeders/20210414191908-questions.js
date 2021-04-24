@@ -26,7 +26,16 @@ module.exports = {
       score: 0,
       createdAt: new Date(),
       updatedAt: new Date()
-    }], {});
+    },{
+      title: 'Programming languages',
+      body: 'Which online resources can I use to learn a programming language?',
+      authorId: 4,
+      moduleId: 4,
+      score: 0,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ], {});
   },
 
   down: async (queryInterface, Sequelize) => {
