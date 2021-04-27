@@ -5,19 +5,37 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-// import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:wits_overflow/main.dart';
 
 void main() {
-  testWidgets('Enter title and question body, then press post and clear fields',
-      (WidgetTester tester) async {
+  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
 
+    // Verify that our counter starts at 0.
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('1'), findsNothing);
+
+    // Tap the '+' icon and trigger a frame.
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+
+    // Verify that our counter has incremented.
+    expect(find.text('0'), findsNothing);
+    expect(find.text('1'), findsOneWidget);
+
+    // Finds temporary 'go to next screen button'
+    var btnTravel = find.byKey(ValueKey(3));
+    expect(btnTravel, findsOneWidget);
+
+    // Pushes button to begin rest of test
+    await tester.tap(btnTravel);
+    await tester.pumpAndSettle();
+
+    // Expect to find text text fields
     // Finds text fields
     var textFieldTitle = find.byKey(ValueKey(1));
     expect(textFieldTitle, findsOneWidget);
@@ -33,12 +51,13 @@ void main() {
     expect(find.text('Test Question Body'), findsOneWidget);
 
     // Find post button
-    var button = find.byIcon(Icons.add);
-    expect(button, findsOneWidget);
+    var btnPost = find.byKey(ValueKey(4));
+    expect(btnPost, findsOneWidget);
 
     // Tap post button and expect cleared textfields
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.tap(btnPost);
+    await tester.pumpAndSettle();
+
     expect(find.text('Test Title'), findsNothing);
     expect(find.text('Test Question Body'), findsNothing);
   });
