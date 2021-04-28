@@ -59,8 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Text('Error initializing Firebase');
-                            } 
-                            else if (snapshot.connectionState ==
+                            } else if (snapshot.connectionState ==
                                 ConnectionState.done) {
                               return GoogleSignInButton();
                             }

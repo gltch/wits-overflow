@@ -12,10 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("Wits Overflow Home Screen")
-      ),
+      body: Center(child: Text("Wits Overflow Home Screen")),
     );
   }
-
 }

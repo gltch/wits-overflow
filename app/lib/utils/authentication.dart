@@ -8,7 +8,6 @@ import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:wits_overflow/screens/user_info_screen.dart';
 
 class Authentication {
-  
   static Future<FirebaseApp> initializeFirebase({
     required BuildContext context,
   }) async {
@@ -36,23 +35,17 @@ class Authentication {
 
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
-      authProvider.setCustomParameters({
-        "prompt": 'select_account'
-      });
+      authProvider.setCustomParameters({"prompt": 'select_account'});
 
       try {
         final UserCredential userCredential =
             await auth.signInWithPopup(authProvider);
 
         user = userCredential.user;
-
-      } 
-      catch (e) {
+      } catch (e) {
         print(e);
       }
-    } 
-    else {
-
+    } else {
       final GoogleSignIn googleSignIn = GoogleSignIn();
 
       final GoogleSignInAccount? googleSignInAccount =
@@ -72,8 +65,7 @@ class Authentication {
               await auth.signInWithCredential(credential);
 
           user = userCredential.user;
-        } 
-        on FirebaseAuthException catch (e) {
+        } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
             ScaffoldMessenger.of(context).showSnackBar(
               Authentication.customSnackBar(
@@ -100,11 +92,9 @@ class Authentication {
     }
 
     if (user != null) {
-
       var email = user.email;
 
       if (email != null && !email.endsWith('wits.ac.za')) {
-
         // Sign out
         user = null; // Important
         await signOut(context: context);
@@ -115,45 +105,38 @@ class Authentication {
           ),
         );
       }
-
     }
 
     return user;
-
   }
 
   static Future<void> signOut({required BuildContext context}) async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     try {
-      
       if (!kIsWeb) {
         await googleSignIn.disconnect();
         await googleSignIn.signOut();
       }
-      
-      await FirebaseAuth.instance.signOut();
 
+      await FirebaseAuth.instance.signOut();
     } catch (e) {
-      
       ScaffoldMessenger.of(context).showSnackBar(
         Authentication.customSnackBar(
           content: 'Error signing out. Try again.',
         ),
       );
-
     }
   }
 
   static SnackBar customSnackBar({required String content}) {
-  return SnackBar(
-    backgroundColor: Colors.black,
-    behavior: SnackBarBehavior.floating,
-    content: Text(
+    return SnackBar(
+      backgroundColor: Colors.black,
+      behavior: SnackBarBehavior.floating,
+      content: Text(
         content,
         style: TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
       ),
     );
   }
-  
 }

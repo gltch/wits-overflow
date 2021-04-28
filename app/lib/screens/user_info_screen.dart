@@ -49,10 +49,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.blue
-      ),
+      appBar: AppBar(elevation: 0, backgroundColor: Colors.blue),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
