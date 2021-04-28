@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:wits_overflow/screens/user_info_screen.dart';
 
 class Authentication {
@@ -18,9 +19,10 @@ class Authentication {
     if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => UserInfoScreen(
-            user: user,
-          ),
+          // builder: (context) => UserInfoScreen(
+          //   user: user,
+          // ),
+          builder: (context) => HomeScreen(),
         ),
       );
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:wits_overflow/screens/sign_in_screen.dart';
 
 void main() {
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       home: SignInScreen(),
+      //home: HomeScreen()
     );
   }
 }

@@ -48,7 +48,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.blue
@@ -89,17 +89,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     ),
               SizedBox(height: 16.0),
               Text(
-                'Hello',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 26,
-                ),
-              ),
-              SizedBox(height: 8.0),
-              Text(
                 _user.displayName!,
                 style: TextStyle(
-                  color: Colors.yellow,
+                  color: Colors.black,
                   fontSize: 26,
                 ),
               ),
@@ -107,18 +99,10 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               Text(
                 '( ${_user.email!} )',
                 style: TextStyle(
-                  color: Colors.orange,
+                  color: Colors.black,
                   fontSize: 20,
                   letterSpacing: 0.5,
                 ),
-              ),
-              SizedBox(height: 24.0),
-              Text(
-                'You are now signed in using your Google account. To sign out of your account, click the "Sign Out" button below.',
-                style: TextStyle(
-                    color: Colors.grey.withOpacity(0.8),
-                    fontSize: 14,
-                    letterSpacing: 0.2),
               ),
               SizedBox(height: 16.0),
               _isSigningOut
