@@ -8,23 +8,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:wits_overflow/main.dart';
+import 'package:wits_overflow/screens/sign_in_screen.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('Test Home Screen', (WidgetTester tester) async {
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    Widget testWidget = new MediaQuery(
+      data: new MediaQueryData(),
+      child: new MaterialApp(home: new SignInScreen())
+    );
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    await tester.pumpWidget(testWidget);
+
+    final textFinder = find.text('Wits Overflow');
+
+    expect(textFinder, findsWidgets);
+
   });
+
 }
