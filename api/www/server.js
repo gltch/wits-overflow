@@ -8,4 +8,6 @@ app.set('port', PORT);
 
 const server = http.createServer(app);
 
-server.listen(PORT);
+server.listen(PORT, () => {
+    console.log(`Server listening at http://localhost:${PORT}`);
+});
