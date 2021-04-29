@@ -2,10 +2,14 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin')
+var cors = require('cors');
 
 // Set up the express app
 const app = express();
 const ENVIRONMENT = process.env.NODE_ENV || "development";
+
+// Add cors support
+app.use(cors())
 
 // Log requests to the console.
 app.use(logger('dev'));
