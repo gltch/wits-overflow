@@ -38,7 +38,7 @@ jobs:
 
       # Build web 
       - name: Build the web app
-        run: flutter build web
+        run: flutter build web -t lib/startup/main_pre.dart
       
       # Deploy to Heroku
       - name: Deploy Web App to Heroku (Pre-Release Environment)
@@ -105,7 +105,7 @@ jobs:
     
       # Build android apk 
       - name: Build the Android app
-        run: flutter build apk --split-per-abi
+        run: flutter build apk -t lib/startup/main_pre.dart --split-per-abi
 
       # Upload output to artifacts
       - name: Upload the APK files as build artifacts
