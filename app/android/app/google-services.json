@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "228746765399",
+    "project_id": "wits-overflow-2021",
+    "storage_bucket": "wits-overflow-2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228746765399:android:7363f2863ed4af2b176f12",
+        "android_client_info": {
+          "package_name": "com.example.wits_overflow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228746765399-hi0g804jfgs8cq4bb74mhb68dpvun128.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wits_overflow",
+            "certificate_hash": "c048289830921bf65b8186fbbf474a1d777addc4"
+          }
+        },
+        {
+          "client_id": "228746765399-ev81t5ner6rtgl1oil2itam9mg24b9r4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBunJZQlpISjpHLFGSCQZIeRQOFvSHdk_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228746765399-ev81t5ner6rtgl1oil2itam9mg24b9r4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

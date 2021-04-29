@@ -27,5 +27,6 @@ module.exports = (app) => {
 
     app.get('/questions', questionsController.listFiltered);
 
-    app.post('/questions', questionsController.insertIntoDataBase);
+    // TODO: Add some comment here like above.
+    app.post('/questions', questionsController.createQuestion);
 };
