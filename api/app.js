@@ -17,11 +17,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Setup authorization for pre and prod environments
 if ( ENVIRONMENT != 'development' ) {
 
+    console.log(process.env.FIREBASE_PRIVATE_KEY);
+
     // Init firebase admin
     admin.initializeApp({
         credential: admin.credential.cert({
             "projectId": process.env.FIREBASE_PROJECT_ID,
-            "private_key": process.env.FIREBASE_PRIVATE_KEY,
+            "private_key": process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
             "client_email": process.env.FIREBASE_CLIENT_EMAIL,
         })
     });
