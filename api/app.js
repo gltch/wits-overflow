@@ -17,8 +17,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Setup authorization for pre and prod environments
 if ( ENVIRONMENT != 'development' ) {
 
-    console.log(process.env.FIREBASE_PRIVATE_KEY);
-
     // Init firebase admin
     admin.initializeApp({
         credential: admin.credential.cert({
