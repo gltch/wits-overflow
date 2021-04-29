@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:wits_overflow/screens/home_screen.dart';
+import 'package:wits_overflow/screens/api_request_example.dart';
+//import 'package:wits_overflow/screens/home_screen.dart';
+//import 'package:wits_overflow/screens/user_info_screen.dart';
+import 'package:wits_overflow/utils/storage.dart';
 
 class Authentication {
   static Future<FirebaseApp> initializeFirebase({
@@ -17,10 +20,11 @@ class Authentication {
     if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          // builder: (context) => UserInfoScreen(
-          //   user: user,
-          // ),
-          builder: (context) => HomeScreen(),
+          //builder: (context) => UserInfoScreen(
+          //  user: user,
+          //),
+          //builder: (context) => HomeScreen(),
+          builder: (context) => ApiRequestExampleScreen(),
         ),
       );
     }
@@ -34,6 +38,7 @@ class Authentication {
 
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
+
       authProvider.setCustomParameters({"prompt": 'select_account'});
 
       try {
@@ -42,7 +47,11 @@ class Authentication {
 
         user = userCredential.user;
       } catch (e) {
-        print(e);
+        ScaffoldMessenger.of(context).showSnackBar(
+          Authentication.customSnackBar(
+            content: 'Error occurred using Google Sign-In. Try again.',
+          ),
+        );
       }
     } else {
       final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -103,6 +112,12 @@ class Authentication {
             content: 'Only Wits users are permitted at this stage!',
           ),
         );
+      } else {
+        // Save details to secure storage:
+        var token = await user.getIdToken();
+        SecureStorage.write('user.email', user.email.toString());
+        SecureStorage.write('user.name', user.displayName.toString());
+        SecureStorage.write('user.token', token);
       }
     }
 
@@ -119,6 +134,11 @@ class Authentication {
       }
 
       await FirebaseAuth.instance.signOut();
+
+      // Clean up
+      SecureStorage.delete('user.email');
+      SecureStorage.delete('user.name');
+      SecureStorage.delete('user.token');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         Authentication.customSnackBar(
