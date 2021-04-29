@@ -1,5 +1,4 @@
 class Question {
-  
   final int id;
   final String title;
 
