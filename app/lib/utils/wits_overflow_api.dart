@@ -36,7 +36,7 @@ class WitsOverflowApi {
   }
 
   static Future<String> postQuestions(String title, String body) async {
-    final token = await SecureStorage.read('user.token');
+    // final token = await SecureStorage.read('user.token');
 
     // Get the api url from the environmental variables
     String apiBaseUrl = env['API_BASE_URL'].toString();
