@@ -34,4 +34,30 @@ class WitsOverflowApi {
       throw Exception('Failed to load questions');
     }
   }
+
+  static Future<String> postQuestions(String title, String body) async {
+    // final token = await SecureStorage.read('user.token');
+
+    // Get the api url from the environmental variables
+    String apiBaseUrl = env['API_BASE_URL'].toString();
+
+    final response = await http.post(Uri.parse("$apiBaseUrl/questions"),
+        headers: {"Content-Type": "application/json; charset=utf-8"},
+        body: json.encode(<String, dynamic>{
+          "title": title,
+          "body": body,
+          "score": 0,
+          // Change this to get userId later down the line
+          "authorId": 1,
+          "moduleId": 5
+        }));
+
+    if (response.statusCode == 200) {
+      return 'Posted';
+    } else if (response.statusCode == 400) {
+      return 'Not Posted';
+    } else {
+      throw Exception('Not Posted');
+    }
+  }
 }

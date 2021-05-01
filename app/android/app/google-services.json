@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "228746765399-0trqbdj0gdf1c3vf88utinorjm8suso5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wits_overflow",
+            "certificate_hash": "d3fc7c11d22c8ea77e5cd08dfae1e6d2308d2c43"
+          }
+        },
+        {
           "client_id": "228746765399-hi0g804jfgs8cq4bb74mhb68dpvun128.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
