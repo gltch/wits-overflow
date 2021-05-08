@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wits_overflow/utils/sidebar.dart';
 import 'package:wits_overflow/utils/wits_overflow_api.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -97,6 +98,7 @@ class _PostQuestionState extends State<PostQuestionScreen> {
           }
         },
         child: Scaffold(
+          drawer: SideDrawer(),
           appBar: AppBar(
             // Here we take the value from the MyPostQuestionsPage object that was created by
             // the App.build method, and use it to set our appbar title.
