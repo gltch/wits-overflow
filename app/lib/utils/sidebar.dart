@@ -7,13 +7,6 @@ import 'package:wits_overflow/screens/sign_in_screen.dart';
 class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // COMS years drop down menu items list
-    var _courseYears = ['Year 1', 'Year 2', 'Year 3', 'Year 4'];
-
-    // var _courses = ['Computer Science', 'CAM', 'Maths'];
-    var _currentYearSelected = "1";
-    var _currentCourseSelected = "COMS";
-
     return Drawer(
       child: Column(
         children: <Widget>[
