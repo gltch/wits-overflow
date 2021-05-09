@@ -9,7 +9,35 @@ class PostQuestionScreen extends StatefulWidget {
   _PostQuestionState createState() => _PostQuestionState();
 }
 
+// GLobal Variable
+String valueChoose = "None";
+
+List listItem = [
+  "None",
+  "COMS1015",
+  "COMS1016",
+  "COMS1017",
+  "COMS1018",
+  "MATH1036"
+];
+
+Map<String, int> moduleMap = {
+  "None": 0,
+  "COMS1015": 1,
+  "COMS1016": 2,
+  "COMS1017": 3,
+  "COMS1018": 4,
+  "MATH1036": 5
+};
+
 class _PostQuestionState extends State<PostQuestionScreen> {
+  // Setting value of valueCHoose for dropdown button
+  void _setValueChoose(String nV) {
+    setState(() {
+      valueChoose = nV.toString();
+    });
+  }
+
   // Variable Declarations
   final titleController = new TextEditingController();
   final questionController = new TextEditingController();
@@ -19,23 +47,31 @@ class _PostQuestionState extends State<PostQuestionScreen> {
     setState(() {
       // Check for empty fields
       if (titleController.text == "") {
-        // Show toast message saying posted or not posted
+        // Show error toast message
         Fluttertoast.showToast(
             msg: 'Missing Title',
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1);
       } else if (questionController.text == "") {
-        // Show toast message saying posted or not posted
+        // Show error toast message
         Fluttertoast.showToast(
             msg: 'Missing Question Body',
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1);
+      } else if (valueChoose == "None") {
+        // Show error toast message
+        Fluttertoast.showToast(
+            msg: 'Select A Module',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1);
       } else {
+        int module = moduleMap[valueChoose]!;
         // Actually post the question
         WitsOverflowApi.postQuestions(
-            titleController.text, questionController.text);
+            titleController.text, questionController.text, module);
         // Show toast message saying posted or not posted
         Fluttertoast.showToast(
             msg: 'Posted',
@@ -81,7 +117,35 @@ class _PostQuestionState extends State<PostQuestionScreen> {
                 alignLabelWithHint: true,
                 hintText: 'Enter question here',
                 border: OutlineInputBorder()),
-            maxLines: 20,
+            maxLines: 40,
+          ),
+        ),
+      );
+    }
+
+    // Drop down button build widget
+
+    Widget _buildDropdownMenu() {
+      return Expanded(
+        child: Padding(
+          key: ValueKey(2),
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: DropdownButton(
+              hint: Text("Select Module: "),
+              dropdownColor: Colors.blue,
+              isExpanded: true,
+              value: valueChoose,
+              onChanged: (newValue) {
+                _setValueChoose(newValue.toString());
+              },
+              items: listItem.map((valueItem) {
+                return DropdownMenuItem(
+                  value: valueItem,
+                  child: Text(valueItem),
+                );
+              }).toList(),
+            ),
           ),
         ),
       );
@@ -126,6 +190,8 @@ class _PostQuestionState extends State<PostQuestionScreen> {
                 _buildTitleTextField(),
                 SizedBox(height: 10),
                 _buildMultipleTextField(),
+                // SizedBox(height: 10),
+                _buildDropdownMenu(),
               ],
             ),
           ),
