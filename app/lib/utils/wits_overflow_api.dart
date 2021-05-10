@@ -35,7 +35,8 @@ class WitsOverflowApi {
     }
   }
 
-  static Future<String> postQuestions(String title, String body) async {
+  static Future<String> postQuestions(
+      String title, String body, int module) async {
     // final token = await SecureStorage.read('user.token');
 
     // Get the api url from the environmental variables
@@ -49,7 +50,7 @@ class WitsOverflowApi {
           "score": 0,
           // Change this to get userId later down the line
           "authorId": 1,
-          "moduleId": 5
+          "moduleId": module
         }));
 
     if (response.statusCode == 200) {
