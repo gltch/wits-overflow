@@ -23,7 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    
+  material_floating_search_bar: ^0.2.6  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -59,9 +59,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
+    #- assets/images/wits_logo_transparent.png
+    #- assets/images/google_logo.png
   assets:
-    - assets/images/wits_logo_transparent.png
-    - assets/images/google_logo.png
+    - assets/images/
     - env/.env_dev
     - env/.env_pre
     - env/.env_prod
