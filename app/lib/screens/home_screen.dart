@@ -13,36 +13,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-/*  Future questionsFeed() async {
-    var feed = await http
-        .get(Uri.http("wits-overflow-pre-api.herokuapp.com", "/questions"));
-    var jsonData = jsonDecode(feed.body);
-
-    List<QuestionFeed> questions = [];
-
-    for (var question in jsonData) {
-      QuestionFeed questionsFeed =
-          QuestionFeed(question['title'], question['score']);
-
-      questions.add(questionsFeed);
-    }
-
-    print("This is working");
-    return questions;
-
-
-    body: Container(
-        width: 100,
-        child: TextField(
-          controller: getFilters,
-          decoration: InputDecoration(
-            hintText: 'Filter by ',
-            border: OutlineInputBorder(),
-          ),
-        ),
-      ),
-  }*/
-
   static const int historySize = 5;
   List<String> history = [
     'Coms1015A',
@@ -108,8 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugDisableShadows = false;
+
     Scaffold view = Scaffold(
-      drawer: customNavBar(),
+      drawer: CustomNavBar(),
       appBar: AppBar(
         title: Text("Home"),
       ),
@@ -218,6 +190,17 @@ class SearchResultsListView extends StatelessWidget {
     required this.searchTerm,
   }) : super(key: key);
 
+  void showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('showing detailed questions'),
+        action: SnackBarAction(label: 'UNDO', onPressed: () {}),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -249,6 +232,8 @@ class SearchResultsListView extends StatelessWidget {
             (index) => ListTile(
                   title: Text('$searchTerm has been found'),
                   subtitle: Text(''),
+                  //Add a navigator in the onTab method for when a question is clicked
+                  onTap: () => showToast(context),
                 )));
   }
 }

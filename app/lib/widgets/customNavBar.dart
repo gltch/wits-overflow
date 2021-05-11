@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-class customNavBar extends StatelessWidget {
+class CustomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Drawer(
+      //Add your code for the side bar in here
+
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -30,12 +32,12 @@ class customNavBar extends StatelessWidget {
             ),
           ),
           ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Log out'),
+              leading: Icon(Icons.portrait_rounded),
+              title: Text('User details'),
               onTap: () => null),
           ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Log out'),
+              leading: Icon(Icons.favorite),
+              title: Text('Favourites'),
               onTap: () => null),
           ListTile(
               leading: Icon(Icons.logout),
