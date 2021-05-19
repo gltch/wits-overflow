@@ -9,9 +9,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    padding:
     const EdgeInsets.all(32);
-    Color color = Theme.of(context).primaryColor;
 
     Widget buttonSection = Container(
       child: Row(
