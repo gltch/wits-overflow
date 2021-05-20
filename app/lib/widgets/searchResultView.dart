@@ -1,7 +1,6 @@
-//@dart=2.9
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchResultsListView extends StatelessWidget {
@@ -22,8 +21,7 @@ class SearchResultsListView extends StatelessWidget {
     )
   ];
 
-  SearchResultsListView(
-      {Key key, @required this.searchTerm, @required this.tab})
+  SearchResultsListView({Key? key, required this.searchTerm, required this.tab})
       : super(key: key);
 
 //the following method in for showing a toast
