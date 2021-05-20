@@ -10,8 +10,8 @@ class CustomNavBar extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text("Thabiso kobe"),
-            accountEmail: Text("kobethabiso360@gmail.com"),
+            accountName: Text("Username"),
+            accountEmail: Text("Example_mail@gmail.com"),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.asset(

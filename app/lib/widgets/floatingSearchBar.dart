@@ -1,13 +1,13 @@
-//@dart=2.9
-
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:wits_overflow/widgets/searchResultView.dart';
 
 class MySearchBar extends StatefulWidget {
   final int myTab;
 
-  const MySearchBar({Key key, @required this.myTab}) : super(key: key);
+  const MySearchBar({Key? key, required this.myTab}) : super(key: key);
 
   @override
   _MySearchBar createState() => _MySearchBar(tab: myTab);
@@ -16,7 +16,7 @@ class MySearchBar extends StatefulWidget {
 class _MySearchBar extends State<MySearchBar> {
   final int tab;
 
-  _MySearchBar({@required this.tab});
+  _MySearchBar({required this.tab});
 
   static const int historySize = 5;
   //int myTab = 0;
@@ -33,7 +33,7 @@ class _MySearchBar extends State<MySearchBar> {
   static String selectedItem = '';
 
   List<String> filterItem({
-    @required String filter = '',
+    String filter = '',
   }) {
     if (filter.isNotEmpty) {
       return history.reversed.where((term) => term.startsWith(filter)).toList();
