@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 class CustomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Drawer(
-      //Add your code for the side bar in here
+      //TODO Add your code for the side bar in here
 
       child: ListView(
         padding: EdgeInsets.zero,
