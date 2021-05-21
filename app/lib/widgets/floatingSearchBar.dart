@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:wits_overflow/widgets/searchResultView.dart';
 
 class MySearchBar extends StatefulWidget {
@@ -14,12 +12,11 @@ class MySearchBar extends StatefulWidget {
 }
 
 class _MySearchBar extends State<MySearchBar> {
+  static const int historySize = 5;
   final int tab;
 
   _MySearchBar({required this.tab});
 
-  static const int historySize = 5;
-  //int myTab = 0;
   List<String> history = [
     'Coms1015A',
     'IDSA',
@@ -30,10 +27,10 @@ class _MySearchBar extends State<MySearchBar> {
 
   List<String> filteredHistory = [];
 
-  static String selectedItem = '';
+  String selectedItem = '';
 
   List<String> filterItem({
-    String filter = '',
+    required String filter,
   }) {
     if (filter.isNotEmpty) {
       return history.reversed.where((term) => term.startsWith(filter)).toList();
@@ -89,7 +86,7 @@ class _MySearchBar extends State<MySearchBar> {
       //TODO replace the body so that when we navigate to different tabs we get populate with relevent results
       body: FloatingSearchBarScrollNotifier(
         child: SearchResultsListView(
-          searchTerm: selectedItem,
+          searchTerm: history.isNotEmpty ? history.reversed.first : '',
           tab: tab,
         ),
       ),
@@ -108,6 +105,7 @@ class _MySearchBar extends State<MySearchBar> {
         setState(() {
           addSearchItem(query);
           selectedItem = query;
+          print(selectedItem);
         });
         controller.close();
       },

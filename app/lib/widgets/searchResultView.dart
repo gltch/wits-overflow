@@ -1,25 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchResultsListView extends StatelessWidget {
   final String searchTerm;
   final int tab;
-  final List<Icon> myTab = [
-    Icon(
-      Icons.home,
-      size: 64,
-    ),
-    Icon(
-      Icons.favorite,
-      size: 64,
-    ),
-    Icon(
-      Icons.notifications_active,
-      size: 64,
-    )
-  ];
 
   SearchResultsListView({Key? key, required this.searchTerm, required this.tab})
       : super(key: key);
@@ -39,8 +24,6 @@ class SearchResultsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     if (searchTerm.isEmpty) {
       return Center(
         child: Column(
@@ -59,15 +42,13 @@ class SearchResultsListView extends StatelessWidget {
       );
     }
 
-    final size = FloatingSearchBar.of(context);
-
     return ListView(
-        padding: EdgeInsets.only(top: size.height + size.margins.vertical),
+        padding: EdgeInsets.only(top: 95, bottom: 56),
         children: List.generate(
             13,
             (index) => ListTile(
                   title: Text('$searchTerm has been found'),
-                  subtitle: Text(''),
+                  subtitle: Text('Body will go here.....'),
                   //Add a navigator in the onTab method for when a question is clicked
                   onTap: () => showToast(context, "showing detailed question"),
                 )));
