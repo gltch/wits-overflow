@@ -10,7 +10,7 @@ void main() {
 
     await tester.pumpWidget(testWidget);
 
-    final textFinder = find.text('Wits Overflow Home Screen');
+    final textFinder = find.text('Home');
 
     expect(textFinder, findsWidgets);
   });
