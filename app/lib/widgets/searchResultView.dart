@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchResultsListView extends StatelessWidget {
   final String searchTerm;
