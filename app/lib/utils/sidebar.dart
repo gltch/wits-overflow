@@ -14,6 +14,182 @@ class SideDrawer extends StatefulWidget {
 class _SideDrawerState extends State<SideDrawer> {
   @override
   Widget build(BuildContext context) {
+    void _scrollToSelectedContent({required GlobalKey expansionTileKey}) {
+      final keyContext = expansionTileKey.currentContext;
+      if (keyContext != null) {
+        Future.delayed(Duration(milliseconds: 200)).then((value) {
+          Scrollable.ensureVisible(keyContext,
+              duration: Duration(milliseconds: 200));
+        });
+      }
+    }
+
+    // Build the expansion tiles
+    ExpansionTile createExpTile(String s) {
+      if (s == "COMS") {
+        final GlobalKey expansionTileKey = GlobalKey();
+        return ExpansionTile(
+          key: expansionTileKey,
+          onExpansionChanged: (value) {
+            if (value) {
+              _scrollToSelectedContent(expansionTileKey: expansionTileKey);
+            }
+          },
+          title: Text("Computer Science"),
+          // COMS modules
+          children: [
+            Container(
+              height: 170,
+              child: Scrollbar(
+                isAlwaysShown: true,
+                child: ListView(
+                  padding: EdgeInsets.only(top: 0.0),
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Machine Learning III'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostQuestionScreen())),
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Formal Languages and Automata III'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostQuestionScreen())),
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Parallel Computing III'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostQuestionScreen())),
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Software Design III'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostQuestionScreen())),
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Software Design Project III'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostQuestionScreen())),
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      } else if (s == "CAM") {
+        final GlobalKey expansionTileKey = GlobalKey();
+        return ExpansionTile(
+          key: expansionTileKey,
+          onExpansionChanged: (value) {
+            if (value) {
+              _scrollToSelectedContent(expansionTileKey: expansionTileKey);
+            }
+          },
+          title: Text("Applied Maths"),
+          // CAM modules
+          children: [
+            Container(
+              height: 170,
+              child: Scrollbar(
+                isAlwaysShown: true,
+                child: ListView(
+                  padding: EdgeInsets.only(top: 0.0),
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Optimisation I'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostQuestionScreen())),
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Mechanics I'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostQuestionScreen())),
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Optimisation II'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostQuestionScreen())),
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Numerical Methods I'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostQuestionScreen())),
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Lagrangian Mechanics II'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostQuestionScreen())),
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      } else
+        return ExpansionTile(title: Text("none"), children: []);
+    }
+
     return Drawer(
       child: Column(
         children: [
@@ -82,172 +258,9 @@ class _SideDrawerState extends State<SideDrawer> {
                     padding: EdgeInsets.only(top: 0.0),
                     children: <Widget>[
                       // Module: COMS
-                      ExpansionTile(
-                        title: Text("Computer Science"),
-                        // COMS modules
-                        children: [
-                          Container(
-                            height: 170,
-                            child: Scrollbar(
-                              isAlwaysShown: true,
-                              child: ListView(
-                                padding: EdgeInsets.only(top: 0.0),
-                                children: <Widget>[
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.arrow_right_alt_outlined),
-                                    title: Text('Machine Learning III'),
-                                    // On tap should open a dropdown menu of ...
-                                    onTap: () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostQuestionScreen())),
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.arrow_right_alt_outlined),
-                                    title: Text(
-                                        'Formal Languages and Automata III'),
-                                    // On tap should open a dropdown menu of ...
-                                    onTap: () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostQuestionScreen())),
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.arrow_right_alt_outlined),
-                                    title: Text('Parallel Computing III'),
-                                    // On tap should open a dropdown menu of ...
-                                    onTap: () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostQuestionScreen())),
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.arrow_right_alt_outlined),
-                                    title: Text('Software Design III'),
-                                    // On tap should open a dropdown menu of ...
-                                    onTap: () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostQuestionScreen())),
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.arrow_right_alt_outlined),
-                                    title: Text('Software Design Project III'),
-                                    // On tap should open a dropdown menu of ...
-                                    onTap: () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostQuestionScreen())),
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      createExpTile("COMS"),
                       // Module: CAM
-                      ExpansionTile(
-                        title: Text("Applied Maths"),
-                        // CAM modules
-                        children: [
-                          Container(
-                            height: 170,
-                            child: Scrollbar(
-                              isAlwaysShown: true,
-                              child: ListView(
-                                padding: EdgeInsets.only(top: 0.0),
-                                children: <Widget>[
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.arrow_right_alt_outlined),
-                                    title: Text('Optimisation I'),
-                                    // On tap should open a dropdown menu of ...
-                                    onTap: () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostQuestionScreen())),
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.arrow_right_alt_outlined),
-                                    title: Text('Mechanics I'),
-                                    // On tap should open a dropdown menu of ...
-                                    onTap: () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostQuestionScreen())),
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.arrow_right_alt_outlined),
-                                    title: Text('Optimisation II'),
-                                    // On tap should open a dropdown menu of ...
-                                    onTap: () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostQuestionScreen())),
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.arrow_right_alt_outlined),
-                                    title: Text('Numerical Methods I'),
-                                    // On tap should open a dropdown menu of ...
-                                    onTap: () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostQuestionScreen())),
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.arrow_right_alt_outlined),
-                                    title: Text('Lagrangian Mechanics II'),
-                                    // On tap should open a dropdown menu of ...
-                                    onTap: () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostQuestionScreen())),
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      createExpTile("CAM"),
                     ],
                   ),
                 ),
