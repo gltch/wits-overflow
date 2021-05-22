@@ -213,6 +213,7 @@ class _SideDrawerState extends State<SideDrawer> {
           Expanded(
             child: Column(
               children: <Widget>[
+                SizedBox(height: 10),
                 ListTile(
                   leading: Icon(Icons.logout),
                   title: Text('Logout'),
@@ -232,6 +233,10 @@ class _SideDrawerState extends State<SideDrawer> {
                     //   MaterialPageRoute(builder: (context) => SignInScreen())),
                   },
                 ),
+                SizedBox(height: 25),
+                Center(
+                  child: Text("version information"),
+                )
               ],
             ),
           )
