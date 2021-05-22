@@ -17,27 +17,69 @@ class _SideDrawerState extends State<SideDrawer> {
     return Drawer(
       child: Column(
         children: [
+          // Profile Container
           Container(
-            height: 450,
-            child: Scrollbar(
-              child: ListView(
-                padding: EdgeInsets.only(top: 0.0),
-                children: <Widget>[
-                  SizedBox(height: 25),
-                  ListTile(
-                    leading: Icon(Icons.home),
-                    title: Text('Home'),
-                    // On tap should open a dropdown menu of ...
-                    onTap: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen())),
-                    },
-                  ),
-                  SizedBox(height: 25),
-                  ExpansionTile(
-                    title: Text("Modules"),
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(10),
+              color: Theme.of(context).primaryColor,
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: 130,
+                      height: 100,
+                      margin: EdgeInsets.only(top: 20),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            // Change code to get profile image of user
+                            image: NetworkImage(
+                                'https://holy.trinity.joburg/wp-content/uploads/2017/11/Wits-University-logo.jpg'),
+                            fit: BoxFit.fill),
+                      ),
+                    ),
+                    // Change code to get username of user
+                    Text('Username',
+                        style: TextStyle(fontSize: 22, color: Colors.white)),
+                    // Change code to get eamil address of user
+                    Text('Email Address',
+                        style: TextStyle(color: Colors.white)),
+                    ListTile(
+                      title: Center(
+                        child: Text('Edit Profile'),
+                      ),
+                      onTap: () => {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => SignInScreen())),
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Home Button
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Home'),
+            // On tap should open a dropdown menu of ...
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HomeScreen())),
+            },
+          ),
+          // Modules Container
+          ExpansionTile(
+            title: Text("Modules"),
+            children: <Widget>[
+              Container(
+                height: 180,
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  child: ListView(
+                    padding: EdgeInsets.only(top: 0.0),
                     children: <Widget>[
                       // Module: COMS
                       ExpansionTile(
@@ -47,6 +89,7 @@ class _SideDrawerState extends State<SideDrawer> {
                           Container(
                             height: 170,
                             child: Scrollbar(
+                              isAlwaysShown: true,
                               child: ListView(
                                 padding: EdgeInsets.only(top: 0.0),
                                 children: <Widget>[
@@ -130,6 +173,7 @@ class _SideDrawerState extends State<SideDrawer> {
                           Container(
                             height: 170,
                             child: Scrollbar(
+                              isAlwaysShown: true,
                               child: ListView(
                                 padding: EdgeInsets.only(top: 0.0),
                                 children: <Widget>[
@@ -206,14 +250,18 @@ class _SideDrawerState extends State<SideDrawer> {
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
+          // Spacer
+          // Spacer(),
+          SizedBox(height: 10),
+          // Logout Button & Version Information
           Expanded(
             child: Column(
               children: <Widget>[
-                SizedBox(height: 10),
+                // SizedBox(height: 40),
                 ListTile(
                   leading: Icon(Icons.logout),
                   title: Text('Logout'),
@@ -224,16 +272,7 @@ class _SideDrawerState extends State<SideDrawer> {
                         (route) => false)
                   },
                 ),
-                ListTile(
-                  leading: Icon(Icons.account_circle_outlined),
-                  title: Text('Profile'),
-                  onTap: () => {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => SignInScreen())),
-                  },
-                ),
-                SizedBox(height: 25),
+                SizedBox(height: 5),
                 Center(
                   child: Text("version information"),
                 )
