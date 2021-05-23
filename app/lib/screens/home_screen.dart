@@ -4,6 +4,7 @@ import 'package:wits_overflow/widgets/floatingSearchBar.dart';
 import 'package:wits_overflow/widgets/customNavBar.dart';
 import 'package:wits_overflow/widgets/favoritesTab.dart';
 import 'package:wits_overflow/widgets/notificationsTab.dart';
+import 'package:wits_overflow/utils/sidebar.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);

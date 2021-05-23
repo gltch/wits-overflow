@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wits_overflow/screens/sign_in_screen.dart';
 import 'package:wits_overflow/utils/authentication.dart';
+import 'package:wits_overflow/utils/sidebar.dart';
 
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({Key? key, required User user})
@@ -48,6 +49,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: SideDrawer(),
       backgroundColor: Colors.white,
       appBar: AppBar(elevation: 0, backgroundColor: Colors.blue),
       body: SafeArea(
