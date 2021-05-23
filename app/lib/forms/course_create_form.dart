@@ -9,6 +9,8 @@ import 'package:wits_overflow/widgets/navigation.dart';
 import 'package:wits_overflow/screens/course_screen.dart';
 
 
+// TODO: trim trailing spaces on course name, faculty, school name
+
 // -----------------------------------------------------------------------------
 //                    COURSE CREATE FORM STATE
 // -----------------------------------------------------------------------------

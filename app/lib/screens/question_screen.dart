@@ -311,7 +311,7 @@ class _QuestionState extends State<Question> {
     
     List<Widget> answers = <Widget>[];
     for(var i = 0; i < this.answers!.docs.length; i++){
-      print('[GETTING QUESTION ANSWER VOTES WITH ID: ${this.answers!.docs[i].id.toString()}, this.answerVotes.keys().toString: ${this.answerVotes!.keys.toString()}]');
+      print('[GETTING QUESTION ANSWER VOTES WITH ID: ${this.answers!.docs[i].id.toString()}, this.answerVotes.keys().toString: ${this.answerVotes.keys.toString()}]');
       answers.add(buildAnswerWidget(this.answerVotes[this.answers!.docs[i].id.toString()]!.docs.length.toString(), this.answers!.docs[i].get('body')));
       answers.add(Divider());
     }

@@ -144,7 +144,7 @@ class Authentication {
 
       else {
       // //   // Save details to secure storage:
-        var token = await user!.getIdToken();
+        var token = await user.getIdToken();
         SecureStorage.write('user.email', user.email.toString());
         SecureStorage.write('user.name', user.displayName.toString());
         SecureStorage.write('user.token', token);

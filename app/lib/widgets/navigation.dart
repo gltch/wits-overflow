@@ -15,6 +15,7 @@ import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:wits_overflow/screens/courses_screen.dart';
 import 'package:wits_overflow/screens/sign_in_screen.dart';
 import 'package:wits_overflow/screens/user_info_screen.dart';
+import 'package:wits_overflow/screens/feed_screen.dart';
 
 // -----------------------------------------------------------------------------
 //             NavDrawer class
@@ -72,6 +73,9 @@ class NavDrawer extends StatelessWidget {
               );
             },
           ),
+
+
+          // courses page
           ListTile(
             leading: Icon(Icons.border_color),
             title: Text('Courses'),
@@ -82,6 +86,24 @@ class NavDrawer extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context){
                       return Courses();
+                    }
+                ),
+              );
+            },
+          ),
+
+
+          // feed page
+          ListTile(
+            leading: Icon(Icons.border_color),
+            title: Text('Feed'),
+            onTap: () {
+              // Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context){
+                      return Feed();
                     }
                 ),
               );

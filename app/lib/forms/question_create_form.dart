@@ -191,19 +191,13 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            // decoration: InputDecoration(
-                            //   border: UnderlineInputBorder(),
-                            //   labelText: 'course (choose a course you want to post question to)',
-                            // ),
                             hint: Text("Select the course you want to post your question to"),
                             value: courseController,
                             isDense: true,
                             onChanged: (newValue) {
-                              print('[DROPDOWN BUTTON ON CHANGE, new value: $newValue]');
                               setState(() {
                                 courseController = newValue!;
                               });
-                              print('[DROP DOWN BUTTON ON CHANGE VALUE: $courseController]');
                             },
                             items: this.dropdownButtonMenuItems,
                           ),
