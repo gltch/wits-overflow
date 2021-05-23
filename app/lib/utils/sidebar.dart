@@ -248,15 +248,34 @@ class _SideDrawerState extends State<SideDrawer> {
             ),
           ),
           // Home Button
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
-            // On tap should open a dropdown menu of ...
-            onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HomeScreen())),
-            },
+          Row(
+            children: [
+              Expanded(
+                child: ListTile(
+                  leading: Icon(Icons.home),
+                  title: Text('Home'),
+                  // On tap should open a dropdown menu of ...
+                  onTap: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeScreen())),
+                  },
+                ),
+              ),
+              Expanded(
+                child: ListTile(
+                  leading: Icon(Icons.post_add_outlined),
+                  title: Text('Post Question'),
+                  onTap: () => {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PostQuestionScreen()))
+                  },
+                ),
+              ),
+            ],
           ),
+
           // Modules Container
           ExpansionTile(
             title: Text("Modules"),
