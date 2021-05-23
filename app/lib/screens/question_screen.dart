@@ -176,21 +176,20 @@ class _QuestionState extends State<Question> {
       String body = getField(commentDoc.data(), 'body', onError: '[error, body not found for this comment]');
       DateTime createdAt = getField(commentDoc.data(), 'createAt', onError:DateTime.now(), onNull:DateTime.now());
       comments.add(buildCommentWidget(body: body, displayName: displayName, createdAt: createdAt));
-      // comments.add(Divider());
-      if(i == this.comments!.docs.length - 1 ){
-        comments.add(
-          Container(
-            child:TextButton(
-              child: Text('add comment'),
-              onPressed: (){
-                print('[ADD COMMENT BUTTON PRESSED]');
-              },
-            ),
-          )
-        );
-      }
+      // comments.add(Divider())
 
     }
+
+    comments.add(
+      Container(
+        child:TextButton(
+          child: Text('add comment'),
+          onPressed: (){
+            print('[ADD COMMENT BUTTON PRESSED]');
+          },
+        ),
+      )
+    );
 
      return Container(
        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),

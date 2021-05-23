@@ -75,19 +75,12 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
     List<DocumentSnapshot<Map<String, dynamic>>> ufc = <DocumentSnapshot<Map<String, dynamic>>>[for(var i = 0 ; i < favorites.docs.length; i++) await FirebaseFirestore.instance.collection('courses').doc(favorites.docs[i].get('course')).get()];
   
     ufc.forEach((userFavoriteCourse) {
-      print('[ADDING TO USER DROPDOWN BUTTON MENU ITEMS FAVOIRITE COURSES, userFavoriteCourse: ${userFavoriteCourse.get('name')}]');
+      print('[ADDING TO USER DROPDOWN BUTTON MENU ITEMS FAVORITE COURSES, userFavoriteCourse: ${userFavoriteCourse.get('name')}]');
       dmi.add(DropdownMenuItem(child: Text(userFavoriteCourse.get('name')), value: userFavoriteCourse.id));
     });
 
     print('[RETRIEVED USER FAVORITES FROM DATABASE, favorites.docs.length: ${favorites.docs.length}]');
     print('[RETRIEVED USER FAVORITES COURSES FROM DATABASE, favoriteCourses.docs.length: ${ufc.length}]');
-    // favorites.docs.forEach((favoriteDoc) async {
-    //   var courseDoc = await FirebaseFirestore.instance.collection('courses').doc(favoriteDoc.get('course')).get();
-    //   print('[FETCHED FAVORITE COURSE, course.id: ${courseDoc.id}, course.name: ${courseDoc.get('name')}]');
-    //   ufc.add(courseDoc);
-    //   dbmi.add(DropdownMenuItem(value: courseDoc.id, child: Text(courseDoc.get('name'))));
-    // });
-
 
     setState(() {
       print('[CHANGING STATE : dmi: ${dmi.length}]');
@@ -99,51 +92,57 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
       this.isBusy = false;
       print('[--------------------------------------- CHANGE STATE CHANGED STATE CHANGED STATE ---------------------------------------------------]');
     });
-
-    // .then((querySnapshot){
-    //   print('[USER HAS ${querySnapshot.docs.length} FAVORITE COURSES]');
-    //   querySnapshot.docs.forEach((favoriteDoc) {
-    //     var a = FirebaseFirestore.instance.collection('courses').doc(favoriteDoc.get('course')).get();
-    //     coursesFuture.add(a);
-    //     a.then((courseDoc){
-    //       print('[RETRIEVED COURSE : ${courseDoc.data().toString()}]');
-    //       courses.add(courseDoc);
-    //     });
-    //   });
-    //   print('[USER FAVORITE COURSES : ${courses.toString()}]');
-    // });
   }
   // TODO: add a field where the user can choose for which subject is she/he posting question to
 
-  DocumentReference ? addQuestion(String course, String title, String body) {
+  DocumentReference ? addQuestion(String courseId, String title, String body) {
     CollectionReference questions = FirebaseFirestore.instance.collection('questions');
     print('[USER UID ' + FirebaseAuth.instance.currentUser!.uid.toString() +  ']');
-    questions.add({
-      'course': course,
-      'user': FirebaseAuth.instance.currentUser!.uid,
-      'title': title,
-      'body': body,
-      'votes': 0,
-      'createAt': DateTime.now(),
-      'updatedAt': DateTime.now(),
-    })
-        .then((value) {
-      print("[QUESTION ADDED]");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Successfully posted question'),
-        ),
-      );
-      return value;
-    })
-        .catchError((error){
-      print("[FAILED TO ADD QUESTION]: $error");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error occurred'),
-        ),
-      );
-    });
+    DocumentSnapshot course;
+    for(var i = 0; i < this.userFavoriteCourses!.length; i++){
+      if(this.userFavoriteCourses!.elementAt(i).id == courseId){
+        course = this.userFavoriteCourses!.elementAt(i);
+        questions.add({
+          'school': course.get('school'),
+          'year': course.get('year'),
+          'faculty': course.get('faculty'),
+          'course': courseId,
+          'user': FirebaseAuth.instance.currentUser!.uid,
+          'title': title,
+          'body': body,
+          'votes': 0,
+          'createAt': DateTime.now(),
+          'updatedAt': DateTime.now(),
+        })
+            .then((value) {
+          print("[QUESTION ADDED]");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Successfully posted question'),
+            ),
+          );
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context){
+                  return Question(value.id);
+                },
+              )
+          );
+
+          return value;
+        })
+            .catchError((error){
+          print("[FAILED TO ADD QUESTION]: $error");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error occurred'),
+            ),
+          );
+        });
+      }
+    }
     return null;
   }
 
@@ -176,114 +175,134 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
       appBar: AppBar(
         title: Text('wits-overflow'),
       ),
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: Container(
-            margin: EdgeInsets.all(20),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: DropdownButtonHideUnderline(
-                    child: Flex(
-                      direction: Axis.horizontal,
-                      children: [
-                        Expanded(
-                          child: DropdownButtonFormField<String>(
-                            hint: Text("Select the course you want to post your question to"),
-                            value: courseController,
-                            isDense: true,
-                            onChanged: (newValue) {
-                              setState(() {
-                                courseController = newValue!;
-                              });
-                            },
-                            items: this.dropdownButtonMenuItems,
-                          ),
-                        ),
-                      ],
-                    )
-                  ),
-                ),
-                TextFormField(
-                  controller: titleController,
-                  maxLines: null,
-                  maxLength: null,
-                  keyboardType: TextInputType.multiline,
-                  decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'title',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Enter title';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: this.bodyController,
-                  maxLines: 15,
-                  minLines: 10,
-                  decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'body',
-
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 50, 0, 10),
-                  child: ElevatedButton(
-                    onPressed:(){
-                      print('[POST QUESTION BUTTON PRESSED]');
-                      if (_formKey.currentState!.validate()) {
-                        var course = this.courseController;
-                        var title = this.titleController.text;
-                        var body = this.bodyController.text;
-                        print('[POST QUESTION course : $course, title: $title, body: $body]');
-
-
-                        DocumentReference<Object?>? question = addQuestion(course, title, body);
-                        if(question == null){
-
-                        }
-                        else{
-                          // redirect to question page
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context){
-                                return Question(question.id);
-                              },
-                            )
-                          );
-                        }
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Processing Data'),
-                          ),
-                        );
-                      }
-                      else{
-                        print('[INVALID FORM DATA]');
-
-                      }
-                    },
-                    child: Text('POST'),
-                  )
-                )
-              ],
+      body: ListView(
+        children: [
+          Container(
+            padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+            color: Color.fromARGB(100, 220, 220, 220),
+            child:Text(
+              'Post question',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w600,
+                color: Color.fromARGB(100, 16, 16, 16)
+              ),
             ),
           ),
-        ),
+
+
+          Center(
+            child: Form(
+              key: _formKey,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                // margin: EdgeInsets.all(20),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      child: DropdownButtonHideUnderline(
+                        child: Flex(
+                          direction: Axis.horizontal,
+                          children: [
+                            Expanded(
+                              child: DropdownButtonFormField<String>(
+                                isExpanded: true, // from stack overflow, when this is added, not overflow occurs
+                                hint: Text("Select the course you want to post your question to"),
+                                value: courseController,
+                                isDense: true,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    courseController = newValue!;
+                                  });
+                                },
+                                items: this.dropdownButtonMenuItems,
+                              ),
+                            ),
+                          ],
+                        )
+                      ),
+                    ),
+                    TextFormField(
+                      controller: titleController,
+                      maxLines: null,
+                      maxLength: null,
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'title',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter title';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: this.bodyController,
+                      maxLines: 15,
+                      minLines: 10,
+                      decoration: InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'body',
+
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 50, 0, 10),
+                      child: ElevatedButton(
+                        onPressed:(){
+                          print('[POST QUESTION BUTTON PRESSED]');
+                          if (_formKey.currentState!.validate()) {
+                            var course = this.courseController;
+                            var title = this.titleController.text;
+                            var body = this.bodyController.text;
+                            print('[POST QUESTION course : $course, title: $title, body: $body]');
+
+
+                            DocumentReference<Object?>? question = addQuestion(course, title, body);
+                            if(question == null){
+
+                            }
+                            else{
+                              // redirect to question page
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context){
+                                    return Question(question.id);
+                                  },
+                                )
+                              );
+                            }
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Processing Data'),
+                              ),
+                            );
+                          }
+                          else{
+                            print('[INVALID FORM DATA]');
+
+                          }
+                        },
+                        child: Text('POST'),
+                      )
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

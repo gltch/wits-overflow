@@ -58,21 +58,6 @@ class NavDrawer extends StatelessWidget {
             },
           ),
 
-          // uer profile
-          ListTile(
-            leading: Icon(Icons.account_circle_outlined),
-            title: Text('Profile'),
-            onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context){
-                    return UserInfoScreen(user: FirebaseAuth.instance.currentUser!,);
-                  },
-                ),
-              );
-            },
-          ),
 
 
           // courses page
@@ -95,7 +80,7 @@ class NavDrawer extends StatelessWidget {
 
           // feed page
           ListTile(
-            leading: Icon(Icons.border_color),
+            leading: Icon(CupertinoIcons.news),
             title: Text('Feed'),
             onTap: () {
               // Navigator.of(context).pop();
@@ -110,6 +95,21 @@ class NavDrawer extends StatelessWidget {
             },
           ),
 
+          // uer profile
+          ListTile(
+            leading: Icon(Icons.account_circle_outlined),
+            title: Text('Profile'),
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context){
+                    return UserInfoScreen(user: FirebaseAuth.instance.currentUser!,);
+                  },
+                ),
+              );
+            },
+          ),
 
           // LOGIN BUTTON
           ListTile(

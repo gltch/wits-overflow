@@ -70,3 +70,6 @@ const Map FACULTIES_SCHOOLS = {
    ],
   },
 };
+
+
+const List<String> YEARS = <String>['first', 'second', 'third', 'honours', 'masters', 'doctorate'];
