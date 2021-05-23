@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
-import 'package:wits_overflow/widgets/floatingSearchBar.dart';
 
 void main() {
   testWidgets('Favorites Screen', (WidgetTester tester) async {
