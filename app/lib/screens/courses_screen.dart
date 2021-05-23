@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:wits_overflow/widgets/navigation.dart';
+import 'package:wits_overflow/utils/functions.dart';
 import 'package:wits_overflow/forms/course_create_form.dart';
 import 'package:wits_overflow/screens/course_screen.dart';
 
@@ -188,7 +189,7 @@ class _CoursesState extends State<Courses> {
         child: isUserFavoriteIcon,
       ),
 
-      title: Text(courseName),
+      title: Text(toTitleCase(courseName)),
       subtitle: Text(courseDescription),
 
       onTap: (){

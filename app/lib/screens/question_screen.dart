@@ -366,6 +366,32 @@ class _QuestionState extends State<Question> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
 
+                        /// up vote button, down vote button
+                        /// number of votes
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Icon(Icons.arrow_drop_up, size: 40,),
+                                  Text(
+                                    // this.votes!.docs.length.toString(),
+                                    // TODO: insert real votes
+                                    this.questionVotes!.docs.length.toString(),
+                                    style: TextStyle(
+                                      // fontSize: 20,
+                                    ),
+                                  ),
+                                  Icon(Icons.arrow_drop_down, size: 40,),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        
+                        
+                        
                         /// question title and body
                         Expanded(
                           child: Column(
@@ -399,29 +425,6 @@ class _QuestionState extends State<Question> {
                           ),
                         ),
 
-                        /// up vote button, down vote button
-                        /// number of votes
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Container(
-                              child: Column(
-                                children: <Widget>[
-                                  Icon(Icons.arrow_drop_up, size: 40,),
-                                  Text(
-                                    // this.votes!.docs.length.toString(),
-                                    // TODO: insert real votes
-                                    this.questionVotes!.docs.length.toString(),
-                                    style: TextStyle(
-                                      // fontSize: 20,
-                                    ),
-                                  ),
-                                  Icon(Icons.arrow_drop_down, size: 40,),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
