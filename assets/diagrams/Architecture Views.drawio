@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-05-23T07:06:30.413Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="VtmLufnrBcU8KOR7b8Us" version="14.6.13" type="github">
+<mxfile host="app.diagrams.net" modified="2021-05-23T07:11:09.210Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="6dENKlUCqpea4KMqXnHL" version="14.6.13" type="github">
   <diagram id="XdC1j3IHL-RzZTJf8BNx" name="Page-1">
     <mxGraphModel dx="2062" dy="825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -157,6 +157,39 @@
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="450" y="775" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-22" value="High-Level System Overview" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;spacing=20;verticalAlign=top;align=left;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="1120" width="460" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=block;startFill=1;endArrow=block;endFill=1;" edge="1" parent="1" source="cXEcaTY2lwT7MXvua-dQ-23" target="cXEcaTY2lwT7MXvua-dQ-25">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="170" y="1300" />
+              <mxPoint x="275" y="1300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-23" value="&lt;b&gt;Web Application&lt;/b&gt;&lt;br&gt;(Flutter)" style="rounded=0;whiteSpace=wrap;html=1;align=center;shadow=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1210" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;startArrow=block;startFill=1;" edge="1" parent="1" source="cXEcaTY2lwT7MXvua-dQ-24" target="cXEcaTY2lwT7MXvua-dQ-25">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="1300" />
+              <mxPoint x="275" y="1300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-28" value="Database Storage&lt;br&gt;and&lt;br&gt;Google Authentication" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="cXEcaTY2lwT7MXvua-dQ-27">
+          <mxGeometry x="0.3796" y="1" relative="1" as="geometry">
+            <mxPoint x="-1" y="16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-24" value="&lt;b&gt;Mobile Apps&lt;/b&gt;&lt;br&gt;(Flutter)" style="rounded=0;whiteSpace=wrap;html=1;align=center;shadow=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="290" y="1211" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-25" value="&lt;b&gt;Firebase&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=center;shadow=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1380" width="390" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
