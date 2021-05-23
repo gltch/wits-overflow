@@ -21,7 +21,7 @@ class _NotificationsTab extends State<NotificationsTab> {
               size: 64,
             ),
             Text(
-              'Notifications',
+              'notifications',
               style: Theme.of(context).textTheme.headline5,
             ),
           ],

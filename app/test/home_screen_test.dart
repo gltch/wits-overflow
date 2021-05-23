@@ -3,14 +3,34 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
 
 void main() {
-  testWidgets('Test Home Screen', (WidgetTester tester) async {
+  testWidgets('Favorites Screen', (WidgetTester tester) async {
     Widget testWidget = new MediaQuery(
         data: new MediaQueryData(),
         child: new MaterialApp(home: new HomeScreen()));
 
-    await tester.pumpWidget(testWidget);
+    final changeTab = find.byIcon(Icons.auto_awesome);
 
-    final textFinder = find.text('Home');
+    await tester.pumpWidget(testWidget);
+    await tester.tap(changeTab);
+    await tester.pump();
+
+    final textFinder = find.text('no favorites to show');
+
+    expect(textFinder, findsWidgets);
+  });
+
+  testWidgets('Notifications Screen', (WidgetTester tester) async {
+    Widget testWidget = new MediaQuery(
+        data: new MediaQueryData(),
+        child: new MaterialApp(home: new HomeScreen()));
+
+    final changeTab = find.byIcon(Icons.notifications_active);
+
+    await tester.pumpWidget(testWidget);
+    await tester.tap(changeTab);
+    await tester.pump();
+
+    final textFinder = find.text('Notifications');
 
     expect(textFinder, findsWidgets);
   });
