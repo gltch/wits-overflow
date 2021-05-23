@@ -81,6 +81,7 @@ class _MySearchBar extends State<MySearchBar> {
   @override
   Widget build(BuildContext context) {
     return FloatingSearchBar(
+      key: Key('home search bar'),
       controller: controller,
 
       //TODO replace the body so that when we navigate to different tabs we get populate with relevent results
@@ -130,6 +131,7 @@ class _MySearchBar extends State<MySearchBar> {
                 );
               } else if (filteredHistory.isEmpty) {
                 return ListTile(
+                  key: Key('search for item'),
                   title: Text(controller.query),
                   leading: const Icon(Icons.search),
                   onTap: () {
