@@ -519,104 +519,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "api/data/config/config.js",
-			"settings":
-			{
-				"buffer_size": 1140,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/lib/widgets/google_sign_in_button.dart",
-			"settings":
-			{
-				"buffer_size": 2766,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/lib/utils/authentication.dart",
-			"settings":
-			{
-				"buffer_size": 5017,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/lib/utils/functions.dart",
-			"settings":
-			{
-				"buffer_size": 605,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/lib/screens/api_request_example.dart",
-			"settings":
-			{
-				"buffer_size": 2343,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/lib/models/question.dart",
-			"settings":
-			{
-				"buffer_size": 251,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/lib/generated_plugin_registrant.dart",
-			"settings":
-			{
-				"buffer_size": 794,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/web/index.html",
-			"settings":
-			{
-				"buffer_size": 2822,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/lib/startup/wits_overflow_app.dart",
-			"settings":
-			{
-				"buffer_size": 453,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/lib/screens/sign_in_screen.dart",
-			"settings":
-			{
-				"buffer_size": 10589,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/lib/startup/main_prod.dart",
-			"settings":
-			{
-				"buffer_size": 275,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/lib/startup/main_dev.dart",
-			"settings":
-			{
-				"buffer_size": 274,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -871,22 +773,28 @@
 	],
 	"file_history":
 	[
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/startup/main_dev.dart",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/startup/main_prod.dart",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/screens/sign_in_screen.dart",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/startup/wits_overflow_app.dart",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/web/index.html",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/generated_plugin_registrant.dart",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/models/question.dart",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/screens/api_request_example.dart",
+		"/C/Users/reube/Documents/projects/wits-overflow/api/data/config/config.js",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/widgets/google_sign_in_button.dart",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/utils/authentication.dart",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/utils/functions.dart",
+		"/C/Users/reube/Documents/SCHOOL/2021/SD/group_members.txt",
+		"/C/Users/reube/Documents/projects/wits-overflow/.git/COMMIT_EDITMSG",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/test/home_screen_test.dart",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/utils/storage.dart",
-		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/utils/authentication.dart",
-		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/startup/wits_overflow_app.dart",
-		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/startup/main_prod.dart",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/startup/main_pre.dart",
-		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/startup/main_dev.dart",
-		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/screens/sign_in_screen.dart",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/screens/home_screen.dart",
-		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/screens/api_request_example.dart",
 		"/C/Users/reube/Documents/projects/wits-overflow/README.md",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/main.dart",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/test/widget_test.dart",
-		"/C/Users/reube/Documents/projects/wits-overflow/.git/COMMIT_EDITMSG",
 		"/C/Users/reube/Documents/projects/wits-overflow/.gitignore",
-		"/C/Users/reube/Documents/projects/wits-overflow/api/data/config/config.js",
 		"/C/Users/reube/Documents/projects/thuto/requirements.txt",
 		"/C/Users/reube/Documents/projects/thuto/.gitignore",
 		"/C/Users/reube/Documents/projects/thuto/extras.py",
@@ -992,13 +900,7 @@
 		"/C/Users/reube/Documents/projects/thuto/thuto/wsgi.py",
 		"/C/Users/reube/Documents/projects/mysite_sublime_project.sublime-project",
 		"/C/Users/reube/Documents/projects/mysite/manage.py",
-		"/C/Users/reube/Documents/projects/mysite/thuto/wsgi.py",
-		"/C/Users/reube/Documents/projects/mysite/thuto/web_scraper.py",
-		"/C/Users/reube/Documents/projects/mysite/thuto/urls.py",
-		"/C/Users/reube/Documents/projects/mysite/thuto/views.py",
-		"/C/Users/reube/Documents/projects/mysite/thuto/tests.py",
-		"/C/Users/reube/Documents/projects/mysite/thuto/__init__.py",
-		"/C/Users/reube/Documents/projects/mysite/static/js/subject-registers.js"
+		"/C/Users/reube/Documents/projects/mysite/thuto/wsgi.py"
 	],
 	"find":
 	{
@@ -1040,359 +942,8 @@
 	"groups":
 	[
 		{
-			"selected": 3,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "api/data/config/config.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1140,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								362,
-								362
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "app/lib/widgets/google_sign_in_button.dart",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2766,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Dart/Dart.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "app/lib/utils/authentication.dart",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5017,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								879,
-								879
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Dart/Dart.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/lib/utils/functions.dart",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 605,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Dart/Dart.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "app/lib/screens/api_request_example.dart",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2343,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								467,
-								467
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Dart/Dart.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "app/lib/models/question.dart",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 251,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								251,
-								251
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Dart/Dart.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "app/lib/generated_plugin_registrant.dart",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 794,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Dart/Dart.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "app/web/index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2822,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 692.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "app/lib/startup/wits_overflow_app.dart",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 453,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Dart/Dart.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "app/lib/screens/sign_in_screen.dart",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10589,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Dart/Dart.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "app/lib/startup/main_prod.dart",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 275,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Dart/Dart.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "app/lib/startup/main_dev.dart",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 274,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								274,
-								274
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Dart/Dart.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				}
 			]
 		}
 	],
