@@ -99,7 +99,7 @@ class NavDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context){
-                    return SignInScreen('');
+                    return SignInScreen();
                     // return SignIn();
                   }
                 ),
@@ -117,8 +117,7 @@ class NavDrawer extends StatelessWidget {
               GoogleSignIn().signOut();
               Navigator.push(context, MaterialPageRoute(
                 builder: (context){
-                  return SignInScreen('');
-                  // return SignIn();
+                  return SignInScreen();
                 }),
               );
             },

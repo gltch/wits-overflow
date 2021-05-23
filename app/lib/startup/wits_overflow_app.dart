@@ -10,7 +10,7 @@ class WitsOverflowApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: SignInScreen(''),
+      home: SignInScreen(),
       //home: HomeScreen()
     );
   }
