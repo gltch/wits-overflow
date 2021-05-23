@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-05-23T10:23:47.882Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="D4WVYmhp7ksWtF6-kTPl" version="14.6.13" type="github">
+<mxfile host="app.diagrams.net" modified="2021-05-23T10:25:29.362Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="lJEYXYmnLjtvAFQS8GW6" version="14.6.13" type="github">
   <diagram id="XdC1j3IHL-RzZTJf8BNx" name="Page-1">
     <mxGraphModel dx="5569" dy="3306" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -1041,7 +1041,7 @@
           <mxGeometry x="175" y="-535" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="cXEcaTY2lwT7MXvua-dQ-321" value="Student Workflow" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;verticalAlign=top;spacing=20;fontStyle=1;dashed=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="1080" y="-2327.5" width="895" height="895" as="geometry" />
+          <mxGeometry x="-242.5" y="-2360" width="1032.5" height="960" as="geometry" />
         </mxCell>
         <mxCell id="cXEcaTY2lwT7MXvua-dQ-334" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=none;startFill=0;endArrow=block;endFill=1;" edge="1" parent="1" source="cXEcaTY2lwT7MXvua-dQ-322" target="cXEcaTY2lwT7MXvua-dQ-333">
           <mxGeometry relative="1" as="geometry" />
@@ -1054,9 +1054,6 @@
         </mxCell>
         <mxCell id="cXEcaTY2lwT7MXvua-dQ-323" value="Student is &lt;br&gt;logged into the system" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;shadow=1;strokeColor=#000000;align=center;size=14;" vertex="1" parent="1">
           <mxGeometry x="100" y="-2332.75" width="100" height="95.5" as="geometry" />
-        </mxCell>
-        <mxCell id="cXEcaTY2lwT7MXvua-dQ-325" value="Navigation" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;verticalAlign=top;spacing=20;fontStyle=1;dashed=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="-1020" y="-1600" width="860" height="440" as="geometry" />
         </mxCell>
         <mxCell id="cXEcaTY2lwT7MXvua-dQ-357" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=none;startFill=0;endArrow=block;endFill=1;" edge="1" parent="1" source="cXEcaTY2lwT7MXvua-dQ-326" target="cXEcaTY2lwT7MXvua-dQ-328">
           <mxGeometry relative="1" as="geometry" />
@@ -1281,6 +1278,11 @@
             <mxPoint x="9" y="-1930" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-419" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cXEcaTY2lwT7MXvua-dQ-414" target="cXEcaTY2lwT7MXvua-dQ-420">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-150" y="-1800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="cXEcaTY2lwT7MXvua-dQ-414" value="View &lt;br&gt;Profile Page" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;strokeColor=#000000;fillColor=#ffffff;align=center;" vertex="1" parent="1">
           <mxGeometry x="-210" y="-1930" width="120" height="60" as="geometry" />
         </mxCell>
@@ -1293,6 +1295,23 @@
               <mxPoint x="-149.85" y="-1955" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-416" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="-170" y="-1704" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-417" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=0;strokeColor=#000000;align=center;fillColor=#000000;" vertex="1" parent="cXEcaTY2lwT7MXvua-dQ-416">
+          <mxGeometry x="5" y="5" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-418" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=0;strokeColor=#000000;fillColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-170" y="-1704" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-421" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cXEcaTY2lwT7MXvua-dQ-420" target="cXEcaTY2lwT7MXvua-dQ-418">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-150" y="-1710" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-420" value="Log Out" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;strokeColor=#000000;fillColor=#ffffff;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-210" y="-1820" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
