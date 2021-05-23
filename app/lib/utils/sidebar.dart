@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:wits_overflow/screens/post_question_screen.dart';
+import 'package:wits_overflow/screens/question_list_screen.dart';
 import 'package:wits_overflow/screens/sign_in_screen.dart';
 
 class SideDrawer extends StatefulWidget {
@@ -53,7 +54,8 @@ class _SideDrawerState extends State<SideDrawer> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PostQuestionScreen())),
+                                builder: (context) =>
+                                    QuestionListScreen(module: "COMS3007"))),
                       },
                     ),
                     ListTile(
@@ -64,7 +66,8 @@ class _SideDrawerState extends State<SideDrawer> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PostQuestionScreen())),
+                                builder: (context) =>
+                                    QuestionListScreen(module: "COMS3003"))),
                       },
                     ),
                     ListTile(
@@ -75,7 +78,20 @@ class _SideDrawerState extends State<SideDrawer> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PostQuestionScreen())),
+                                builder: (context) =>
+                                    QuestionListScreen(module: "COMS3008"))),
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.arrow_right_alt_outlined),
+                      title: Text('Discrete Computational Structures I'),
+                      // On tap should open a dropdown menu of ...
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    QuestionListScreen(module: "COMS1016"))),
                       },
                     ),
                     ListTile(
@@ -86,18 +102,8 @@ class _SideDrawerState extends State<SideDrawer> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PostQuestionScreen())),
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.arrow_right_alt_outlined),
-                      title: Text('Software Design Project III'),
-                      // On tap should open a dropdown menu of ...
-                      onTap: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PostQuestionScreen())),
+                                builder: (context) =>
+                                    QuestionListScreen(module: "COMS3009"))),
                       },
                     ),
                   ],
@@ -115,8 +121,8 @@ class _SideDrawerState extends State<SideDrawer> {
               _scrollToSelectedContent(expansionTileKey: expansionTileKey);
             }
           },
-          title: Text("Applied Maths"),
-          // CAM modules
+          title: Text("Mathematics"),
+          // Maths modules
           children: [
             Container(
               height: 170,
@@ -127,57 +133,62 @@ class _SideDrawerState extends State<SideDrawer> {
                   children: <Widget>[
                     ListTile(
                       leading: Icon(Icons.arrow_right_alt_outlined),
-                      title: Text('Optimisation I'),
+                      title: Text('Calculus I'),
                       // On tap should open a dropdown menu of ...
                       onTap: () => {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PostQuestionScreen())),
+                                builder: (context) =>
+                                    QuestionListScreen(module: "MATH1036"))),
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.arrow_right_alt_outlined),
-                      title: Text('Mechanics I'),
+                      title: Text('Algebra I'),
                       // On tap should open a dropdown menu of ...
                       onTap: () => {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PostQuestionScreen())),
+                                builder: (context) =>
+                                    QuestionListScreen(module: "MATH1034"))),
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.arrow_right_alt_outlined),
-                      title: Text('Optimisation II'),
+                      title: Text('Multivariable Calculus II'),
                       // On tap should open a dropdown menu of ...
                       onTap: () => {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PostQuestionScreen())),
+                                builder: (context) =>
+                                    QuestionListScreen(module: "MATH2007"))),
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.arrow_right_alt_outlined),
-                      title: Text('Numerical Methods I'),
+                      title: Text('Abstract Mathematics II'),
                       // On tap should open a dropdown menu of ...
                       onTap: () => {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PostQuestionScreen())),
+                                builder: (context) =>
+                                    QuestionListScreen(module: "MATH2015"))),
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.arrow_right_alt_outlined),
-                      title: Text('Lagrangian Mechanics II'),
+                      title: Text('Linear Algebra II'),
                       // On tap should open a dropdown menu of ...
                       onTap: () => {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PostQuestionScreen())),
+                                builder: (context) =>
+                                    QuestionListScreen(module: "MATH2019"))),
                       },
                     ),
                   ],
