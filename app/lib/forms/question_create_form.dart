@@ -124,6 +124,8 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
       'title': title,
       'body': body,
       'votes': 0,
+      'createAt': DateTime.now(),
+      'updatedAt': DateTime.now(),
     })
         .then((value) {
       print("[QUESTION ADDED]");
@@ -156,7 +158,7 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
         resizeToAvoidBottomInset: false,
         drawer: NavDrawer(),
         appBar: AppBar(
-          title: Text('wits-overflow'),
+          title: Text('wits overflow'),
         ),
         body: Center(
           child: CircularProgressIndicator(),
@@ -164,9 +166,9 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
       );
     }
 
-    for (var dropdownMenuItem in this.dropdownButtonMenuItems) {
-      print('[QuestionCreateFormState.build dropDownMenuItem: text: ${dropdownMenuItem.child.toString()}, value: ${dropdownMenuItem.value}]');
-    }
+    // for (var dropdownMenuItem in this.dropdownButtonMenuItems) {
+    //   print('[QuestionCreateFormState.build dropDownMenuItem: text: ${dropdownMenuItem.child.toString()}, value: ${dropdownMenuItem.value}]');
+    // }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

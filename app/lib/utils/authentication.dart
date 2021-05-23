@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import 'package:wits_overflow/utils/storage.dart';
 import 'package:wits_overflow/screens/api_request_example.dart';
 
 // TODO: storage is not working well on my pc
+// TODO: enter user information in the database
+
 
 class Authentication {
 
@@ -40,6 +43,8 @@ class Authentication {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
+
+    // if user is logging from the web
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
 
@@ -57,11 +62,19 @@ class Authentication {
           ),
         );
       }
-    } else {
+
+    // if the user is logging from mobile application
+    }
+
+    // if user is logging from mobile application
+    else {
       final GoogleSignIn googleSignIn = GoogleSignIn();
 
-      final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
+      // final GoogleSignInAccount? googleSignInAccount =
+      //     await googleSignIn.signIn();
+
+      final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+
 
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
@@ -107,6 +120,16 @@ class Authentication {
       // TODO: on deployment, make this to only accept wits emails only
       var email = user.email;
 
+      print('[USER DISPLAY NAME: ${user
+          .displayName}, USER ACCESS TOKEN ${await user.getIdToken()}]');
+      Map<String, String> data = {
+        'displayName': user.displayName.toString(),
+        'email': user.email.toString(),
+      };
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set(
+          data);
+
+
       // if (email != null && !email.endsWith('wits.ac.za')) {
       //   // Sign out
       //   user = null; // Important
@@ -118,9 +141,10 @@ class Authentication {
       //     ),
       //   );
       // }
+
       // else {
-        // Save details to secure storage:
-        var token = await user.getIdToken();
+      // //   // Save details to secure storage:
+        var token = await user!.getIdToken();
         SecureStorage.write('user.email', user.email.toString());
         SecureStorage.write('user.name', user.displayName.toString());
         SecureStorage.write('user.token', token);

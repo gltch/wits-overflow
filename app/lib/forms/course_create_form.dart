@@ -91,7 +91,9 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                   ),
                 ),
 
-                // course code
+
+
+                // course year
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: DropdownButtonHideUnderline(
@@ -173,12 +175,12 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                       labelText: 'description',
 
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Describe course';
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value == null || value.isEmpty) {
+                    //     return 'Describe course';
+                    //   }
+                    //   return null;
+                    // },
                   ),
                 ),
 
