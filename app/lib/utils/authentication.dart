@@ -130,25 +130,25 @@ class Authentication {
           data);
 
 
-      // if (email != null && !email.endsWith('wits.ac.za')) {
-      //   // Sign out
-      //   user = null; // Important
-      //   await signOut(context: context);
-      //
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     Authentication.customSnackBar(
-      //       content: 'Only Wits users are permitted at this stage!',
-      //     ),
-      //   );
-      // }
+      if (email != null && !email.endsWith('wits.ac.za')) {
+        // Sign out
+        user = null; // Important
+        await signOut(context: context);
 
-      // else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          Authentication.customSnackBar(
+            content: 'Only Wits users are permitted at this stage!',
+          ),
+        );
+      }
+
+      else {
       // //   // Save details to secure storage:
         var token = await user!.getIdToken();
         SecureStorage.write('user.email', user.email.toString());
         SecureStorage.write('user.name', user.displayName.toString());
         SecureStorage.write('user.token', token);
-      // }
+      }
     }
 
     return user;
