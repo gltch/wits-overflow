@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2021-05-23T08:11:15.362Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="X13Q4tZqWEXEcfW2aN_h" version="14.6.13" type="github">
+<mxfile host="app.diagrams.net" modified="2021-05-23T08:27:07.863Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="0g6dqEO1iX0ZZo6yoP8H" version="14.6.13" type="github">
   <diagram id="XdC1j3IHL-RzZTJf8BNx" name="Page-1">
-    <mxGraphModel dx="5225" dy="688" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="5569" dy="1652" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -867,6 +867,15 @@
         </mxCell>
         <mxCell id="cXEcaTY2lwT7MXvua-dQ-241" value="User Logged In" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;strokeColor=#000000;align=center;fillColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="-3200" y="275" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-253" value="Tech Stack" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;verticalAlign=top;spacing=20;fontStyle=1;dashed=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-1120" y="-690" width="260" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-254" value="Flutter&lt;br&gt;(Mobile and Web Applications)" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-1090" y="-630" width="195" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cXEcaTY2lwT7MXvua-dQ-255" value="Firebase&lt;br&gt;(Authentication and Data Storage)" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;strokeColor=#82b366;fillColor=#d5e8d4;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-1090" y="-567" width="195" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
