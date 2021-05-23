@@ -16,8 +16,12 @@ class WitsOverflowApi {
     // Format query parameters
     var queryParameters = {'module': moduleId};
 
+    //Remove http:// from apiBaseUrl
+    String baseUrl = "$apiBaseUrl";
+    String newUrl = baseUrl.substring(baseUrl.indexOf("/") + 2, baseUrl.length);
+
     final response = await http.get(
-        Uri.http("$apiBaseUrl", "/questions", queryParameters),
+        Uri.http(newUrl, "/questions", queryParameters),
         headers: {'token': token ?? ''});
 
     if (response.statusCode == 200) {
