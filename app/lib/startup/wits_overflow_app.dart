@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wits_overflow/screens/sign_in_screen.dart';
+import 'package:wits_overflow/screens/sign_up_screen.dart';
 
 class WitsOverflowApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -10,7 +11,7 @@ class WitsOverflowApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: SignInScreen(''),
+      home: SignInScreen(""),
       //home: HomeScreen()
     );
   }
