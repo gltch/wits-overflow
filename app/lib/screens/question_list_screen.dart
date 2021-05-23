@@ -4,7 +4,8 @@ import 'package:wits_overflow/utils/wits_overflow_api.dart';
 import 'package:wits_overflow/models/question.dart';
 
 class QuestionListScreen extends StatefulWidget {
-  QuestionListScreen({Key? key}) : super(key: key);
+  final String module;
+  QuestionListScreen({Key? key, required this.module}) : super(key: key);
   @override
   _QuestionListState createState() => new _QuestionListState();
 }
@@ -15,7 +16,7 @@ class _QuestionListState extends State<QuestionListScreen> {
   @override
   void initState() {
     super.initState();
-    questions = WitsOverflowApi.fetchQuestions();
+    questions = WitsOverflowApi.fetchQuestions(widget.module);
   }
 
   @override
