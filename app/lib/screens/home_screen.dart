@@ -1,17 +1,49 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wits_overflow/utils/sidebar.dart';
 
+import 'package:wits_overflow/widgets/navigation.dart';
+import 'package:wits_overflow/forms/question_create_form.dart';
+import 'package:wits_overflow/screens/question_screen.dart';
+
+
+
+// -----------------------------------------------------------------------------
+//             Dashboard class
+// -----------------------------------------------------------------------------
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+
+  // final logoutAction;
+
+  final state = HomeScreenState(CircularProgressIndicator());
+
+
+  HomeScreen(){
+    print('[DASHBOARD CONSTRUCTOR]');
+  }
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => state;
+
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+
+// -----------------------------------------------------------------------------
+//    DASHBOARD STATE CLASS
+// -----------------------------------------------------------------------------
+class HomeScreenState extends State<HomeScreen> {
+
+  Widget child;
+
+  HomeScreenState(this.child);
+
   @override
   Widget build(BuildContext context) {
+    print('[DASHBOARD STATE]');
+    CollectionReference questions = FirebaseFirestore.instance.collection('questions');
     return Scaffold(
       drawer: SideDrawer(),
       backgroundColor: Colors.white,
@@ -19,4 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(child: Text("Wits Overflow Home Screen")),
     );
   }
+
+  void show(Widget widget){
+    this.setState(() {
+      child = widget;
+    });
+  }
 }
+
+
