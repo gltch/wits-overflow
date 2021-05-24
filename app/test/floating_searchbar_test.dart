@@ -8,12 +8,12 @@ void main() {
         data: new MediaQueryData(),
         child: new MaterialApp(home: new MySearchBar(myTab: 0)));
 
-    final textField = find.byKey(ValueKey('Search field'));
+    //final textField = find.byKey(ValueKey('Search field'));
 
     await tester.pumpWidget(testWidget);
 
-    //final textFinder = find.text('');
+    final textFinder = find.text('');
 
-    expect(textField, findsNothing);
+    expect(textFinder, findsNothing);
   });
 }
