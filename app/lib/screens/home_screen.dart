@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wits_overflow/widgets/floatingSearchBar.dart';
-import 'package:wits_overflow/widgets/customNavBar.dart';
 import 'package:wits_overflow/widgets/favoritesTab.dart';
 import 'package:wits_overflow/widgets/notificationsTab.dart';
 import 'package:wits_overflow/utils/sidebar.dart';
@@ -25,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Scaffold view = Scaffold(
-      drawer: CustomNavBar(),
+      drawer: SideDrawer(),
       body: _view[_currentTab],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentTab,
