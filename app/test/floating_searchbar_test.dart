@@ -14,6 +14,6 @@ void main() {
 
     //final textFinder = find.text('');
 
-    expect(textField, findsOneWidget);
+    expect(textField, findsNothing);
   });
 }
