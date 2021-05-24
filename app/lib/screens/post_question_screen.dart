@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wits_overflow/utils/sidebar.dart';
 import 'package:wits_overflow/utils/wits_overflow_api.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
