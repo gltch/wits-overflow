@@ -24,7 +24,7 @@ void main() {
         data: new MediaQueryData(),
         child: new MaterialApp(home: new HomeScreen()));
 
-    final changeTab = find.byIcon(Icons.notifications_active);
+    final changeTab = find.byIcon(Icons.post_add_outlined);
 
     await tester.pumpWidget(testWidget);
     await tester.tap(changeTab);
