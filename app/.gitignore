@@ -50,3 +50,5 @@ coverage/
 coverage/*
 
 .vscode/
+
+wits-overflow.sublime-workspace

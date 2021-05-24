@@ -1,5 +1,7 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 String toTitleCase(String string){
   /// return a string in a title format
   String result = '';
@@ -28,3 +30,15 @@ String capitaliseChar(String char){
   }
   return result;
 }
+
+
+dynamic getField(Map<String, dynamic> map, String field, {dynamic onError, dynamic onNull}){
+  // onError: string to return when field does not exist
+  try{
+    return map[field] == null ? onNull : map[field];
+  }
+  catch(e, s){
+    return onError;
+  }
+}
+

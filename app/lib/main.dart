@@ -283,7 +283,7 @@ class _MyAppState extends State<MyApp> {
       print('[USER NOT LOGGED IN]');
       setState(() {
         // this.body = Login('');
-        this.body = SignInScreen('');
+        this.body = SignInScreen();
       });
     }
     else{

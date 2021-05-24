@@ -11,8 +11,12 @@ class WitsOverflowApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: SignInScreen(""),
-      //home: HomeScreen()
+//<<<<<<< answer_question_page
+  //    home: SignInScreen(""),
+//=======
+//      home: SignInScreen(),
+//>>>>>>> reuben_matlala
+      home: HomeScreen()
     );
   }
 }

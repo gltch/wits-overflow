@@ -15,6 +15,7 @@ import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:wits_overflow/screens/courses_screen.dart';
 import 'package:wits_overflow/screens/sign_in_screen.dart';
 import 'package:wits_overflow/screens/user_info_screen.dart';
+import 'package:wits_overflow/screens/feed_screen.dart';
 
 // -----------------------------------------------------------------------------
 //             NavDrawer class
@@ -57,21 +58,9 @@ class NavDrawer extends StatelessWidget {
             },
           ),
 
-          // uer profile
-          ListTile(
-            leading: Icon(Icons.account_circle_outlined),
-            title: Text('Profile'),
-            onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context){
-                    return UserInfoScreen(user: FirebaseAuth.instance.currentUser!,);
-                  },
-                ),
-              );
-            },
-          ),
+
+
+          // courses page
           ListTile(
             leading: Icon(Icons.border_color),
             title: Text('Courses'),
@@ -89,6 +78,39 @@ class NavDrawer extends StatelessWidget {
           ),
 
 
+          // feed page
+          ListTile(
+            leading: Icon(CupertinoIcons.news),
+            title: Text('Feed'),
+            onTap: () {
+              // Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context){
+                      return Feed();
+                    }
+                ),
+              );
+            },
+          ),
+
+          // uer profile
+          ListTile(
+            leading: Icon(Icons.account_circle_outlined),
+            title: Text('Profile'),
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context){
+                    return UserInfoScreen(user: FirebaseAuth.instance.currentUser!,);
+                  },
+                ),
+              );
+            },
+          ),
+
           // LOGIN BUTTON
           ListTile(
             leading: Icon(Icons.login),
@@ -99,7 +121,7 @@ class NavDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context){
-                    return SignInScreen('');
+                    return SignInScreen();
                     // return SignIn();
                   }
                 ),
@@ -117,8 +139,7 @@ class NavDrawer extends StatelessWidget {
               GoogleSignIn().signOut();
               Navigator.push(context, MaterialPageRoute(
                 builder: (context){
-                  return SignInScreen('');
-                  // return SignIn();
+                  return SignInScreen();
                 }),
               );
             },
