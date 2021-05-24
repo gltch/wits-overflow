@@ -17,7 +17,7 @@ class _ApiRequestExampleScreenState extends State<ApiRequestExampleScreen> {
   @override
   void initState() {
     super.initState();
-    questions = WitsOverflowApi.fetchQuestions();
+    questions = WitsOverflowApi.fetchQuestions("");
   }
 
   @override
