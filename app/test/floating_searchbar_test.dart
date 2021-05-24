@@ -12,7 +12,7 @@ void main() {
 
     await tester.pumpWidget(testWidget);
 
-    final textFinder = find.text('');
+    final textFinder = find.text('hey');
 
     expect(textFinder, findsNothing);
   });
