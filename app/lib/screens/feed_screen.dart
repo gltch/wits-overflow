@@ -35,8 +35,10 @@ class _FeedState extends State<Feed>{
   String filterSchool = 'all';
   String filterFaculty = 'all';
   String filterYear = 'all';
+  String filterCourse = 'all';
 
-  List<String >facultyDropdownMenuOptions = <String>['all'];
+  List<String> facultyDropdownMenuOptions = <String>['all'];
+  List<DropdownMenuItem<String>> courseDropdownMenuItems = [DropdownMenuItem(child: Text('all'), value: 'all')];
 
 
   _FeedState(){
@@ -54,6 +56,12 @@ class _FeedState extends State<Feed>{
     this.courses = await FirebaseFirestore.instance.collection('courses').get();
     this.questions = await FirebaseFirestore.instance.collection('questions').limit(50).get();
     print('[==================================== [RETRIEVED DATA] ====================================]');
+
+    print('[LIST OF COURSE LENGTH: ${this.courses!.docs.length}]');
+    // this.courseDropdownMenuOptions.addAll(iterable);
+    this.courses!.docs.forEach((courseDoc){
+      this.courseDropdownMenuItems.add(DropdownMenuItem(child: Text(courseDoc.get('code').toString().toUpperCase()), value: courseDoc.get('code').toString()));
+    });
 
     setState(() {
       this.isBusy = false;
@@ -81,113 +89,34 @@ class _FeedState extends State<Feed>{
     });
 
     // filter by a year
-    if (this.filterYear != 'all' && limit > 0) {
+    if (this.filterYear != 'all') {
       query = query.where('year', isEqualTo: this.filterYear);
     }
 
     // filter by school name
-    if (this.filterSchool != 'all' && limit > 0) {
+    if (this.filterSchool != 'all') {
       query = query.where('school', isEqualTo: this.filterSchool);
 
     }
 
     // filter by faculty
-    if (this.filterFaculty != 'all' && limit > 0) {
+    if (this.filterFaculty != 'all') {
       query = query.where('faculty', isEqualTo: this.filterFaculty);
 
     }
 
 
-    this.questions = await query.get() as QuerySnapshot<Map<String, dynamic>>;
+    // filter by course code
+    if (this.filterCourse != 'all') {
+      query = query.where('courseCode', isEqualTo: this.filterCourse);
+    }
 
+    this.questions = await query.get() as QuerySnapshot<Map<String, dynamic>>;
 
     setState(() {
       isBusy = false;
     });
-
-
   }
-    
-    
-  // Future<void> filter() async {
-  //   print('[---------------------------- STARTING FILTER ----------------------------]');
-  //   CollectionReference questionsCollection = FirebaseFirestore.instance.collection('questions');
-  //
-  //   int limit = 100;
-  //   QuerySnapshot<Map<String, dynamic>> ? filterByYearQuestions;
-  //   QuerySnapshot<Map<String, dynamic>> ? filterBySchoolQuestions;
-  //   QuerySnapshot<Map<String, dynamic>> ? filterByFacultyQuestions;
-  //
-  //
-  //   Query query = questionsCollection;
-  //
-  //   setState(() {
-  //     isBusy = true;
-  //   });
-  //
-  //   // filter by a year
-  //   if (this.filterYear != 'all' && limit > 0) {
-  //     // get courses for the selected year
-  //     // then get questions that belong to theses courses
-  //     List yearCoursesIds = <String>[];
-  //     for (var i = 0; i < this.courses!.docs.length; i++) {
-  //       if (this.courses!.docs[i].get('year') == this.filterYear) {
-  //         yearCoursesIds.add(this.courses!.docs[i].id);
-  //       }
-  //     }
-  //     if(yearCoursesIds.length == 0){
-  //       yearCoursesIds.add('----------------');
-  //     }
-  //
-  //     query = query.where('year', whereIn: yearCoursesIds);
-  //   }
-  //
-  //
-  //   // filter by school name
-  //   if (this.filterSchool != 'all' && limit > 0) {
-  //     // get courses that belong to this school
-  //
-  //     List schoolCoursesIds = <String>[];
-  //     for (var i = 0; i < this.courses!.docs.length; i++) {
-  //       if (this.courses!.docs[i].get('school') == this.filterSchool) {
-  //         schoolCoursesIds.add(this.courses!.docs[i].id);
-  //       }
-  //     }
-  //     if(schoolCoursesIds.length == 0){
-  //       schoolCoursesIds.add('----------------');
-  //     }
-  //     query = query.where('year', whereIn: schoolCoursesIds);
-  //   }
-  //
-  //   // filter by faculty
-  //   if (this.filterFaculty != 'all' && limit > 0) {
-  //     // get courses that belong to this school
-  //
-  //     List facultyCoursesIds = <String>[];
-  //     for (var i = 0; i < this.courses!.docs.length; i++) {
-  //       if (this.courses!.docs[i].get('school') == this.filterSchool) {
-  //         facultyCoursesIds.add(this.courses!.docs[i].id);
-  //       }
-  //     }
-  //
-  //     if(facultyCoursesIds.length == 0){
-  //       facultyCoursesIds.add('----------------');
-  //     }
-  //     query = query.where('year', whereIn: facultyCoursesIds);
-  //   }
-  //
-  //
-  //   this.questions = await query.limit(50).get() as QuerySnapshot<Map<String, dynamic>>;
-  //
-  //   setState(() {
-  //     isBusy = false;
-  //   });
-  //
-  //
-  //   // filterByYearQuestions!.docs.addAll(filterBySchoolQuestions!.docs.addAll(filterByFacultyQuestions!.docs));
-  //   print('================================== [ FILTER FINISHED ] ==================================');
-  // }
-  //
 
 
   Widget buildQuestionsWidget() {
@@ -259,6 +188,42 @@ class _FeedState extends State<Feed>{
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      /// filter questions by year
+                      Align(
+
+                        child: Text(
+                          'Year',
+                        ),
+                        alignment: Alignment.centerLeft,
+                      ),
+
+
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        // color: Color.fromARGB(100, 220, 220, 220),
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                        child: DropdownButton<String>(
+                          hint: Text('year'),
+                          value: this.filterCourse,
+                          isDense: true,
+                          onChanged: (newValue) {
+                            setState(() {
+                              this.filterCourse = newValue!;
+                              print('[FILTER BY COURSE CODE: $this.filterCourse]');
+                              filter();
+                            });
+                          },
+                          items: this.courseDropdownMenuItems,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
                 // year selector
                 Expanded(
                   child: Column(
@@ -318,6 +283,8 @@ class _FeedState extends State<Feed>{
                     ],
                   ),
                 ),
+
+                // filter by faculty
                 Expanded(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

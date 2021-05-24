@@ -107,6 +107,7 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
           'year': course.get('year'),
           'faculty': course.get('faculty'),
           'course': courseId,
+          'courseCode': course.get('code'),
           'user': FirebaseAuth.instance.currentUser!.uid,
           'title': title,
           'body': body,
