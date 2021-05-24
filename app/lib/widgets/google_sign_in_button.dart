@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-
+import 'package:wits_overflow/screens/home_screen.dart';
+//import 'package:wits_overflow/screens/home_screen.dart';
+//import 'package:wits_overflow/screens/user_info_screen.dart';
 import 'package:wits_overflow/utils/authentication.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
 
@@ -47,8 +48,8 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                       //builder: (context) => UserInfoScreen(
                       //  user: user,
                       //),
+                      //builder: (context) => HomeScreen(),
                       builder: (context) => HomeScreen(),
-                      // builder: (context) => ApiRequestExampleScreen(),
                     ),
                   );
                 }

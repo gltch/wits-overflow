@@ -6,7 +6,9 @@ import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
-
+import 'package:wits_overflow/screens/home_screen.dart';
+//import 'package:wits_overflow/screens/home_screen.dart';
+//import 'package:wits_overflow/screens/user_info_screen.dart';
 import 'package:wits_overflow/utils/storage.dart';
 import 'package:wits_overflow/screens/api_request_example.dart';
 
@@ -31,7 +33,7 @@ class Authentication {
           //  user: user,
           //),
           //builder: (context) => HomeScreen(),
-          builder: (context) => ApiRequestExampleScreen(),
+          builder: (context) => HomeScreen(),
         ),
       );
     }
