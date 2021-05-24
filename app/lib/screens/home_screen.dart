@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wits_overflow/widgets/floatingSearchBar.dart';
 import 'package:wits_overflow/widgets/favoritesTab.dart';
-import 'package:wits_overflow/widgets/notificationsTab.dart';
+import 'package:wits_overflow/widgets/postedQuestionsTab.dart';
 import 'package:wits_overflow/utils/sidebar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _view = [
     Container(child: MySearchBar(myTab: 0)),
     FavoritesTab(),
-    NotificationsTab()
+    PostedQuestionsTab()
   ];
 
   @override
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.auto_awesome), label: 'Favorites'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.notifications_active), label: 'Notifications')
+                icon: Icon(Icons.post_add_outlined), label: 'Posted')
           ],
           onTap: (index) {
             setState(() {

@@ -19,7 +19,7 @@ void main() {
     expect(textFinder, findsWidgets);
   });
 
-  testWidgets('Notifications Screen', (WidgetTester tester) async {
+  testWidgets('Posted questiond Tab', (WidgetTester tester) async {
     Widget testWidget = new MediaQuery(
         data: new MediaQueryData(),
         child: new MaterialApp(home: new HomeScreen()));
@@ -30,7 +30,7 @@ void main() {
     await tester.tap(changeTab);
     await tester.pump();
 
-    final textFinder = find.text('Notifications');
+    final textFinder = find.text('No posted questions');
 
     expect(textFinder, findsWidgets);
   });
