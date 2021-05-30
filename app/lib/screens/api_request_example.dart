@@ -25,40 +25,40 @@ class _ApiRequestExampleScreenState extends State<ApiRequestExampleScreen> {
     return Scaffold(
       body: Center(
           child: Container(
-            padding: EdgeInsets.fromLTRB(20, 40, 20, 20),
-            child: Column(
-                //mainAxisAlignment: MainAxisAlignment.center,
-                //crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('API Request Example'),
-                  SizedBox(
-                      height: 200,
-                      child: FutureBuilder<List<Question>>(
-                        future: questions,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                              itemCount: snapshot.data?.length,
-                              itemBuilder: (context, index) {
-                                Question? question = snapshot.data?[index];
+              padding: EdgeInsets.fromLTRB(20, 40, 20, 20),
+              child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  //crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('API Request Example'),
+                    SizedBox(
+                        height: 200,
+                        child: FutureBuilder<List<Question>>(
+                          future: questions,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                itemCount: snapshot.data?.length,
+                                itemBuilder: (context, index) {
+                                  Question? question = snapshot.data?[index];
 
-                                if (question != null) {
-                                  return Text(
-                                      "Question Id '${question.id} : ${question.title}'");
-                                } else {
-                                  return Text('Could not load titles');
-                                }
-                              },
-                            );
-                          } else if (snapshot.hasError) {
-                            return Text("${snapshot.error}");
-                          }
+                                  if (question != null) {
+                                    return Text(
+                                        "Question Id '${question.id} : ${question.title}'");
+                                  } else {
+                                    return Text('Could not load titles');
+                                  }
+                                },
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text("${snapshot.error}");
+                            }
 
-                          // By default, show a loading spinner.
-                          return CircularProgressIndicator();
-                        },
-                      ))
-                ]))),
+                            // By default, show a loading spinner.
+                            return CircularProgressIndicator();
+                          },
+                        ))
+                  ]))),
     );
   }
 }
