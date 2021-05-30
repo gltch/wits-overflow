@@ -1,5 +1,3 @@
-
-
 const List<String> FACULTIES = <String>[
   'Commerce, Law and Management',
   'Engineering and the Built Environment',
@@ -9,7 +7,6 @@ const List<String> FACULTIES = <String>[
 ];
 
 const Map FACULTIES_SCHOOLS = {
-
   'commerce, law and management': {
     'schools': <String>[
       'Accountancy',
@@ -20,21 +17,18 @@ const Map FACULTIES_SCHOOLS = {
       'Wits School of Governance',
     ],
   },
-
   'engineering and the built environment': {
-     'schools': <String>[
-       'Architecture and Planning',
-       'Civil & Environmental Engineering',
-       'Chemical & Metallurgical Engineering',
-       'Construction Economics & Management',
-       'Electrical & Information Engineering',
-       'Mechanical, Industrial & Aeronautical Engineering',
-       'Mining Engineering',
-     ],
+    'schools': <String>[
+      'Architecture and Planning',
+      'Civil & Environmental Engineering',
+      'Chemical & Metallurgical Engineering',
+      'Construction Economics & Management',
+      'Electrical & Information Engineering',
+      'Mechanical, Industrial & Aeronautical Engineering',
+      'Mining Engineering',
+    ],
   },
-
-
-  'health sciences':{
+  'health sciences': {
     'schools': <String>[
       'Anatomical Sciences',
       'Clinical Medicine',
@@ -45,7 +39,6 @@ const Map FACULTIES_SCHOOLS = {
       'Therapeutic Sciences',
     ],
   },
-
   'humanities': {
     'schools': <String>[
       'Wits School of Arts',
@@ -55,21 +48,26 @@ const Map FACULTIES_SCHOOLS = {
       'Social Sciences',
     ],
   },
-
   'science': {
-   'schools': <String>[
-     'Animal, Plant and Environmental Sciences',
-     'Chemistry',
-     'Computer Science and Applied Mathematics',
-     'Geography, Archaeology and Environmental Sciences',
-     'Geosciences',
-     'Mathematics',
-     'Molecular and Cell Biology',
-     'Physics',
-     'Statistics and Actuarial Science',
-   ],
+    'schools': <String>[
+      'Animal, Plant and Environmental Sciences',
+      'Chemistry',
+      'Computer Science and Applied Mathematics',
+      'Geography, Archaeology and Environmental Sciences',
+      'Geosciences',
+      'Mathematics',
+      'Molecular and Cell Biology',
+      'Physics',
+      'Statistics and Actuarial Science',
+    ],
   },
 };
 
-
-const List<String> YEARS = <String>['first', 'second', 'third', 'honours', 'masters', 'doctorate'];
+const List<String> YEARS = <String>[
+  'first',
+  'second',
+  'third',
+  'honours',
+  'masters',
+  'doctorate'
+];
