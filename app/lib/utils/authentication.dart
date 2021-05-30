@@ -10,15 +10,9 @@ import 'package:wits_overflow/screens/home_screen.dart';
 //import 'package:wits_overflow/screens/home_screen.dart';
 //import 'package:wits_overflow/screens/user_info_screen.dart';
 import 'package:wits_overflow/utils/storage.dart';
-import 'package:wits_overflow/screens/api_request_example.dart';
 
-// TODO: storage is not working well on my pc
-// TODO: enter user information in the database
-
-
+// import 'package:wits_overflow/screens/api_request_example.dart';
 class Authentication {
-
-
   static Future<FirebaseApp> initializeFirebase({
     required BuildContext context,
   }) async {
@@ -45,7 +39,6 @@ class Authentication {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
-
     // if user is logging from the web
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
@@ -65,7 +58,7 @@ class Authentication {
         );
       }
 
-    // if the user is logging from mobile application
+      // if the user is logging from mobile application
     }
 
     // if user is logging from mobile application
@@ -75,8 +68,8 @@ class Authentication {
       // final GoogleSignInAccount? googleSignInAccount =
       //     await googleSignIn.signIn();
 
-      final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
 
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
@@ -119,18 +112,18 @@ class Authentication {
     }
 
     if (user != null) {
-      // TODO: on deployment, make this to only accept wits emails only
       var email = user.email;
 
-      print('[USER DISPLAY NAME: ${user
-          .displayName}, USER ACCESS TOKEN ${await user.getIdToken()}]');
+      print(
+          '[USER DISPLAY NAME: ${user.displayName}, USER ACCESS TOKEN ${await user.getIdToken()}]');
       Map<String, String> data = {
         'displayName': user.displayName.toString(),
         'email': user.email.toString(),
       };
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set(
-          data);
-
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .set(data);
 
       if (email != null && !email.endsWith('wits.ac.za')) {
         // Sign out
@@ -142,10 +135,8 @@ class Authentication {
             content: 'Only Wits users are permitted at this stage!',
           ),
         );
-      }
-
-      else {
-      // //   // Save details to secure storage:
+      } else {
+        // //   // Save details to secure storage:
         var token = await user.getIdToken();
         SecureStorage.write('user.email', user.email.toString());
         SecureStorage.write('user.name', user.displayName.toString());
