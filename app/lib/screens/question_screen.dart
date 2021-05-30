@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -125,8 +125,6 @@ class _QuestionState extends State<Question> {
   }
 
   Widget buildCommentsWidget() {
-    // TODO: remote the following lines in production
-
     Widget buildCommentWidget(
         {required String displayName,
         required String body,
@@ -230,14 +228,12 @@ class _QuestionState extends State<Question> {
   }
 
   String getQuestionBody() {
-    // TODO: get body field properly
     // check whether 'body' field exist in the document snapshot question
     // if you try to access it and its not there, it will give error
     return this.question!.get('body');
   }
 
   String getQuestionTitle() {
-    // TODO: get title field properly
     // check whether 'title' field exist in the document snapshot question
     // if you try to access it and its not there, it will give error
     return this.question!.get('title');
@@ -283,7 +279,6 @@ class _QuestionState extends State<Question> {
                                       size: 40,
                                     ),
                                     Text(
-                                      // TODO: insert real votes
                                       votes,
                                       // this.votes!.docs.length.toString(),
                                       style: TextStyle(
@@ -410,7 +405,6 @@ class _QuestionState extends State<Question> {
                                   ),
                                   Text(
                                     // this.votes!.docs.length.toString(),
-                                    // TODO: insert real votes
                                     this.questionVotes!.docs.length.toString(),
                                     style: TextStyle(
                                         // fontSize: 20,

@@ -118,7 +118,6 @@ class _CourseProfileState extends State<CourseProfile> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) {
-                                  // TODO: update to return
                                   return QuestionCreateForm(
                                       this.courseId, this.course!.get('name'));
                                 }),

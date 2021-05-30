@@ -8,8 +8,6 @@ import 'package:wits_overflow/screens/course_screen.dart';
 import 'package:wits_overflow/utils/sidebar.dart';
 import 'package:wits_overflow/utils/static.dart';
 
-// TODO: trim trailing spaces on course name, faculty, school name
-
 // -----------------------------------------------------------------------------
 //                    COURSE CREATE FORM STATE
 // -----------------------------------------------------------------------------
@@ -263,7 +261,6 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                             SnackBar(
                                 content: Text('Successfully create course')),
                           );
-                          // TODO: redirect user to course profile page
                           // pop this page from navigation stack
 
                           // redirect to course page

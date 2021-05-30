@@ -106,7 +106,6 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
           '[--------------------------------------- CHANGE STATE CHANGED STATE CHANGED STATE ---------------------------------------------------]');
     });
   }
-  // TODO: add a field where the user can choose for which subject is she/he posting question to
 
   DocumentReference? addQuestion(String courseId, String title, String body) {
     CollectionReference questions =
@@ -160,8 +159,6 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-
-    // TODO: include courses dropdown list
 
     if (this.isBusy) {
       return Scaffold(

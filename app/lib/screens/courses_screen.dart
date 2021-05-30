@@ -149,7 +149,6 @@ class _CoursesState extends State<Courses> {
                 'course': courseId,
                 'datetime': DateTime.now(),
               };
-              // TODO: add code to reload page after user has added subject to his/her favorites
               // reload page
               FirebaseFirestore.instance
                   .collection('favorites')

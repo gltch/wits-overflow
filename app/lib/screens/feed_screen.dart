@@ -142,8 +142,6 @@ class _FeedState extends State<Feed> {
     20 questions sorted by datetime
      */
 
-    // TODO: get faculty, course name, and course code list
-
     if (this.isBusy) {
       return Scaffold(
         drawer: SideDrawer(),

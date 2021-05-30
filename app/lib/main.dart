@@ -9,8 +9,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:wits_overflow/screens/sign_in_screen.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
 
-
-
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
@@ -38,19 +36,14 @@ const AUTH0_ISSUER = 'https://$AUTH0_DOMAIN';
 final app = MyApp();
 var user;
 
-
-// TODO: Allow email and password sign up in firebase
-
-
 // -----------------------------------------------------------------------------
 //             RUN APPLICATION
 // -----------------------------------------------------------------------------
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(app);
 }
-
 
 // -----------------------------------------------------------------------------
 //             MyApp
@@ -74,11 +67,10 @@ class _MyAppState extends State<MyApp> {
   // String picture;
   Widget body;
 
-
   // ---------------------------------------------------------------------------
   //
   // ---------------------------------------------------------------------------
-  _MyAppState(this.body){
+  _MyAppState(this.body) {
     // this.body = null;
     print('[_MyAppState] constructor');
   }
@@ -86,17 +78,17 @@ class _MyAppState extends State<MyApp> {
   // ---------------------------------------------------------------------------
   //
   // ---------------------------------------------------------------------------
-  CircularProgressIndicator showCircularProgressIndicator(){
+  CircularProgressIndicator showCircularProgressIndicator() {
     /*
     show loader/ progress
      */
-    CircularProgressIndicator circularProgressIndicator = new CircularProgressIndicator();
+    CircularProgressIndicator circularProgressIndicator =
+        new CircularProgressIndicator();
     this.setState(() {
       this.body = circularProgressIndicator;
     });
     return circularProgressIndicator;
   }
-
 
   // ---------------------------------------------------------------------------
   //            BUILD
@@ -113,22 +105,22 @@ class _MyAppState extends State<MyApp> {
       else
         home = Login
       */
-      home: isLoggedIn ? HomeScreen() : Scaffold(
-        body: Center(
-          // child: Dashboard(logoutAction),
-          child: this.body,
-          // child: isBusy ? CircularProgressIndicator() : isLoggedIn ? Dashboard(logoutAction) : Login(errorMessage),
-        ),
-      ),
+      home: isLoggedIn
+          ? HomeScreen()
+          : Scaffold(
+              body: Center(
+                // child: Dashboard(logoutAction),
+                child: this.body,
+                // child: isBusy ? CircularProgressIndicator() : isLoggedIn ? Dashboard(logoutAction) : Login(errorMessage),
+              ),
+            ),
     );
   }
-
 
   // ---------------------------------------------------------------------------
   //                SIGN IN WITH GOOGLE
   // ---------------------------------------------------------------------------
   Future<UserCredential?> signInWithGoogle() async {
-
     print('[signInWithGoogle]');
     // show loading
     setState(() {
@@ -153,8 +145,7 @@ class _MyAppState extends State<MyApp> {
         print('[ERROR OCCURRED USING GOOGLE SIGN-IN. TRY AGAIN]');
         return null;
       }
-    }
-    else {
+    } else {
       print('[THIS IS ANDROID APPLICATION]');
       final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -176,8 +167,7 @@ class _MyAppState extends State<MyApp> {
 
           user = userCredential.user;
           return userCredential;
-        }
-        on FirebaseAuthException catch (e) {
+        } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
             ScaffoldMessenger.of(context).showSnackBar(
               customSnackBar(
@@ -194,8 +184,7 @@ class _MyAppState extends State<MyApp> {
             );
           }
           return null;
-        }
-        catch (e) {
+        } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
             customSnackBar(
               content: 'Error occurred using Google Sign-In. Try again.',
@@ -210,7 +199,7 @@ class _MyAppState extends State<MyApp> {
   // --------------------------------------------------------------------------
   // METHOD TO SHOW CONTENT ON THE MAIN PAGE
   // --------------------------------------------------------------------------
-  void show(Widget widget){
+  void show(Widget widget) {
     this.body = widget;
   }
 
@@ -229,7 +218,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-
   // --------------------------------------------------------------------------
   //  LOGOUT METHOD
   // --------------------------------------------------------------------------
@@ -243,12 +231,17 @@ class _MyAppState extends State<MyApp> {
     //   // go to login page
     //   this.body = Login('');
     // });
-    var line = '[LOGGIN OUT USER: ' + FirebaseAuth.instance.currentUser.toString() + ']';
+    var line = '[LOGGIN OUT USER: ' +
+        FirebaseAuth.instance.currentUser.toString() +
+        ']';
     print(line);
     FirebaseAuth.instance.signOut();
 
-    // TODO: clear navigation stack
-    Navigator.pushNamedAndRemoveUntil(this.context, 'Login', (route) => false,);
+    Navigator.pushNamedAndRemoveUntil(
+      this.context,
+      'Login',
+      (route) => false,
+    );
     // redirect user to login page
     // Navigator.push(
     //   this.context,
@@ -256,7 +249,6 @@ class _MyAppState extends State<MyApp> {
     //       builder: (context) => Login(''),
     //   ),
     // );
-
   }
 
   @override
@@ -265,7 +257,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-
   void initAction() async {
     print('[initAction]');
     // show that the page is loading
@@ -273,20 +264,18 @@ class _MyAppState extends State<MyApp> {
       this.body = CircularProgressIndicator();
     });
 
-
     await Firebase.initializeApp();
     // FirebaseAuth auth = FirebaseAuth.instance;
     // User? user;
 
-    if(FirebaseAuth.instance.currentUser == null){
+    if (FirebaseAuth.instance.currentUser == null) {
       // navigate to login
       print('[USER NOT LOGGED IN]');
       setState(() {
         // this.body = Login('');
         this.body = SignInScreen();
       });
-    }
-    else{
+    } else {
       print('[USER IS LOGGED IN]');
       // continue to dashboard
       this.setState(() {
@@ -296,14 +285,8 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-
-
 // -----------------------------------------------------------------------------
 // TODO: combine  multiple futures in FutureBuilder using the code below
 //
 // Future.wait([bar, foo])
 // -----------------------------------------------------------------------------
-
-
-
-

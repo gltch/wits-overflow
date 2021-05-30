@@ -55,7 +55,6 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
       drawer: SideDrawer(),
@@ -140,8 +139,6 @@ class SignUp extends StatelessWidget {
                           // If the form is valid, display a snackbar. In the real world,
                           // you'd often call a server or save the information in a database.
                           // print('[VALID FORM DATA]');
-
-                          // TODO: add user
 
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Processing Data')));
