@@ -1,12 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wits_overflow/utils/sidebar.dart';
-
-import 'package:wits_overflow/forms/question_create_form.dart';
-import 'package:wits_overflow/screens/question_screen.dart';
 
 // -----------------------------------------------------------------------------
 //             Dashboard class
@@ -35,8 +31,8 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     print('[DASHBOARD STATE]');
-    CollectionReference questions =
-        FirebaseFirestore.instance.collection('questions');
+    // CollectionReference questions =
+    //     FirebaseFirestore.instance.collection('questions');
     return Scaffold(
       drawer: SideDrawer(),
       backgroundColor: Colors.white,

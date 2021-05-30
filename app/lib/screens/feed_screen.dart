@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wits_overflow/utils/sidebar.dart';
 
-import 'package:wits_overflow/forms/question_create_form.dart';
 import 'package:wits_overflow/utils/static.dart';
 import 'package:wits_overflow/utils/functions.dart';
 
@@ -79,11 +78,6 @@ class _FeedState extends State<Feed> {
         '[---------------------------- STARTING FILTER ----------------------------]');
     CollectionReference questionsCollection =
         FirebaseFirestore.instance.collection('questions');
-
-    int limit = 100;
-    QuerySnapshot<Map<String, dynamic>>? filterByYearQuestions;
-    QuerySnapshot<Map<String, dynamic>>? filterBySchoolQuestions;
-    QuerySnapshot<Map<String, dynamic>>? filterByFacultyQuestions;
 
     Query query = questionsCollection;
 

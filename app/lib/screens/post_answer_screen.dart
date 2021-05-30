@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:wits_overflow/utils/sidebar.dart';
 //void main() async {
 //WidgetsFlutterBinding.ensureInitialized();
@@ -30,15 +30,15 @@ class _AnswersPageState extends State<AnswersPage> {
         .collection('answers')
         .where("question", isEqualTo: this.question_id)
         .snapshots();
-    Future<DocumentSnapshot> question = FirebaseFirestore.instance
-        .collection('questions')
-        .doc(this.question_id)
-        .get();
+    // Future<DocumentSnapshot> question = FirebaseFirestore.instance
+    //     .collection('questions')
+    //     .doc(this.question_id)
+    //     .get();
     _getQuestionId() {
-      dynamic temp = question.then((questionDocumentSnapshot) {
-        this.questionBody = questionDocumentSnapshot["body"];
-        this.authorId = questionDocumentSnapshot["user"];
-      });
+      // dynamic temp = question.then((questionDocumentSnapshot) {
+      //   this.questionBody = questionDocumentSnapshot["body"];
+      //   this.authorId = questionDocumentSnapshot["user"];
+      // });
     }
 
     _getQuestionId();

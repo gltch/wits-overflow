@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:wits_overflow/utils/sidebar.dart';
 
 // -----------------------------------------------------------------------------
@@ -18,8 +18,8 @@ class SignUp extends StatelessWidget {
       String email, String password) async {
     String error = '';
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      // UserCredential userCredential = await FirebaseAuth.instance
+      //     .createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         error = 'The password provided is too weak';
@@ -37,8 +37,8 @@ class SignUp extends StatelessWidget {
   Future<String> signUpWithGoogle(String email, String password) async {
     String error = '';
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      // UserCredential userCredential = await FirebaseAuth.instance
+      //     .createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         error = 'The password provided is too weak';

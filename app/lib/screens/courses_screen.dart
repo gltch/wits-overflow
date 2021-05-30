@@ -171,8 +171,8 @@ class _CoursesState extends State<Courses> {
               querySnapshot.docs.forEach((favoriteCourseDoc) async {
                 await FirebaseFirestore.instance
                     .runTransaction((Transaction transaction) async {
-                  Transaction deleteTransaction =
-                      transaction.delete(favoriteCourseDoc.reference);
+                  // Transaction deleteTransaction =
+                  //     transaction.delete(favoriteCourseDoc.reference);
                 });
               });
               ScaffoldMessenger.of(context).showSnackBar(
