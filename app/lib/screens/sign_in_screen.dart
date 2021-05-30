@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:wits_overflow/widgets/google_sign_in_button.dart';
-import 'package:wits_overflow/screens/home_screen.dart';
-import 'package:wits_overflow/screens/sign_up_screen.dart';
+// import 'package:wits_overflow/screens/home_screen.dart';
+// import 'package:wits_overflow/screens/sign_up_screen.dart';
 import 'package:wits_overflow/utils/authentication.dart';
 
 class SignInScreen extends StatefulWidget {

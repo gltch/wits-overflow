@@ -12,27 +12,27 @@ import 'package:wits_overflow/utils/sidebar.dart';
 //));}
 
 class AnswersPage extends StatefulWidget {
-  final question_id;
+  final questionId;
   @override
-  AnswersPage(this.question_id);
-  _AnswersPageState createState() => _AnswersPageState(question_id);
+  AnswersPage(this.questionId);
+  _AnswersPageState createState() => _AnswersPageState(questionId);
 }
 
 class _AnswersPageState extends State<AnswersPage> {
-  final question_id;
-  _AnswersPageState(this.question_id);
+  final questionId;
+  _AnswersPageState(this.questionId);
   final answer = TextEditingController();
   dynamic questionBody = "Failed to retrieve question";
   dynamic authorId = "";
   @override
   Widget build(BuildContext context) {
-    var get_answers = FirebaseFirestore.instance
+    var getAnswers = FirebaseFirestore.instance
         .collection('answers')
-        .where("question", isEqualTo: this.question_id)
+        .where("question", isEqualTo: this.questionId)
         .snapshots();
     // Future<DocumentSnapshot> question = FirebaseFirestore.instance
     //     .collection('questions')
-    //     .doc(this.question_id)
+    //     .doc(this.questionId)
     //     .get();
     _getQuestionId() {
       // dynamic temp = question.then((questionDocumentSnapshot) {
@@ -67,7 +67,7 @@ class _AnswersPageState extends State<AnswersPage> {
             Container(
               margin: EdgeInsets.fromLTRB(10.0, 0.0, 50.0, 0.0),
               child: StreamBuilder(
-                stream: get_answers,
+                stream: getAnswers,
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasData) {
                     return Container(
@@ -142,7 +142,7 @@ class _AnswersPageState extends State<AnswersPage> {
                     'body': this.answer.text,
                     'user': '${this.authorId}',
                     'question':
-                        '${this.question_id}', //update this to fit the current id
+                        '${this.questionId}', //update this to fit the current id
                     'createdAt': DateTime.now(),
                   });
                   answer.clear();
