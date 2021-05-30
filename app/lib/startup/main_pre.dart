@@ -6,5 +6,4 @@ import 'package:wits_overflow/startup/wits_overflow_app.dart';
 Future<void> main() async {
   await DotEnv.load(fileName: "env/.env_pre");
   runApp(WitsOverflowApp());
-
 }
