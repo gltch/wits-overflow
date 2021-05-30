@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "228746765399-cggn8podkbq10ncib10p84gogpcj5cr9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wits_overflow",
+            "certificate_hash": "20ef0452a7336b662d2fec1ec3867378b59c3d0c"
+          }
+        },
+        {
           "client_id": "228746765399-hi0g804jfgs8cq4bb74mhb68dpvun128.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
