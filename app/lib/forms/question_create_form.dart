@@ -4,22 +4,20 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:wits_overflow/widgets/navigation.dart';
 import 'package:wits_overflow/screens/question_screen.dart';
-
-
+import 'package:wits_overflow/utils/sidebar.dart';
 
 // -----------------------------------------------------------------------------
 //                      QUESTION CREATE FORM
 // -----------------------------------------------------------------------------
 class QuestionCreateForm extends StatefulWidget {
+  final String? courseId;
+  final String? courseName;
 
-  final String ? courseId;
-  final String ? courseName;
-
-  QuestionCreateForm(this.courseId, this.courseName){
+  QuestionCreateForm(this.courseId, this.courseName) {
     // get course name
-    print('[QuestionCreateForm.QuestionCreateForm(${this.courseId}, ${this.courseName})]');
+    print(
+        '[QuestionCreateForm.QuestionCreateForm(${this.courseId}, ${this.courseName})]');
   }
 
   @override
@@ -32,22 +30,21 @@ class QuestionCreateForm extends StatefulWidget {
 //                      QUESTION CREATE FORM STATE
 // -----------------------------------------------------------------------------
 class QuestionCreateFormState extends State<QuestionCreateForm> {
-
-  final String ? courseName;
+  final String? courseName;
 
   final _formKey = GlobalKey<FormState>();
   String courseController = 'general';
   final titleController = TextEditingController();
   final bodyController = TextEditingController();
-  final String ? courseId;
+  final String? courseId;
   bool isBusy = true;
-  List<DropdownMenuItem<String>> dropdownButtonMenuItems = [DropdownMenuItem(child: Text('general'), value: 'general')];
-  List<DocumentSnapshot> ? userFavoriteCourses;
+  List<DropdownMenuItem<String>> dropdownButtonMenuItems = [
+    DropdownMenuItem(child: Text('general'), value: 'general')
+  ];
+  List<DocumentSnapshot>? userFavoriteCourses;
 
-
-
-  QuestionCreateFormState(this.courseId, this.courseName){
-    if(this.courseId != null){
+  QuestionCreateFormState(this.courseId, this.courseName) {
+    if (this.courseId != null) {
       this.courseController = this.courseId!;
     }
 
@@ -64,43 +61,61 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
     // we can fetch all documents at once
 
     // user favorites courses
-    
+
     // dropdown button menu items
     var dmi = [
       DropdownMenuItem(value: 'general', child: Text('general')),
     ];
 
+    QuerySnapshot favorites = await FirebaseFirestore.instance
+        .collection('favorites')
+        .where('user', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    List<DocumentSnapshot<Map<String, dynamic>>> ufc =
+        <DocumentSnapshot<Map<String, dynamic>>>[
+      for (var i = 0; i < favorites.docs.length; i++)
+        await FirebaseFirestore.instance
+            .collection('courses')
+            .doc(favorites.docs[i].get('course'))
+            .get()
+    ];
 
-    QuerySnapshot favorites = await FirebaseFirestore.instance.collection('favorites').where('user', isEqualTo: FirebaseAuth.instance.currentUser!.uid).get();
-    List<DocumentSnapshot<Map<String, dynamic>>> ufc = <DocumentSnapshot<Map<String, dynamic>>>[for(var i = 0 ; i < favorites.docs.length; i++) await FirebaseFirestore.instance.collection('courses').doc(favorites.docs[i].get('course')).get()];
-  
     ufc.forEach((userFavoriteCourse) {
-      print('[ADDING TO USER DROPDOWN BUTTON MENU ITEMS FAVORITE COURSES, userFavoriteCourse: ${userFavoriteCourse.get('name')}]');
-      dmi.add(DropdownMenuItem(child: Text(userFavoriteCourse.get('name')), value: userFavoriteCourse.id));
+      print(
+          '[ADDING TO USER DROPDOWN BUTTON MENU ITEMS FAVORITE COURSES, userFavoriteCourse: ${userFavoriteCourse.get('name')}]');
+      dmi.add(DropdownMenuItem(
+          child: Text(userFavoriteCourse.get('name')),
+          value: userFavoriteCourse.id));
     });
 
-    print('[RETRIEVED USER FAVORITES FROM DATABASE, favorites.docs.length: ${favorites.docs.length}]');
-    print('[RETRIEVED USER FAVORITES COURSES FROM DATABASE, favoriteCourses.docs.length: ${ufc.length}]');
+    print(
+        '[RETRIEVED USER FAVORITES FROM DATABASE, favorites.docs.length: ${favorites.docs.length}]');
+    print(
+        '[RETRIEVED USER FAVORITES COURSES FROM DATABASE, favoriteCourses.docs.length: ${ufc.length}]');
 
     setState(() {
       print('[CHANGING STATE : dmi: ${dmi.length}]');
       for (var dropdownMenuItem in dmi) {
-        print('[dropDownMenuItem: text: ${dropdownMenuItem.child.toString()}, value: ${dropdownMenuItem.value}]');
+        print(
+            '[dropDownMenuItem: text: ${dropdownMenuItem.child.toString()}, value: ${dropdownMenuItem.value}]');
       }
       this.userFavoriteCourses = ufc;
       this.dropdownButtonMenuItems = dmi;
       this.isBusy = false;
-      print('[--------------------------------------- CHANGE STATE CHANGED STATE CHANGED STATE ---------------------------------------------------]');
+      print(
+          '[--------------------------------------- CHANGE STATE CHANGED STATE CHANGED STATE ---------------------------------------------------]');
     });
   }
   // TODO: add a field where the user can choose for which subject is she/he posting question to
 
-  DocumentReference ? addQuestion(String courseId, String title, String body) {
-    CollectionReference questions = FirebaseFirestore.instance.collection('questions');
-    print('[USER UID ' + FirebaseAuth.instance.currentUser!.uid.toString() +  ']');
+  DocumentReference? addQuestion(String courseId, String title, String body) {
+    CollectionReference questions =
+        FirebaseFirestore.instance.collection('questions');
+    print(
+        '[USER UID ' + FirebaseAuth.instance.currentUser!.uid.toString() + ']');
     DocumentSnapshot course;
-    for(var i = 0; i < this.userFavoriteCourses!.length; i++){
-      if(this.userFavoriteCourses!.elementAt(i).id == courseId){
+    for (var i = 0; i < this.userFavoriteCourses!.length; i++) {
+      if (this.userFavoriteCourses!.elementAt(i).id == courseId) {
         course = this.userFavoriteCourses!.elementAt(i);
         questions.add({
           'school': course.get('school'),
@@ -114,8 +129,7 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
           'votes': 0,
           'createAt': DateTime.now(),
           'updatedAt': DateTime.now(),
-        })
-            .then((value) {
+        }).then((value) {
           print("[QUESTION ADDED]");
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -123,18 +137,14 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
             ),
           );
 
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context){
-                  return Question(value.id);
-                },
-              )
-          );
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return Question(value.id);
+            },
+          ));
 
           return value;
-        })
-            .catchError((error){
+        }).catchError((error) {
           print("[FAILED TO ADD QUESTION]: $error");
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -153,10 +163,10 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
 
     // TODO: include courses dropdown list
 
-    if(this.isBusy){
+    if (this.isBusy) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
-        drawer: NavDrawer(),
+        drawer: SideDrawer(),
         appBar: AppBar(
           title: Text('wits overflow'),
         ),
@@ -172,7 +182,7 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      drawer: NavDrawer(),
+      drawer: SideDrawer(),
       appBar: AppBar(
         title: Text('wits-overflow'),
       ),
@@ -181,17 +191,14 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
           Container(
             padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
             color: Color.fromARGB(100, 220, 220, 220),
-            child:Text(
+            child: Text(
               'Post question',
               style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w600,
-                color: Color.fromARGB(100, 16, 16, 16)
-              ),
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(100, 16, 16, 16)),
             ),
           ),
-
-
           Center(
             child: Form(
               key: _formKey,
@@ -203,26 +210,27 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: DropdownButtonHideUnderline(
-                        child: Flex(
-                          direction: Axis.horizontal,
-                          children: [
-                            Expanded(
-                              child: DropdownButtonFormField<String>(
-                                isExpanded: true, // from stack overflow, when this is added, not overflow occurs
-                                hint: Text("Select the course you want to post your question to"),
-                                value: courseController,
-                                isDense: true,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    courseController = newValue!;
-                                  });
-                                },
-                                items: this.dropdownButtonMenuItems,
-                              ),
+                          child: Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                          Expanded(
+                            child: DropdownButtonFormField<String>(
+                              isExpanded:
+                                  true, // from stack overflow, when this is added, not overflow occurs
+                              hint: Text(
+                                  "Select the course you want to post your question to"),
+                              value: courseController,
+                              isDense: true,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  courseController = newValue!;
+                                });
+                              },
+                              items: this.dropdownButtonMenuItems,
                             ),
-                          ],
-                        )
-                      ),
+                          ),
+                        ],
+                      )),
                     ),
                     TextFormField(
                       controller: titleController,
@@ -247,7 +255,6 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
                       decoration: InputDecoration(
                         border: UnderlineInputBorder(),
                         labelText: 'body',
-
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -257,47 +264,40 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
                       },
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 50, 0, 10),
-                      child: ElevatedButton(
-                        onPressed:(){
-                          print('[POST QUESTION BUTTON PRESSED]');
-                          if (_formKey.currentState!.validate()) {
-                            var course = this.courseController;
-                            var title = this.titleController.text;
-                            var body = this.bodyController.text;
-                            print('[POST QUESTION course : $course, title: $title, body: $body]');
+                        margin: EdgeInsets.fromLTRB(0, 50, 0, 10),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            print('[POST QUESTION BUTTON PRESSED]');
+                            if (_formKey.currentState!.validate()) {
+                              var course = this.courseController;
+                              var title = this.titleController.text;
+                              var body = this.bodyController.text;
+                              print(
+                                  '[POST QUESTION course : $course, title: $title, body: $body]');
 
-
-                            DocumentReference<Object?>? question = addQuestion(course, title, body);
-                            if(question == null){
-
-                            }
-                            else{
-                              // redirect to question page
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context){
+                              DocumentReference<Object?>? question =
+                                  addQuestion(course, title, body);
+                              if (question == null) {
+                              } else {
+                                // redirect to question page
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
                                     return Question(question.id);
                                   },
-                                )
+                                ));
+                              }
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Processing Data'),
+                                ),
                               );
+                            } else {
+                              print('[INVALID FORM DATA]');
                             }
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Processing Data'),
-                              ),
-                            );
-                          }
-                          else{
-                            print('[INVALID FORM DATA]');
-
-                          }
-                        },
-                        child: Text('POST'),
-                      )
-                    )
+                          },
+                          child: Text('POST'),
+                        ))
                   ],
                 ),
               ),
@@ -308,7 +308,6 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
     );
   }
 }
-
 
 //   FutureBuilder(
 //     future: Future.wait(coursesFuture),
@@ -380,4 +379,3 @@ class QuestionCreateFormState extends State<QuestionCreateForm> {
 //       return Text("loading courses");
 //     },
 //   ),
-

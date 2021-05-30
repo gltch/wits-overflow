@@ -1,14 +1,12 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:wits_overflow/widgets/navigation.dart';
 import 'package:wits_overflow/screens/course_screen.dart';
+import 'package:wits_overflow/utils/sidebar.dart';
 import 'package:wits_overflow/utils/static.dart';
-
 
 // TODO: trim trailing spaces on course name, faculty, school name
 
@@ -26,7 +24,6 @@ class CourseCreateForm extends StatefulWidget {
 //                      COURSE CREATE FORM STATE
 // -----------------------------------------------------------------------------
 class CourseCreateFormState extends State<CourseCreateForm> {
-
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final codeController = TextEditingController();
@@ -37,33 +34,36 @@ class CourseCreateFormState extends State<CourseCreateForm> {
   String facultyController = '';
   String yearController = 'first';
 
-  List<DropdownMenuItem<String>> facultyDropdownMenuItems = <DropdownMenuItem<String>>[DropdownMenuItem(child: Text(''), value: '')];
-  List<DropdownMenuItem<String>> schoolDropdownMenuItems = <DropdownMenuItem<String>>[DropdownMenuItem(child: Text(''), value: '')];
+  List<DropdownMenuItem<String>> facultyDropdownMenuItems =
+      <DropdownMenuItem<String>>[DropdownMenuItem(child: Text(''), value: '')];
+  List<DropdownMenuItem<String>> schoolDropdownMenuItems =
+      <DropdownMenuItem<String>>[DropdownMenuItem(child: Text(''), value: '')];
 
-
-  CourseCreateFormState(){
-    this.facultyDropdownMenuItems.addAll(FACULTIES.map((e){
-      return DropdownMenuItem(child: Text(e), value: e.toLowerCase());
-    }).toList());
-
+  CourseCreateFormState() {
+    this.facultyDropdownMenuItems.addAll(FACULTIES.map((e) {
+          return DropdownMenuItem(child: Text(e), value: e.toLowerCase());
+        }).toList());
   }
 
-  void updateSchoolDropdownMenuItems(){
+  void updateSchoolDropdownMenuItems() {
     print('[UPDATED SCHOOL DROP DOWN MENU ITEMS]');
-    if(this.facultyController != ''){
-      List<String> schools = FACULTIES_SCHOOLS[this.facultyController.toLowerCase()]['schools'];
+    if (this.facultyController != '') {
+      List<String> schools =
+          FACULTIES_SCHOOLS[this.facultyController.toLowerCase()]['schools'];
       print('[SCHOOLS : ${schools.toString()}]');
-      this.schoolDropdownMenuItems = <DropdownMenuItem<String>>[DropdownMenuItem(child: Text(''), value: '')];
-      this.schoolDropdownMenuItems.addAll(schools.map((e){
-        return DropdownMenuItem(child: Text(e), value: e.toLowerCase());
-      }).toList());
+      this.schoolDropdownMenuItems = <DropdownMenuItem<String>>[
+        DropdownMenuItem(child: Text(''), value: '')
+      ];
+      this.schoolDropdownMenuItems.addAll(schools.map((e) {
+            return DropdownMenuItem(child: Text(e), value: e.toLowerCase());
+          }).toList());
+      setState(() {});
+    } else {
       setState(() {
-      });
-    }
-    else{
-      setState(() {
-      this.schoolController = '';
-      this.schoolDropdownMenuItems = <DropdownMenuItem<String>>[DropdownMenuItem(child: Text(''), value: '')];
+        this.schoolController = '';
+        this.schoolDropdownMenuItems = <DropdownMenuItem<String>>[
+          DropdownMenuItem(child: Text(''), value: '')
+        ];
       });
     }
   }
@@ -72,7 +72,7 @@ class CourseCreateFormState extends State<CourseCreateForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      drawer: NavDrawer(),
+      drawer: SideDrawer(),
       appBar: AppBar(
         title: Text('Wits overflow---'),
       ),
@@ -104,7 +104,6 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                   ),
                 ),
 
-
                 // course code
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -125,8 +124,6 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                     },
                   ),
                 ),
-
-
 
                 // course year
                 Container(
@@ -150,20 +147,27 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                         setState(() {
                           yearController = newValue!;
                         });
-                        print('[DROP DOWN BUTTON ON CHANGE VALUE: $yearController]');
+                        print(
+                            '[DROP DOWN BUTTON ON CHANGE VALUE: $yearController]');
                       },
                       items: [
-                        DropdownMenuItem(child: Text('first'), value: 'first',),
-                        DropdownMenuItem(child: Text('second'), value: 'second'),
+                        DropdownMenuItem(
+                          child: Text('first'),
+                          value: 'first',
+                        ),
+                        DropdownMenuItem(
+                            child: Text('second'), value: 'second'),
                         DropdownMenuItem(child: Text('third'), value: 'third'),
-                        DropdownMenuItem(child: Text('honours'), value: 'honours'),
-                        DropdownMenuItem(child: Text('masters'), value: 'masters'),
-                        DropdownMenuItem(child: Text('doctorate'), value: 'doctorate'),
+                        DropdownMenuItem(
+                            child: Text('honours'), value: 'honours'),
+                        DropdownMenuItem(
+                            child: Text('masters'), value: 'masters'),
+                        DropdownMenuItem(
+                            child: Text('doctorate'), value: 'doctorate'),
                       ],
                     ),
                   ),
                 ),
-
 
                 // course faculty
                 Container(
@@ -187,7 +191,6 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                   ),
                 ),
 
-
                 // course school
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -202,7 +205,8 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                       value: this.schoolController,
                       isDense: true,
                       onChanged: (newValue) {
-                        print('[SCHOOL DROP DOWN MENU ON CHANGE NEW VALUE: $newValue]');
+                        print(
+                            '[SCHOOL DROP DOWN MENU ON CHANGE NEW VALUE: $newValue]');
                         this.schoolController = newValue!;
                         this.updateSchoolDropdownMenuItems();
                       },
@@ -210,8 +214,6 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                     ),
                   ),
                 ),
-
-
 
                 // course description
                 Container(
@@ -223,13 +225,9 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(),
                       labelText: 'description',
-
                     ),
                   ),
                 ),
-
-
-
 
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 30, 0, 10),
@@ -243,9 +241,11 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                         var school = this.schoolController;
                         var faculty = this.facultyController;
                         var year = this.yearController.toString();
-                        print('title: $name, body: $description, school: $school, faculty: $faculty, year: $year');
+                        print(
+                            'title: $name, body: $description, school: $school, faculty: $faculty, year: $year');
 
-                        CollectionReference coursesCollection = FirebaseFirestore.instance.collection('courses');
+                        CollectionReference coursesCollection =
+                            FirebaseFirestore.instance.collection('courses');
                         var data = {
                           'name': name,
                           'description': description,
@@ -256,34 +256,29 @@ class CourseCreateFormState extends State<CourseCreateForm> {
                           'datetime': DateTime.now(),
                           'code': code,
                         };
-                        coursesCollection.add(data).then((value){
+                        coursesCollection.add(data).then((value) {
                           print('[SUCCESSFULLY ADDED COURSE]');
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                                content: Text('Successfully create course')
-                            ),
+                                content: Text('Successfully create course')),
                           );
                           // TODO: redirect user to course profile page
                           // pop this page from navigation stack
 
                           // redirect to course page
-                          Navigator.push(
-                              context, MaterialPageRoute(
-                            builder: (context){
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
                               return CourseProfile(value.id);
                             },
-                          )
-                          );
-                        })
-                            .catchError((error){
-                          print('[ERROR OCCURRED WHILE CREATING COURSE]: '+ error.toString());
+                          ));
+                        }).catchError((error) {
+                          print('[ERROR OCCURRED WHILE CREATING COURSE]: ' +
+                              error.toString());
                         });
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text(
-                            'Processing Data')));
-                      }
-                      else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Processing Data')));
+                      } else {
                         print('[INVALID FORM DATA]');
                       }
                     },
