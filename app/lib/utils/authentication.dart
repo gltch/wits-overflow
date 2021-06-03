@@ -74,7 +74,7 @@ class Authentication {
       //     await googleSignIn.signIn();
 
       final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-
+      print('[googleSignIn.clientId: ${googleSignIn.clientId}]');
 
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
@@ -121,7 +121,7 @@ class Authentication {
       var email = user.email;
 
       print('[USER DISPLAY NAME: ${user
-          .displayName}, USER ACCESS TOKEN ${await user.getIdToken()}]');
+          .displayName}, USER ID TOKEN ${await user.getIdToken()}]');
       Map<String, String> data = {
         'displayName': user.displayName.toString(),
         'email': user.email.toString(),
@@ -130,25 +130,25 @@ class Authentication {
           data);
 
 
-      if (email != null && !email.endsWith('wits.ac.za')) {
-        // Sign out
-        user = null; // Important
-        await signOut(context: context);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          Authentication.customSnackBar(
-            content: 'Only Wits users are permitted at this stage!',
-          ),
-        );
-      }
-
-      else {
-      // //   // Save details to secure storage:
+      // if (email != null && !email.endsWith('wits.ac.za')) {
+      //   // Sign out
+      //   user = null; // Important
+      //   await signOut(context: context);
+      //
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     Authentication.customSnackBar(
+      //       content: 'Only Wits users are permitted at this stage!',
+      //     ),
+      //   );
+      // }
+      //
+      // else {
+      // Save details to secure storage:
         var token = await user.getIdToken();
         SecureStorage.write('user.email', user.email.toString());
         SecureStorage.write('user.name', user.displayName.toString());
         SecureStorage.write('user.token', token);
-      }
+      // }
     }
 
     return user;
