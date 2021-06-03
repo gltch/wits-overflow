@@ -7,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:wits_overflow/widgets/navigation.dart';
+import 'package:wits_overflow/forms/question_answer_form.dart';
+import 'package:wits_overflow/forms/question_comment_form.dart';
 import 'package:wits_overflow/utils/functions.dart';
 
 
@@ -33,6 +35,8 @@ class _QuestionState extends State<Question> {
   QuerySnapshot<Map<String, dynamic>> ? comments;
   QuerySnapshot<Map<String, dynamic>> ? answers;
 
+  DocumentSnapshot<Map<String, dynamic>> ? questionUser;
+
   Map<String, DocumentSnapshot<Map<String, dynamic>>> commentsUsers = Map<String, DocumentSnapshot<Map<String, dynamic>>>();
   Map<String, DocumentSnapshot<Map<String, dynamic>>> answersUsers = Map<String, DocumentSnapshot<Map<String, dynamic>>>();
   Map<String, QuerySnapshot> answerVotes = Map<String, QuerySnapshot>();
@@ -42,6 +46,11 @@ class _QuestionState extends State<Question> {
   _QuestionState(this.id){
     this.getData();
   }
+
+
+  // bool userCanVote(){
+  //
+  // }
 
   Future<void> getData() async {
     // retrieve necessary data from firebase to view this page
@@ -71,12 +80,13 @@ class _QuestionState extends State<Question> {
     Future<Map<String, DocumentSnapshot<Map<String, dynamic>>>> getAnswersUsers() async{
       Map<String, DocumentSnapshot<Map<String, dynamic>>> answersUsers = Map();
       for(var i = 0; i < this.answers!.docs.length; i++){
-        answersUsers.addAll({this.answers!.docs[i].id: await FirebaseFirestore.instance.collection('users').doc(this.comments!.docs[i].get('user')).get()});
+        answersUsers.addAll({this.answers!.docs[i].id: await FirebaseFirestore.instance.collection('users').doc(this.answers!.docs[i].get('user')).get()});
       }
       return answersUsers;
     }
 
     this.question = await FirebaseFirestore.instance.collection("questions").doc(this.id).get();
+    this.questionUser = await FirebaseFirestore.instance.collection('users').doc(this.question!.get('user')).get();
     this.questionVotes = await FirebaseFirestore.instance.collection('questions').doc(this.id).collection('votes').get();
     this.comments = await FirebaseFirestore.instance.collection('questions').doc(this.id).collection('comments').get();
     this.answers = await FirebaseFirestore.instance.collection('questions').doc(this.id).collection('answers').get();
@@ -176,8 +186,6 @@ class _QuestionState extends State<Question> {
       String body = getField(commentDoc.data(), 'body', onError: '[error, body not found for this comment]');
       DateTime createdAt = getField(commentDoc.data(), 'createAt', onError:DateTime.now(), onNull:DateTime.now());
       comments.add(buildCommentWidget(body: body, displayName: displayName, createdAt: createdAt));
-      // comments.add(Divider())
-
     }
 
     comments.add(
@@ -186,6 +194,14 @@ class _QuestionState extends State<Question> {
           child: Text('add comment'),
           onPressed: (){
             print('[ADD COMMENT BUTTON PRESSED]');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context){
+                  return QuestionCommentForm(this.question!.id, this.question!.get('title'), question!.get('body'));
+                },
+              ),
+            );
           },
         ),
       )
@@ -424,6 +440,21 @@ class _QuestionState extends State<Question> {
                           ),
                         ),
 
+                        Expanded(
+                          child: Row(
+                            children: <Widget>[
+                              // date posted
+                              Text(
+                                this.question!.get('createAt').toString(),
+                              ),
+
+                              Text(
+                                this.questionUser!.get('displayName').toString(),
+                              ),
+                              // user information
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -474,13 +505,10 @@ class _QuestionState extends State<Question> {
                     bottom: BorderSide(
                       color: Color.fromARGB(100, 214, 217, 220),
                     ),
-                    // top: BorderSide(
-                    //   color: Color.fromARGB(100, 214, 217, 220),
-                    // ),
                   ),
                 ),
                 // color: Color(0xff2980b9),
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 15),
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                 child:Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -490,7 +518,18 @@ class _QuestionState extends State<Question> {
                         fontSize: 25,
                       ),
                     ),
-                    Icon(Icons.add),
+                    TextButton(
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context){
+                                return QuestionAnswerForm(this.question!.id, this.question!.get('title'), this.question!.get('body'));
+                              }
+                          ),
+                        );
+                      },
+                      child: Icon(Icons.add),)
                   ],
                 ),
               ),
