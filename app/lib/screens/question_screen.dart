@@ -86,6 +86,8 @@ class _QuestionState extends State<Question> {
     }
 
     this.question = await FirebaseFirestore.instance.collection("questions").doc(this.id).get();
+
+    // stores information of the user that first asked the question
     this.questionUser = await FirebaseFirestore.instance.collection('users').doc(this.question!.get('user')).get();
     this.questionVotes = await FirebaseFirestore.instance.collection('questions').doc(this.id).collection('votes').get();
     this.comments = await FirebaseFirestore.instance.collection('questions').doc(this.id).collection('comments').get();
@@ -374,6 +376,7 @@ class _QuestionState extends State<Question> {
               /// votes, up-vote and down-vote
               Column(
                 children: [
+
                   Container(
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
                     child:Row(
@@ -391,8 +394,6 @@ class _QuestionState extends State<Question> {
                                 children: <Widget>[
                                   Icon(Icons.arrow_drop_up, size: 40,),
                                   Text(
-                                    // this.votes!.docs.length.toString(),
-                                    // TODO: insert real votes
                                     this.questionVotes!.docs.length.toString(),
                                     style: TextStyle(
                                       // fontSize: 20,
@@ -427,15 +428,6 @@ class _QuestionState extends State<Question> {
                                   ),
                                 ),
                               ),
-                              /// question body
-                              Flexible(
-                                child:Container(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                  child: Text(
-                                    this.getQuestionBody(),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
@@ -458,6 +450,110 @@ class _QuestionState extends State<Question> {
                       ],
                     ),
                   ),
+
+                  Divider(),
+
+                  /// question body
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Color.fromARGB(100, 214, 217, 220),
+                        ),
+                      ),
+                    ),
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    child: Text(
+                      this.getQuestionBody(),
+                    ),
+                  ),
+
+                  Row(
+                    children: [
+
+                      // share button
+                      TextButton(
+                        child: Text(
+                          "Share",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        onPressed: (){
+                          print("[QUESTION SHARE BUTTON PRESSED]");
+                        },
+                      ),
+
+                      // edit button
+                      TextButton(
+                        child: Text(
+                          "Edit",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        onPressed: (){
+                          print("[QUESTION EDIT BUTTON PRESSED]");
+                        },
+                      ),
+
+                      // follow button
+                      TextButton(
+                        child: Text(
+                          "Follow",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        onPressed: (){
+                          print("[QUESTION FOLLOW BUTTON PRESSED]");
+                        },
+                      ),
+                    ],
+                  ),
+
+                  /// user who asked question
+                  /// user who updated question
+                  Row(
+                    children: [
+                      // user information
+                      Container(
+                        child: Row(
+                          children: [
+                            // user avatar image
+                            Container(
+                              child: Image(image: AssetImage('assets/images/background.png'))
+                            ),
+
+                            // user information (display name, metadata)
+                            Column(
+                              children: [
+                                // user display name
+                                Text(
+                                  this.questionUser!.get('displayName'),
+                                ),
+                                // user metadata
+                                Row(
+                                  children: [
+
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // datetime
+                      Container(
+
+                      ),
+
+                    ],
+                  ),
+
+                  /// question edit information
+                  Container(),
                 ],
               ),
 
@@ -474,9 +570,6 @@ class _QuestionState extends State<Question> {
                     bottom: BorderSide(
                       color: Color.fromARGB(100, 214, 217, 220),
                     ),
-                    // top: BorderSide(
-                    //   color: Color.fromARGB(100, 214, 217, 220),
-                    // ),
                   ),
                 ),
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 15),
