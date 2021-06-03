@@ -3,20 +3,18 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:wits_overflow/widgets/navigation.dart';
 import 'package:wits_overflow/forms/question_create_form.dart';
 import 'package:wits_overflow/screens/question_screen.dart';
 import 'package:wits_overflow/utils/functions.dart';
-
+import 'package:wits_overflow/utils/sidebar.dart';
 
 // -----------------------------------------------------------------------------
 //             COURSE PROFILE PAGE
 // -----------------------------------------------------------------------------
-class CourseProfile extends StatefulWidget{
-
+class CourseProfile extends StatefulWidget {
   final String courseId; // courseId
 
-  CourseProfile(this.courseId){
+  CourseProfile(this.courseId) {
     print('[CourseProfile.CourseProfile(), courseId: ${this.courseId}]');
   }
 
@@ -25,20 +23,26 @@ class CourseProfile extends StatefulWidget{
 }
 
 class _CourseProfileState extends State<CourseProfile> {
-
   String courseId;
   bool isBusy = true;
-  QuerySnapshot<Map<String, dynamic>> ? questions;
-  DocumentSnapshot<Map<String, dynamic>> ? course;
+  QuerySnapshot<Map<String, dynamic>>? questions;
+  DocumentSnapshot<Map<String, dynamic>>? course;
 
-  _CourseProfileState(this.courseId){
+  _CourseProfileState(this.courseId) {
     this.getData();
   }
 
-  void getData() async{
-    print('[_CourseProfileState.getData(), this.widget.courseId: ${this.courseId}]');
-    this.course = await FirebaseFirestore.instance.collection('courses').doc(this.courseId).get();
-    this.questions = await FirebaseFirestore.instance.collection('questions').where('course', isEqualTo: '${this.courseId}').get();
+  void getData() async {
+    print(
+        '[_CourseProfileState.getData(), this.widget.courseId: ${this.courseId}]');
+    this.course = await FirebaseFirestore.instance
+        .collection('courses')
+        .doc(this.courseId)
+        .get();
+    this.questions = await FirebaseFirestore.instance
+        .collection('questions')
+        .where('course', isEqualTo: '${this.courseId}')
+        .get();
     print('[RETRIEVED COURSE INFORMATION AND COURSE QUESTIONS]');
     setState(() {
       isBusy = false;
@@ -49,22 +53,22 @@ class _CourseProfileState extends State<CourseProfile> {
   Widget build(BuildContext context) {
     print('[_CourseProfileState.build]');
 
-    if(isBusy){
+    if (isBusy) {
       return Scaffold(
-        drawer: NavDrawer(),
+        drawer: SideDrawer(),
         appBar: AppBar(
           title: Text('wits-overflow'),
         ),
-        body: Center(child:CircularProgressIndicator()),
+        body: Center(child: CircularProgressIndicator()),
       );
     }
     return Scaffold(
-      drawer: NavDrawer(),
-      appBar: AppBar(
-        title: Text('wits-overflow'),
-      ),
-      body: Center(
-        child:Container(
+        drawer: SideDrawer(),
+        appBar: AppBar(
+          title: Text('wits-overflow'),
+        ),
+        body: Center(
+            child: Container(
           child: Column(
             children: <Widget>[
               // heading
@@ -83,50 +87,44 @@ class _CourseProfileState extends State<CourseProfile> {
 
               // COURSE DESCRIPTION
               Container(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                width: double.infinity,
-                // color: Colors.black26,
-                child: Text(
-                  this.course!.get('description'),
-                  textAlign: TextAlign.left,
-                )
-              ),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  width: double.infinity,
+                  // color: Colors.black26,
+                  child: Text(
+                    this.course!.get('description'),
+                    textAlign: TextAlign.left,
+                  )),
 
               // LIST OF COURSE QUESTIONS
               // Divider(),
               Container(
-
                 padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                child:Container(
+                child: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Container(
-
-                        child:Text(
-                          'Questions',
-                          style: TextStyle(
-                            fontSize: 25,
-                            ),
-                        )
-                      ),
+                          child: Text(
+                        'Questions',
+                        style: TextStyle(
+                          fontSize: 25,
+                        ),
+                      )),
                       Column(
                         children: <Widget>[
                           TextButton(
-                            onPressed: (){
+                            onPressed: () {
                               // redirect to question create page
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context){
-                                  // TODO: update to return
-                                  return QuestionCreateForm(this.courseId, this.course!.get('name'));
-                                  }
-                                ),
+                                MaterialPageRoute(builder: (context) {
+                                  return QuestionCreateForm(
+                                      this.courseId, this.course!.get('name'));
+                                }),
                               );
                             },
                             child: Icon(
-                            Icons.add,
+                              Icons.add,
                             ),
                           ),
                         ],
@@ -137,20 +135,23 @@ class _CourseProfileState extends State<CourseProfile> {
               ),
               Divider(),
               Column(
-                children: <Widget>[for (var i = 0; i < this.questions!.docs.length; i++) ListTile(
-                  title: Text(toTitleCase(this.questions!.docs[i].get('title'))),
-                  subtitle: Text(this.questions!.docs[i].get('body')),
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return Question(this.questions!.docs[i].id);
-                    }));
-                  },
-                )],
+                children: <Widget>[
+                  for (var i = 0; i < this.questions!.docs.length; i++)
+                    ListTile(
+                      title: Text(
+                          toTitleCase(this.questions!.docs[i].get('title'))),
+                      subtitle: Text(this.questions!.docs[i].get('body')),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Question(this.questions!.docs[i].id);
+                        }));
+                      },
+                    )
+                ],
               ),
             ],
           ),
-        )
-      )
-    );
+        )));
   }
 }

@@ -1,43 +1,140 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:wits_overflow/utils/sidebar.dart';
 
-import 'package:wits_overflow/widgets/navigation.dart';
-import 'package:wits_overflow/forms/question_create_form.dart';
-
+import 'package:wits_overflow/utils/static.dart';
+import 'package:wits_overflow/utils/functions.dart';
 
 // -----------------------------------------------------------------------------
 //             FEED PAGE
 // -----------------------------------------------------------------------------
-class Feed extends StatefulWidget{
-
+class Feed extends StatefulWidget {
+  final String module;
+  Feed({Key? key, required this.module}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return FeedState();
+    return _FeedState();
   }
 }
 
 // -----------------------------------------------------------------------------
 //             FEED STATE
 // -----------------------------------------------------------------------------
-class FeedState extends State<Feed>{
+class _FeedState extends State<Feed> {
+  QuerySnapshot<Map<String, dynamic>>? questions;
+  QuerySnapshot<Map<String, dynamic>>? courses;
 
-  bool sortByDate = true;
-  bool filterByCourseName = false;
-  bool filterByCourseCode = false;
-  bool filterByYear = false;
-  bool filterByTags = false;
-  // ---------------------------------------------------------------------------
-  String? filterCourseName;
-  String? filterCourseCode;
-  String? filterCourseTags;
-  String? filterSchool;
-  String? filterFaculty;
-  String? filterYear = 'all';
+  bool isBusy = true;
 
+  String filterSchool = 'all';
+  String filterFaculty = 'all';
+  String filterYear = 'all';
+  String filterCourse = 'all';
+
+  List<String> facultyDropdownMenuOptions = <String>['all'];
+  List<DropdownMenuItem<String>> courseDropdownMenuItems = [
+    DropdownMenuItem(child: Text('all'), value: 'all')
+  ];
+
+  _FeedState() {
+    getData();
+    this.facultyDropdownMenuOptions.addAll(FACULTIES);
+  }
+
+  void getData() async {
+    /// get necessary data to view this page
+    // get initial data
+
+    // get courses list
+    print(
+        '[------------------------------------ [RETRIEVING DATA] -----------------------------------]');
+    this.courses = await FirebaseFirestore.instance.collection('courses').get();
+    this.questions = await FirebaseFirestore.instance
+        .collection('questions')
+        .limit(50)
+        .get();
+    print(
+        '[==================================== [RETRIEVED DATA] ====================================]');
+
+    print('[LIST OF COURSE LENGTH: ${this.courses!.docs.length}]');
+    // this.courseDropdownMenuOptions.addAll(iterable);
+    this.courses!.docs.forEach((courseDoc) {
+      this.courseDropdownMenuItems.add(DropdownMenuItem(
+          child: Text(courseDoc.get('code').toString().toUpperCase()),
+          value: courseDoc.get('code').toString()));
+    });
+
+    filter();
+
+    setState(() {
+      this.isBusy = false;
+    });
+  }
+
+  Future<void> filter() async {
+    print(
+        '[---------------------------- STARTING FILTER ----------------------------]');
+    CollectionReference questionsCollection =
+        FirebaseFirestore.instance.collection('questions');
+
+    Query query = questionsCollection;
+
+    setState(() {
+      isBusy = true;
+    });
+
+    // // filter by a year
+    // if (this.filterYear != 'all') {
+    //   query = query.where('year', isEqualTo: this.filterYear);
+    // }
+
+    // // filter by school name
+    // if (this.filterSchool != 'all') {
+    //   query = query.where('school', isEqualTo: this.filterSchool);
+    // }
+
+    // // filter by faculty
+    // if (this.filterFaculty != 'all') {
+    //   query = query.where('faculty', isEqualTo: this.filterFaculty);
+    // }
+
+    // filter by course code
+    // if (this.filterCourse != 'all') {
+    query = query.where('courseCode', isEqualTo: widget.module);
+    // }
+
+    this.questions = await query.get() as QuerySnapshot<Map<String, dynamic>>;
+
+    setState(() {
+      isBusy = false;
+    });
+  }
+
+  Widget buildQuestionsWidget() {
+    //
+    List<Widget> questionWidgets = <Widget>[];
+    this.questions!.docs.forEach((questionDoc) {
+      questionWidgets.add(ListTile(
+        title: Text(
+          getField(questionDoc.data(), 'title',
+              onError: '[QUESTION DOES NOT HAVE TITLE]',
+              onNull: '[QUESTION DOES NOT HAVE TITLE]'),
+        ),
+        subtitle: Text(
+          getField(questionDoc.data(), 'body',
+              onError: 'QUESTION DOES NOT HAVE BODY',
+              onNull: 'QUESTION DOES NOT HAVE BODY'),
+        ),
+      ));
+      questionWidgets.add(Divider());
+    });
+
+    return Column(
+      children: questionWidgets,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,245 +142,44 @@ class FeedState extends State<Feed>{
     20 questions sorted by datetime
      */
 
-    // TODO: get faculty, course name, and course code list
-
-    var faculties = <String>['all'];
-    var schools = <String>['all'];
-    var courses = <String>['all'];
-    var courseCodes = <String>['all'];
-
-    FirebaseFirestore.instance.collection('courses').get().then((value){
-      value.docs.forEach((doc) {
-        if(!faculties.contains(doc['faculty'])){
-          faculties.add(doc['faculty']);
-        }
-        if(!schools.contains(doc['school'])){
-          schools.add(doc['school']);
-        }
-        courseCodes.add(doc['code']);
-        courses.add(doc['name']);
-      });
-
-    }).catchError((error){
-      print('[ERROR OCCURRED WHILE GETTING COURSES COLLECTION]');
-    });
-
+    if (this.isBusy) {
+      return Scaffold(
+        drawer: SideDrawer(),
+        appBar: AppBar(
+          title: Text('Wits overflow'),
+        ),
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
 
     return Scaffold(
-      drawer: NavDrawer(),
+      drawer: SideDrawer(),
       appBar: AppBar(
         title: Text('wits-overflow'),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
+          // header
           Container(
-            child: Row(
-              children: <Widget>[
-                // year selector
-                Column(
-                  children: <Widget>[
-                    Text(
-                      'year',
-                    ),
-                    DropdownButton(
-                      hint: Text('year'),
-                      value: filterYear,
-                      items: <DropdownMenuItem>[
-                        DropdownMenuItem(
-                          child: Text('all'),
-                          onTap: (){
-                            this.setState(() {
-                              filterByYear = false;
-                            });
-                          },
-                        ),
-
-                        DropdownMenuItem(
-                          child: Text('first'),
-                          onTap: (){
-                            this.setState(() {
-                              filterByYear = true;
-                            });
-                          },
-                        ),
-                        DropdownMenuItem(
-                          child: Text('second'),
-                          onTap: (){
-                            setState(() {
-                              filterByYear = true;
-                            });
-                          },
-                        ),
-                        DropdownMenuItem(
-                          child: Text('third'),
-                          onTap: (){
-                            setState(() {
-                              filterByYear = true;
-                            });
-                          },
-                        ),
-                        DropdownMenuItem(
-                          child: Text('honours'),
-                          onTap: (){
-                            setState(() {
-                              filterByYear = true;
-                            });
-                          },
-                        ),
-                        DropdownMenuItem(
-                          child: Text('masters'),
-                          onTap: (){
-                            setState(() {
-                              filterByYear = true;
-                            });
-                          },
-                        ),
-                        DropdownMenuItem(
-                          child: Text('doctrate'),
-                          onTap: (){
-                            setState(() {
-                              filterByYear = true;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-
-                //faculty selector
-                Column(
-                  children: [
-                    Text('faculty'),
-                    DropdownButton(
-                      hint: Text('faculty'),
-                      value: filterFaculty,
-                      items: <DropdownMenuItem>[
-
-                      ],
-                    )
-                  ],
-                ),
-
-
-                // date selector
-                Column(
-                  children: [
-                    Text('course'),
-                    DropdownButton(
-                      items: <DropdownMenuItem>[
-
-                      ],
-                    )
-                  ],
-                ),
-
-
-                // course code selector
-                Column(
-                  children: [
-                    Text('course'),
-                    DropdownButton(
-                      items: <DropdownMenuItem>[
-
-                      ],
-                    )
-                  ],
-                ),
-
-
-                // course name selector
-                Column(
-                  children: [
-                    Text('course'),
-                    DropdownButton(
-                      items: <DropdownMenuItem>[
-
-                      ],
-                    )
-                  ],
-                ),
-              ],
+            padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+            child: Text(
+              'Questions',
+              style: TextStyle(
+                fontSize: 25,
+              ),
             ),
           ),
-          Center(
-            child:FutureBuilder<QuerySnapshot>(
-              future: FirebaseFirestore.instance.collection('questions').get(),
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                // snapshot.error
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Container(
-                      child: Column(
-                        children: [
-                          Text(
-                            "Could not retrive questions from database",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 25,
-                            ),
-                          ),
-                          Text(
-                            snapshot.error.toString(),
-                            style: TextStyle(
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }
 
-                // if (snapshot.hasData && snapshot.data.docs.) {
-                //   return Text("Document does not exist");
-                // }
+          Divider(),
 
-                if (snapshot.connectionState == ConnectionState.done) {
-                  var list = <Widget>[];
-                  list.add(DrawerHeader(
-                      child: Row(
-                          children: <Widget>[
-                            Text(
-                              'Feed',
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: (){
-                                // TODO: update so that the user can add/post question
-                                print('[QUESTION POST BUTTON CLICKED]');
-                                Navigator.push(
-                                  context,
-                                  // MaterialPageRoute(builder: (context) => PostQuestionScreen()),
-                                  MaterialPageRoute(builder: (context) => QuestionCreateForm(null, null)),
-                                );
-                              },
-                              child: Icon(Icons.add),
-                            )
-                          ]
-                      )
-                  ));
+          Divider(),
 
-                  snapshot.data!.docs.forEach((element) {
-                    print('[ADDING QUESTION TO LIST...]');
-                    list.add(
-                        ListTile(
-                          title: Text(element.get("title")),
-                          subtitle: Text(element.get("body")),
-                        )
-                    );
-                  });
-
-
-                  return ListView(
-                    children: list,
-                  );
-                }
-                return Text("loading");
-              },
-            ),
+          // questions
+          // header
+          Container(
+            child: buildQuestionsWidget(),
           ),
         ],
       ),
