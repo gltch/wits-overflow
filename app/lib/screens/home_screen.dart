@@ -1,3 +1,5 @@
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wits_overflow/widgets/floatingSearchBar.dart';
@@ -5,11 +7,20 @@ import 'package:wits_overflow/widgets/favoritesTab.dart';
 import 'package:wits_overflow/widgets/postedQuestionsTab.dart';
 import 'package:wits_overflow/utils/sidebar.dart';
 
+// -----------------------------------------------------------------------------
+//             Dashboard class
+// -----------------------------------------------------------------------------
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  // final logoutAction;
+
+ // final state = HomeScreenState(CircularProgressIndicator());
+
+ // HomeScreen() {
+ //   print('[DASHBOARD CONSTRUCTOR]');
+//  }
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -43,5 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     return view;
+  }
+
+  void show(Widget widget) {
+    this.setState(() {
+      child = widget;
+    });
   }
 }

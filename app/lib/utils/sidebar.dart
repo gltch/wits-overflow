@@ -1,8 +1,8 @@
 // Sidebar Code
 import 'package:flutter/material.dart';
+import 'package:wits_overflow/screens/feed_screen.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:wits_overflow/screens/post_question_screen.dart';
-import 'package:wits_overflow/screens/question_list_screen.dart';
 import 'package:wits_overflow/screens/sign_in_screen.dart';
 
 class SideDrawer extends StatefulWidget {
@@ -55,7 +55,7 @@ class _SideDrawerState extends State<SideDrawer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionListScreen(module: "COMS3007"))),
+                                    Feed(module: "coms2002"))),
                       },
                     ),
                     ListTile(
@@ -67,7 +67,7 @@ class _SideDrawerState extends State<SideDrawer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionListScreen(module: "COMS3003"))),
+                                    Feed(module: "coms3003"))),
                       },
                     ),
                     ListTile(
@@ -79,7 +79,7 @@ class _SideDrawerState extends State<SideDrawer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionListScreen(module: "COMS3008"))),
+                                    Feed(module: "coms3008"))),
                       },
                     ),
                     ListTile(
@@ -91,7 +91,7 @@ class _SideDrawerState extends State<SideDrawer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionListScreen(module: "COMS1016"))),
+                                    Feed(module: "coms1016"))),
                       },
                     ),
                     ListTile(
@@ -103,7 +103,7 @@ class _SideDrawerState extends State<SideDrawer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionListScreen(module: "COMS3009"))),
+                                    Feed(module: "coms3009"))),
                       },
                     ),
                   ],
@@ -140,7 +140,7 @@ class _SideDrawerState extends State<SideDrawer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionListScreen(module: "MATH1036"))),
+                                    Feed(module: "math1036"))),
                       },
                     ),
                     ListTile(
@@ -152,7 +152,7 @@ class _SideDrawerState extends State<SideDrawer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionListScreen(module: "MATH1034"))),
+                                    Feed(module: "math1034"))),
                       },
                     ),
                     ListTile(
@@ -164,7 +164,7 @@ class _SideDrawerState extends State<SideDrawer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionListScreen(module: "MATH2007"))),
+                                    Feed(module: "math2007"))),
                       },
                     ),
                     ListTile(
@@ -176,7 +176,7 @@ class _SideDrawerState extends State<SideDrawer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionListScreen(module: "MATH2015"))),
+                                    Feed(module: "math2015"))),
                       },
                     ),
                     ListTile(
@@ -188,7 +188,7 @@ class _SideDrawerState extends State<SideDrawer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionListScreen(module: "MATH2019"))),
+                                    Feed(module: "math2019"))),
                       },
                     ),
                   ],
