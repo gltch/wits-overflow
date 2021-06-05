@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
-import 'package:wits_overflow/widgets/floatingSearchBar.dart';
+//import 'package:wits_overflow/widgets/floatingSearchBar.dart';
 import 'package:wits_overflow/widgets/searchResultView.dart';
 
 void main() {
