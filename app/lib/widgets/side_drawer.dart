@@ -1,35 +1,175 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:wits_overflow/screens/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class SideDrawer extends StatefulWidget {
+class SideDrawer extends StatelessWidget {
 
-  @override
-  _SideDrawerState createState() => _SideDrawerState();
-  
-}
+  final Future<List<Map<String, dynamic>>> courses;
+  final Future<List<Map<String, dynamic>>> modules;
 
-class _SideDrawerState extends State<SideDrawer> {
-  
+  SideDrawer({required this.courses, required this.modules});
+
   @override
   Widget build(BuildContext context) {
-    
+
     return Drawer(
-      child: Stack(children: [
+      child: 
+      LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: 
+                BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
+                ),
+              child: Flex(
+                direction: Axis.vertical,
+                children: [
 
-        Positioned(
-          top: 0,
-          child: Text("Test")
-        ),
+                  // Row(
+                  //   children: [
 
-        Text("Testing"),
-        
-        Positioned(
-          bottom: 0,
-          child: Text("Test")
-        )
+                  //     Container(
+                  //       width: 40,
+                  //       height: 40,
+                  //       margin: EdgeInsets.all(10),
+                  //       decoration: BoxDecoration(
+                  //         shape: BoxShape.rectangle,
+                  //         image: DecorationImage(
+                  //             // Change code to get profile image of user
+                  //             image: NetworkImage(
+                  //                 FirebaseAuth.instance.currentUser!.photoURL!
+                  //                 ),
+                  //             fit: BoxFit.fill),
+                  //       ),
+                  //     ),
 
-      ])
-    );
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text("Welcome, " + FirebaseAuth.instance.currentUser!.displayName!),
+                  //         Text("Student")
+                  //     ],
+
+                  //     mainAxisAlignment: MainAxisAlignment.start,)
+
+                  //   ],
+                  // ),                 
+
+                  Divider(color: Colors.grey[200], height: 1),
+
+                  Container(
+                    child: ListTile(
+                      leading: Icon(Icons.home),
+                      title: Text('Home'),
+                      onTap: () => {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => HomeScreen())),
+                      },
+                    ),
+                  ),
+
+                  Divider(color: Colors.grey[200], height: 1),
+
+                  Container(
+                    child: ListTile(
+                      leading: Icon(Icons.post_add_outlined),
+                      title: Text('Post Question'),
+                      onTap: () => {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => HomeScreen())),
+                      },
+                    ),
+                  ),
+
+                  Divider(color: Colors.grey[300], height: 1),
+
+                  FutureBuilder<List<Map<String, dynamic>>>(
+                    future: courses,
+                    builder: (context, snapshot) {
+
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (context, index) {
+
+                            Map<String, dynamic>? courseData = snapshot.data?[index];
+
+                            if (courseData != null) {
+                              
+                              return ExpansionTile(
+                                title: Text(courseData['name']),
+                                children: [
+
+                                  // Modules
+                                  FutureBuilder<List<Map<String, dynamic>>>(
+                                    future: modules,
+                                    builder: (context, snapshot) {
+
+                                      if (snapshot.hasData) {
+                                        return ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: snapshot.data?.length,
+                                          itemBuilder: (context, index) {
+
+                                            Map<String, dynamic>? moduleData = snapshot.data?[index];
+
+                                            if (moduleData != null) {
+
+                                              if (moduleData['courseId'] == courseData['id']) {
+                                                return ListTile(
+                                                title: Text(moduleData['name']),
+                                                onTap: () => {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) => HomeScreen(module: moduleData['id']))),
+                                                },
+                                              );
+                                              }
+                                              else {
+                                                return Container();
+                                              }
+                                              
+                                            }
+                                            else {
+                                              return Text("Could not load module.");
+                                            }
+                                          }
+                                        );
+                                      } 
+                                      else {
+                                        return Container();
+                                      }
+
+                                    }
+                                  ),
+
+
+                                ],
+                              );
+                            }
+                            else {
+                              return Text("Could not load course.");
+                            }
+                          }
+                        );
+                      } else {
+                        return Text("NO COURSES AVAILABLE!");
+                      }
+
+                    }
+                  ),
+
+                ],
+              )
+            )
+          );
+        }
+      ));
 
   }
-
+  
 }

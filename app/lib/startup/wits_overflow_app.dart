@@ -11,6 +11,7 @@ class WitsOverflowApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
+      debugShowCheckedModeBanner: false,
       //home: SignInScreen(),
       home: HomeScreen(),
     );
