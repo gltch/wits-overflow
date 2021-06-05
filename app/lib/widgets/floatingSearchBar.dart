@@ -3,19 +3,12 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:wits_overflow/widgets/searchResultView.dart';
 
 class MySearchBar extends StatefulWidget {
-  final int myTab;
-
-  const MySearchBar({Key? key, required this.myTab}) : super(key: key);
-
   @override
-  _MySearchBar createState() => _MySearchBar(tab: myTab);
+  _MySearchBar createState() => _MySearchBar();
 }
 
 class _MySearchBar extends State<MySearchBar> {
   static const int historySize = 5;
-  final int tab;
-
-  _MySearchBar({required this.tab});
 
   List<String> history = [
     'Coms1015A',
@@ -81,14 +74,12 @@ class _MySearchBar extends State<MySearchBar> {
   @override
   Widget build(BuildContext context) {
     return FloatingSearchBar(
-      key: Key('Search field'),
       controller: controller,
-
+      key: Key("Search here"),
       //TODO replace the body so that when we navigate to different tabs we get populate with relevent results
       body: FloatingSearchBarScrollNotifier(
         child: SearchResultsListView(
           searchTerm: history.isNotEmpty ? history.reversed.first : '',
-          tab: tab,
         ),
       ),
       transition: CircularFloatingSearchBarTransition(),
@@ -106,7 +97,7 @@ class _MySearchBar extends State<MySearchBar> {
         setState(() {
           addSearchItem(query);
           selectedItem = query;
-          print(selectedItem);
+          print("hey we are in here");
         });
         controller.close();
       },
@@ -131,7 +122,7 @@ class _MySearchBar extends State<MySearchBar> {
                 );
               } else if (filteredHistory.isEmpty) {
                 return ListTile(
-                  key: Key('search for item'),
+                  key: Key('Search item'),
                   title: Text(controller.query),
                   leading: const Icon(Icons.search),
                   onTap: () {

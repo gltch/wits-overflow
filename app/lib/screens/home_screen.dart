@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
 
   final _view = [
-    Container(child: MySearchBar(myTab: 0)),
+    Container(child: MySearchBar()),
     FavoritesTab(),
     PostedQuestionsTab()
   ];

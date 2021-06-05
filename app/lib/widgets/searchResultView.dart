@@ -3,10 +3,8 @@ import 'package:flutter/widgets.dart';
 
 class SearchResultsListView extends StatelessWidget {
   final String searchTerm;
-  final int tab;
 
-  SearchResultsListView({Key? key, required this.searchTerm, required this.tab})
-      : super(key: key);
+  SearchResultsListView({Key? key, required this.searchTerm}) : super(key: key);
 
 //the following method in for showing a toast
 
@@ -46,6 +44,7 @@ class SearchResultsListView extends StatelessWidget {
         children: List.generate(
             13,
             (index) => ListTile(
+                  key: Key("list of questions"),
                   title: Text('$searchTerm has been found'),
                   subtitle: Text('Body will go here.....'),
                   //Add a navigator in the onTab method for when a question is clicked
