@@ -5,19 +5,21 @@ import 'package:wits_overflow/widgets/side_drawer.dart';
 // ignore: must_be_immutable
 class WitsOverflowScaffold extends StatelessWidget {
 
-  late Future<List<Map<String, dynamic>>> courses;
-  late Future<List<Map<String, dynamic>>> modules;
+  Future<List<Map<String, dynamic>>> _courses;
+  Future<List<Map<String, dynamic>>> _modules;
+  FloatingActionButton _floatingActionButton;
   final Widget body;
 
-  WitsOverflowScaffold({required this.body}) {
-    courses = WitsOverflowData().fetchCourses();
-    modules = WitsOverflowData().fetchModules();
-  }
+  WitsOverflowScaffold({required this.body, courses, modules, floatingActionButton}) :
+    _floatingActionButton = floatingActionButton,
+    _courses = (courses == null) ? WitsOverflowData().fetchCourses() : courses,
+    _modules = (modules == null) ? WitsOverflowData().fetchModules() : modules;
   
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+      floatingActionButton: this._floatingActionButton,
       appBar: AppBar(
         title: const Text('Wits Overflow'),
         actions: [
@@ -32,7 +34,7 @@ class WitsOverflowScaffold extends StatelessWidget {
               VerticalDivider(color: Colors.transparent,),
           ]
         ),
-      drawer: SideDrawer(courses: courses, modules: modules),
+      drawer: SideDrawer(courses: this._courses, modules: this._modules),
       body: this.body
     );
 
