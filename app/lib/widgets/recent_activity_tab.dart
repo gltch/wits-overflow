@@ -7,7 +7,9 @@ class RecentActivityTab extends StatelessWidget {
   late Future<List<Map<String, dynamic>>> questions;
 
   RecentActivityTab() {
-    questions = WitsOverflowData().fetchQuestions();
+
+    questions = WitsOverflowData().fetchLatestQuestions(3);
+
   }
 
   @override

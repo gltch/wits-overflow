@@ -40,6 +40,45 @@ class WitsOverflowData {
 
   }
 
+  Future<List<Map<String, dynamic>>> fetchUserQuestions({required String userId}) async {
+
+    List<Map<String, dynamic>> results = List.empty(growable: true);
+
+    await questions
+    .where('authorId', isEqualTo: userId)
+    .get()
+    .then((snapshot) => {
+      snapshot.docs.forEach((doc) {
+        Map<String, dynamic> data = doc.data();
+        data['id'] = doc.id;
+        results.add(data);
+      })
+    });
+
+    return results;
+
+  }
+
+  Future<List<Map<String, dynamic>>> fetchLatestQuestions(int limit) async {
+
+    List<Map<String, dynamic>> results = List.empty(growable: true);
+
+    await questions
+    .orderBy('createdAt', descending: true)
+    .limit(limit)
+    .get()
+    .then((snapshot) => {
+      snapshot.docs.forEach((doc) {
+        Map<String, dynamic> data = doc.data();
+        data['id'] = doc.id;
+        results.add(data);
+      })
+    });
+
+    return results;
+
+  }
+
   Future<List<Map<String, dynamic>>> fetchCourses() async {
 
     List<Map<String, dynamic>> results = List.empty(growable: true);
