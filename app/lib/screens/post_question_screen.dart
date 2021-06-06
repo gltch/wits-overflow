@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wits_overflow/utils/sidebar.dart';
-import 'package:wits_overflow/utils/wits_overflow_api.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wits_overflow/utils/wits_overflow_data.dart';
+import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
 class PostQuestionScreen extends StatefulWidget {
   PostQuestionScreen({Key? key}) : super(key: key);
@@ -71,8 +71,12 @@ class _PostQuestionState extends State<PostQuestionScreen> {
       } else {
         int module = moduleMap[valueChoose]!;
         // Actually post the question
-        WitsOverflowApi.postQuestions(
-            titleController.text, questionController.text, module);
+        //TODO WitsOverflowApi.postQuestions(
+            //titleController.text, questionController.text, module);
+            WitsOverflowData().addQuestion({
+              'title': titleController.text,
+              'body': questionController.text
+            });
         // Show toast message saying posted or not posted
         Fluttertoast.showToast(
             msg: 'Posted',
@@ -161,13 +165,7 @@ class _PostQuestionState extends State<PostQuestionScreen> {
             currentFocus.unfocus();
           }
         },
-        child: Scaffold(
-          drawer: SideDrawer(),
-          appBar: AppBar(
-            // Here we take the value from the MyPostQuestionsPage object that was created by
-            // the App.build method, and use it to set our appbar title.
-            title: Text('Wits Overflow'),
-          ),
+        child: WitsOverflowScaffold(
           body: Center(
             // Center is a layout widget. It takes a single child and positions it
             // in the middle of the parent.

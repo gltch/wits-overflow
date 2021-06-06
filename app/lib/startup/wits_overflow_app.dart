@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:wits_overflow/screens/sign_in_screen.dart';
 
 class WitsOverflowApp extends StatelessWidget {
@@ -10,7 +11,9 @@ class WitsOverflowApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
+      debugShowCheckedModeBanner: false,
       home: SignInScreen(),
+      //home: HomeScreen(),
     );
   }
 }

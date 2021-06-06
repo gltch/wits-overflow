@@ -1,21 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:wits_overflow/screens/sign_in_screen.dart';
 import 'package:wits_overflow/utils/authentication.dart';
-import 'package:wits_overflow/utils/sidebar.dart';
+import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
 class UserInfoScreen extends StatefulWidget {
-  const UserInfoScreen({Key? key, required User user})
-      : _user = user,
+  
+  UserInfoScreen({Key? key}) :
         super(key: key);
 
-  final User _user;
+  final User _user = FirebaseAuth.instance.currentUser!;
 
   @override
-  _UserInfoScreenState createState() => _UserInfoScreenState();
-}
+    _UserInfoScreenState createState() => _UserInfoScreenState();
+  }
 
 class _UserInfoScreenState extends State<UserInfoScreen> {
   late User _user;
@@ -49,10 +48,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: SideDrawer(),
-      backgroundColor: Colors.white,
-      appBar: AppBar(elevation: 0, backgroundColor: Colors.blue),
+    return WitsOverflowScaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -151,44 +147,3 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     );
   }
 }
-
-// -----------------------------------------------------------------------------
-//             Profile class
-// -----------------------------------------------------------------------------
-// class Profile extends StatelessWidget{
-//   // final logoutAction;
-//   final String name;
-//   // final String picture;
-//
-//   Profile(this.name);
-//   // Profile(this.logoutAction, this.name, this.picture);
-//
-//   @override
-//   Widget build(BuildContext buildContext){
-//     return Column(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: <Widget>[
-//         Container(
-//           width: 150,
-//           height: 150,
-//           decoration: BoxDecoration(
-//             border: Border.all(color: Colors.blue, width: 4.0),
-//             shape: BoxShape.circle,
-//             // image: DecorationImage(
-//             //   fit: BoxFit.fill,
-//             //   image: NetworkImage(picture ?? ''),
-//             // ),
-//           ),
-//         ),
-//         SizedBox(height: 24.0,),
-//         Text('name: $name'),
-//         ElevatedButton(
-//           onPressed: (){
-//             // logoutAction();
-//           },
-//           child: Text('Logout'),
-//         )
-//       ],
-//     );
-//   }
-// }
