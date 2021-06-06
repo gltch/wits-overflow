@@ -1,11 +1,10 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wits_overflow/utils/wits_overflow_data.dart';
 import 'package:wits_overflow/widgets/question_summary.dart';
-import 'package:wits_overflow/widgets/side_drawer.dart';
+import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -20,16 +19,12 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
 
   late Future<List<Map<String, dynamic>>> questions;
-  late Future<List<Map<String, dynamic>>> courses;
-  late Future<List<Map<String, dynamic>>> modules;
 
   @override
   void initState() {
     super.initState();
 
     questions = WitsOverflowData().fetchQuestions();
-    courses = WitsOverflowData().fetchCourses();
-    modules = WitsOverflowData().fetchModules();
 
     //WitsOverflowData().seedDatabase();
     
@@ -37,26 +32,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wits Overflow'),
-        actions: [
-          
-          // IconButton(
-          //   icon: Image.network(
-          //     FirebaseAuth.instance.currentUser!.photoURL!
-          //   ), 
-          //   onPressed: () {
-          //     ScaffoldMessenger.of(context).showSnackBar(
-          //         const SnackBar(content: Text('This is a snackbar')));
-          //   }),
-            VerticalDivider(color: Colors.transparent,),
-        ],
-      ),
-      drawer: SideDrawer(
-        courses: courses, 
-        modules: modules
-      ),
+    return WitsOverflowScaffold(
       body: DefaultTabController(
         length: 3,
         child: Scaffold(

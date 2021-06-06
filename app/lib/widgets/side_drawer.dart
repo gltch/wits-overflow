@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wits_overflow/screens/post_question_screen.dart';
 
 class SideDrawer extends StatelessWidget {
 
@@ -90,8 +89,8 @@ class SideDrawer extends StatelessWidget {
                       leading: Icon(Icons.post_add_outlined),
                       title: Text('Post Question'),
                       onTap: () => {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => HomeScreen())),
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => PostQuestionScreen())),
                       },
                     ),
                   ),
@@ -135,7 +134,7 @@ class SideDrawer extends StatelessWidget {
                                                 return ListTile(
                                                 title: Text(moduleData['name']),
                                                 onTap: () => {
-                                                  Navigator.push(context,
+                                                  Navigator.pushReplacement(context,
                                                       MaterialPageRoute(
                                                         builder: (context) => HomeScreen(module: moduleData['id']))),
                                                 },
