@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wits_overflow/screens/home_screen.dart';
+import 'package:wits_overflow/screens/questions_and_answers_screen.dart';
 
 class QuestionSummary extends StatelessWidget {
   
@@ -15,7 +15,7 @@ class QuestionSummary extends StatelessWidget {
         GestureDetector(
           onTap: () => {
             Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => HomeScreen())),
+              MaterialPageRoute(builder: (context) => QuestionsAndAnswersScreen())),
           },
           child:
           Center(

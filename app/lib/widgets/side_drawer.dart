@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wits_overflow/screens/post_question_screen.dart';
+import 'package:wits_overflow/screens/user_info_screen.dart';
 
 class SideDrawer extends StatelessWidget {
 
@@ -32,6 +33,12 @@ class SideDrawer extends StatelessWidget {
                     left: 10, right: 10, bottom: 10
                   ) ,
                   child:
+                  GestureDetector(
+                    onTap: () => {
+                      Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => UserInfoScreen())),
+                    },
+                    child:
                     Row(
                     
                     children: [
@@ -66,6 +73,7 @@ class SideDrawer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,)
 
                     ],
+                  )
                   ),   
                 ),              
 
