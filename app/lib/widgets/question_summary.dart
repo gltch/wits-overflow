@@ -67,7 +67,7 @@ class QuestionSummary extends StatelessWidget {
                           color: Colors.lightBlue.shade50,
                           child: Padding(
                               padding: EdgeInsets.all(5),
-                              child: Text('CSAM')
+                              child: Text(this.data['faculty'])
                             ),
                         ),
 
@@ -76,7 +76,7 @@ class QuestionSummary extends StatelessWidget {
                           color: Colors.lightBlue.shade50,
                           child: Padding(
                               padding: EdgeInsets.all(5),
-                              child: Text('COMS3007')
+                              child: Text(this.data['courseCode'])
                             ),
                         ),
                         
