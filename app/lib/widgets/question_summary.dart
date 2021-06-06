@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wits_overflow/screens/questions_and_answers_screen.dart';
@@ -83,7 +84,7 @@ class QuestionSummary extends StatelessWidget {
 
                       Divider(color: Colors.white, height: 5),
 
-                      Text('2020-01-23 at 10:31', style: TextStyle(
+                      Text((this.data['updatedAt'] as Timestamp).toDate().toString(), style: TextStyle(
                         color: Theme.of(context).disabledColor
                       ))
 
