@@ -112,14 +112,14 @@ class Authentication {
     }
 
     if (user != null) {
+
       var email = user.email;
 
-      print(
-          '[USER DISPLAY NAME: ${user.displayName}, USER ACCESS TOKEN ${await user.getIdToken()}]');
       Map<String, String> data = {
         'displayName': user.displayName.toString(),
         'email': user.email.toString(),
       };
+      
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wits_overflow/utils/wits_overflow_data.dart';
@@ -77,6 +78,7 @@ class _PostQuestionScreenState extends State<PostQuestionScreen> {
         'moduleId': _selectedModuleId,
         'title': titleController.text,
         'body': bodyController.text,
+        'authorId': FirebaseAuth.instance.currentUser!.uid,
         'tags': [
           _selectedCourseCode,
           _selectedModuleCode
