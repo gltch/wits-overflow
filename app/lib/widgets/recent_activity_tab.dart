@@ -27,7 +27,7 @@ class RecentActivityTab extends StatelessWidget {
                 return QuestionSummary(data: data);
               }
               else {
-                return Text('No recent activity2');
+                return SizedBox.shrink();
               }
 
             }

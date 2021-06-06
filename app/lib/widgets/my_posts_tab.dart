@@ -31,7 +31,7 @@ class MyPostsTab extends StatelessWidget {
                 return QuestionSummary(data: data);
               }
               else {
-                return Text('You have not asked any questions.');
+                return SizedBox.shrink();
               }
 
             }

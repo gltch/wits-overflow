@@ -3,17 +3,14 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class WitsOverflowData {
 
-  late String userId;
   late CollectionReference<Map<String, dynamic>> questions;
   late CollectionReference<Map<String, dynamic>> courses;
   late CollectionReference<Map<String, dynamic>> modules;
 
   WitsOverflowData._internal() {
-    // TODO: userId = FirebaseAuth.instance.currentUser!.uid;
     questions = FirebaseFirestore.instance.collection('questions-2');
     courses = FirebaseFirestore.instance.collection('courses-2');
     modules = FirebaseFirestore.instance.collection('modules-2');
@@ -46,6 +43,27 @@ class WitsOverflowData {
 
     await questions
     .where('authorId', isEqualTo: userId)
+    .orderBy('createdAt', descending: true)
+    .get()
+    .then((snapshot) => {
+      snapshot.docs.forEach((doc) {
+        Map<String, dynamic> data = doc.data();
+        data['id'] = doc.id;
+        results.add(data);
+      })
+    });
+
+    return results;
+
+  }
+
+  Future<List<Map<String, dynamic>>> fetchModuleQuestions({required String moduleId}) async {
+
+    List<Map<String, dynamic>> results = List.empty(growable: true);
+
+    await questions
+    .where('moduleId', isEqualTo: moduleId)
+    .orderBy('createdAt', descending: true)
     .get()
     .then((snapshot) => {
       snapshot.docs.forEach((doc) {
