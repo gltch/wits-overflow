@@ -28,35 +28,47 @@ class SideDrawer extends StatelessWidget {
                 direction: Axis.vertical,
                 children: [
 
-                  // Row(
-                  //   children: [
+                  Padding(padding: EdgeInsets.only(
+                    top: 40,
+                    left: 10, right: 10, bottom: 10
+                  ) ,
+                  child:
+                    Row(
+                    
+                    children: [
 
-                  //     Container(
-                  //       width: 40,
-                  //       height: 40,
-                  //       margin: EdgeInsets.all(10),
-                  //       decoration: BoxDecoration(
-                  //         shape: BoxShape.rectangle,
-                  //         image: DecorationImage(
-                  //             // Change code to get profile image of user
-                  //             image: NetworkImage(
-                  //                 FirebaseAuth.instance.currentUser!.photoURL!
-                  //                 ),
-                  //             fit: BoxFit.fill),
-                  //       ),
-                  //     ),
+                      Container(
+                        width: 40,
+                        height: 40,
+                        margin: EdgeInsets.only(right: 10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          image: DecorationImage(
+                              // Change code to get profile image of user
+                              image: NetworkImage(
+                                  FirebaseAuth.instance.currentUser!.photoURL!
+                                  ),
+                              fit: BoxFit.fill),
+                        ),
+                      ),
 
-                  //     Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         Text("Welcome, " + FirebaseAuth.instance.currentUser!.displayName!),
-                  //         Text("Student")
-                  //     ],
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Welcome, " + FirebaseAuth.instance.currentUser!.displayName!,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold
+                          )),
+                          Text("Student", style: TextStyle(
+                            color: Theme.of(context).disabledColor
+                          ))
+                      ],
 
-                  //     mainAxisAlignment: MainAxisAlignment.start,)
+                      mainAxisAlignment: MainAxisAlignment.start,)
 
-                  //   ],
-                  // ),                 
+                    ],
+                  ),   
+                ),              
 
                   Divider(color: Colors.grey[200], height: 1),
 

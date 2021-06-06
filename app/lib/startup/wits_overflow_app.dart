@@ -12,8 +12,8 @@ class WitsOverflowApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       debugShowCheckedModeBanner: false,
-      //home: SignInScreen(),
-      home: HomeScreen(),
+      home: SignInScreen(),
+      //home: HomeScreen(),
     );
   }
 }

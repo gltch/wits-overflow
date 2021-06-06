@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wits_overflow/utils/wits_overflow_data.dart';
+import 'package:wits_overflow/widgets/question_summary.dart';
 import 'package:wits_overflow/widgets/side_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -63,7 +64,7 @@ class HomeScreenState extends State<HomeScreen> {
             flexibleSpace: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TabBar(
+               TabBar(
                   tabs: [
                     Tab(
                       text: 'Recent Activity'
@@ -81,9 +82,9 @@ class HomeScreenState extends State<HomeScreen> {
           ),
           body: TabBarView(
             children: [
+              QuestionSummary(),
               Icon(Icons.directions_car),
               Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
             ],
           ),
         ),
