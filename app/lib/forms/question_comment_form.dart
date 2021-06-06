@@ -57,48 +57,59 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
     this.getData();
   }
 
-  DocumentReference ? submitAnswer(String body) {
-
-    DocumentReference ? answer;
+  void submitComment(String body) {
 
     setState(() {
       isBusy = true;
     });
+
     Map<String, dynamic> data = {
       'user': FirebaseAuth.instance.currentUser!.uid,
       'body': body,
+      'commentedAt': DateTime.now(),
     };
-    CollectionReference questionAnswersCollection = FirebaseFirestore.instance.collection('questions').doc(this.questionId).collection('comments');
-    questionAnswersCollection.add(data).then((onValue) {
-      answer = onValue;
+
+    CollectionReference questionCommentsCollection = FirebaseFirestore.instance.collection('questions').doc(this.questionId).collection('comments');
+    questionCommentsCollection.add(data).then((onValue) {
+
       print("[COMMENT ADDED]");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Successfully posted comment'),
+          content: Text(
+            'Successfully posted comment',
+            style: TextStyle(
+              color: Colors.green,
+            ),
+          ),
         ),
       );
 
       Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context){
-              return Question(this.questionId);
-            },
-          )
+        context,
+        MaterialPageRoute(
+          builder: (context){
+            return Question(this.questionId);
+          },
+        )
       );
     }).catchError((error){
       // if error occurs while submitting user answer
-        print("[FAILED TO ADD COMMENT]: $error");
+      print("[FAILED TO ADD COMMENT]: $error");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error occurred'),
+          content: Text(
+            'Error occurred',
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
         ),
       );
     });
+
     setState(() {
       isBusy = false;
     });
-    return answer;
   }
 
 
@@ -113,7 +124,7 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
         resizeToAvoidBottomInset: false,
         drawer: NavDrawer(),
         appBar: AppBar(
-          title: Text('wits overflow'),
+          title: Text('Wits overflow'),
         ),
         body: Center(
           child: CircularProgressIndicator(),
@@ -134,26 +145,26 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
       body: ListView(
         padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
         children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-            color: Color.fromARGB(100, 220, 220, 220),
-            child:Text(
-              'Post answer',
-              style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600,
-                  color: Color.fromARGB(100, 16, 16, 16)
-              ),
-            ),
-          ),
 
           Container(
             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
             alignment: Alignment.centerLeft,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                  // color: Colors.black12,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.black12,
+                        width: 0.5,
+                      ),
+                    ),
+                  ),
+                  margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
                   alignment: Alignment.centerLeft,
                   child: Text(
                     this.questionTitle,
@@ -166,15 +177,33 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
                   ),
                 ),
 
-                Text(
-                  this.questionBody,
-                  style: TextStyle(
-                    color: Color.fromARGB(1000, 70, 70, 70),
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  // color: Colors.black12,
+                  child: Text(
+                    this.questionBody,
+                    style: TextStyle(
+                      color: Color.fromARGB(1000, 70, 70, 70),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
+
+          Container(
+            padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+            color: Color.fromARGB(100, 220, 220, 220),
+            child:Text(
+              'Post comment',
+              style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(100, 16, 16, 16)
+              ),
+            ),
+          ),
+
 
           Center(
             child: Form(
@@ -215,18 +244,7 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
                       margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: ElevatedButton(
                         onPressed: (){
-                          // when the user wants to submit his/her answer to the question
-                          if(submitAnswer(bodyController.text.toString()) != null){
-                            // redirect to question page
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context){
-                                    return Question(this.questionId);
-                                  }
-                              ),
-                            );
-                          }
+                          this.submitComment(bodyController.text.toString());
                         },
                         child: Text('post'),
                       ),

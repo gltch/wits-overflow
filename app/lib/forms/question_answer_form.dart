@@ -57,24 +57,31 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
     this.getData();
   }
 
-  DocumentReference ? submitAnswer(String body) {
+  void submitAnswer(String body) {
 
-    DocumentReference ? answer;
 
     setState(() {
       isBusy = true;
     });
+
+
     Map<String, dynamic> data = {
       'user': FirebaseAuth.instance.currentUser!.uid,
       'body': body,
+      'answeredAt': DateTime.now(),
     };
+
     CollectionReference questionAnswersCollection = FirebaseFirestore.instance.collection('questions').doc(this.questionId).collection('answers');
     questionAnswersCollection.add(data).then((onValue) {
-      answer = onValue;
       print("[QUESTION ADDED]");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Successfully posted answer'),
+          content: Text(
+            'Successfully posted answer',
+            style: TextStyle(
+              color: Colors.green,
+            ),
+          ),
         ),
       );
 
@@ -91,14 +98,18 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
       print("[FAILED TO ADD QUESTION]: $error");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error occurred'),
+          content: Text(
+            'Error occurred',
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
         ),
       );
     });
     setState(() {
       isBusy = false;
     });
-    return answer;
   }
 
 
@@ -134,6 +145,49 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
       body: ListView(
         padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
         children: [
+
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.black12,
+                        width: 0.5,
+                      )
+                    ),
+                  ),
+                  child: Text(
+                    this.questionTitle,
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromARGB(1000, 70, 70, 70),
+                    ),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  child: Text(
+                    this.questionBody,
+                    style: TextStyle(
+                      color: Color.fromARGB(1000, 70, 70, 70),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           Container(
             padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
             color: Color.fromARGB(100, 220, 220, 220),
@@ -147,34 +201,6 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
             ),
           ),
 
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-            alignment: Alignment.centerLeft,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    this.questionTitle,
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(1000, 70, 70, 70),
-
-                    ),
-                  ),
-                ),
-
-                Text(
-                  this.questionBody,
-                  style: TextStyle(
-                    color: Color.fromARGB(1000, 70, 70, 70),
-                  ),
-                ),
-              ],
-            ),
-          ),
 
           Center(
             child: Form(
@@ -216,17 +242,19 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
                       child: ElevatedButton(
                         onPressed: (){
                           // when the user wants to submit his/her answer to the question
-                          if(submitAnswer(bodyController.text.toString()) != null){
-                            // redirect to question page
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context){
-                                  return Question(this.questionId);
-                                }
-                              ),
-                            );
-                          }
+                          // if(submitAnswer(bodyController.text.toString()) != null){
+                          //   // redirect to question page
+                          //   Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context){
+                          //         return Question(this.questionId);
+                          //       }
+                          //     ),
+                          //   );
+                          // }
+
+                          this.submitAnswer(this.bodyController.text.toString());
                         },
                         child: Text('post'),
                       ),
