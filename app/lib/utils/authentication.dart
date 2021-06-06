@@ -6,9 +6,9 @@ import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:wits_overflow/screens/home_screen.dart';
 
 import 'package:wits_overflow/utils/storage.dart';
-import 'package:wits_overflow/screens/api_request_example.dart';
 
 // TODO: storage is not working well on my pc
 // TODO: enter user information in the database
@@ -17,29 +17,32 @@ import 'package:wits_overflow/screens/api_request_example.dart';
 class Authentication {
 
 
-  static Future<FirebaseApp> initializeFirebase({
-    required BuildContext context,
-  }) async {
+  static Future<FirebaseApp> initializeFirebase({required BuildContext context,}) async {
+    print('[INITIALISING FIREBASE]');
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
+      print('[USER IS NOT NULL]');
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           //builder: (context) => UserInfoScreen(
           //  user: user,
           //),
-          //builder: (context) => HomeScreen(),
-          builder: (context) => ApiRequestExampleScreen(),
+          builder: (context) => HomeScreen(),
+          // builder: (context) => ApiRequestExampleScreen(),
         ),
       );
     }
+
+    print('[USER IS NULL]');
 
     return firebaseApp;
   }
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
+
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
