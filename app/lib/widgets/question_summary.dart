@@ -8,11 +8,7 @@ class QuestionSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return ListView(
-      padding: EdgeInsets.all(10),
-      children: [
-
-        GestureDetector(
+    return GestureDetector(
           onTap: () => {
             Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => QuestionsAndAnswersScreen())),
@@ -93,13 +89,7 @@ class QuestionSummary extends StatelessWidget {
               ])
             ),
           )
-        )
-
-        
-
-
-      ],
-    );
+        );
     
   }
 
