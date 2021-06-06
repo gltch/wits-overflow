@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wits_overflow/widgets/question_summary.dart';
 
 class FavouritesTab extends StatelessWidget {
 
