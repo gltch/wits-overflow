@@ -19,11 +19,15 @@ class ModuleQuestionsScreen extends StatefulWidget {
 
 class _ModuleQuestionsScreenState extends State<ModuleQuestionsScreen> {
 
+  late bool _loading;
+
   late Future<List<Map<String, dynamic>>> questions;
 
   @override
   void initState() {
     super.initState();
+
+    this._loading = true;
 
     questions = WitsOverflowData().fetchModuleQuestions(
       moduleId: this.widget.moduleId
@@ -39,6 +43,9 @@ class _ModuleQuestionsScreenState extends State<ModuleQuestionsScreen> {
         future: questions,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+
+            this._loading = false;
+            
             return ListView.builder(
               itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
@@ -54,7 +61,13 @@ class _ModuleQuestionsScreenState extends State<ModuleQuestionsScreen> {
             );
           }
           else {
-            return Text('No questions in module.');
+            if (this._loading == true) {
+              return Center(child: CircularProgressIndicator());
+            }
+            else {
+              return Text('No questions in module.');
+            }
+            
           }
         }
       )

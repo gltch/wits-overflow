@@ -9,15 +9,36 @@ class WitsOverflowData {
   late CollectionReference<Map<String, dynamic>> questions;
   late CollectionReference<Map<String, dynamic>> courses;
   late CollectionReference<Map<String, dynamic>> modules;
+  late CollectionReference<Map<String, dynamic>> favourites;
 
   WitsOverflowData._internal() {
     questions = FirebaseFirestore.instance.collection('questions-2');
     courses = FirebaseFirestore.instance.collection('courses-2');
     modules = FirebaseFirestore.instance.collection('modules-2');
+    favourites = FirebaseFirestore.instance.collection('favourites-2');
   }
 
   //
   // METHODS
+
+  Future<Map<String, dynamic>?> fetchQuestion(String questionId) async {
+
+    Map<String, dynamic>? result;
+
+    await questions
+    .get()
+    .then((snapshot) => {
+      snapshot.docs.forEach((doc) {
+        Map<String, dynamic> data = doc.data();
+        data['id'] = doc.id;
+        result = data;
+      })
+    });
+
+    return result;
+
+  }
+
 
   Future<List<Map<String, dynamic>>> fetchQuestions() async {
 
@@ -139,9 +160,66 @@ class WitsOverflowData {
 
   }
 
+  Future<List<Map<String, dynamic>>> fetchUserFavouriteQuestions({required String userId}) async {
+
+     List<Map<String, dynamic>> results = List.empty(growable: true);
+
+    await favourites.doc(userId).get().then((doc) async {
+
+      if (doc.exists) {
+
+        var fq = doc['favouriteQuestions'];
+        for (int i = 0; i < fq.length; i++) {
+
+          await fetchQuestion(fq[i]).then((question) {
+            if (question != null) {
+              results.add(question);
+            }
+          });
+          
+        }
+
+      }
+
+    });
+
+    return results;
+
+  }
+
   Future<void> addQuestion(Map<String, dynamic> data) async {
 
     await questions.add(data);
+
+  }
+
+  Future<void> addFavouriteQuestion({required String userId, required String questionId}) async {
+
+    await favourites.doc(userId).get().then((doc) {
+
+      if (doc.exists) {
+
+        var fq = doc['favouriteQuestions'];
+        for (int i = 0; i < fq.length; i++) {
+          if (fq[i] == questionId) {
+            return;
+          }
+        }
+
+        fq.add(questionId);
+
+        favourites.doc(userId).set({  'favouriteQuestions': fq },  SetOptions(mergeFields: ['favouriteQuestions'])).then((result) {
+          return;
+        });
+
+      }
+      else {
+        favourites.doc(userId).set({  'favouriteQuestions': [questionId] }).then((result) {
+          return;
+        });
+      }
+
+    });
 
   }
 
