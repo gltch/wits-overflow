@@ -9,7 +9,7 @@ class MyPostsTab extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.all(10),
       children: [
-        QuestionSummary()
+        //QuestionSummary()
       ],
     );
 

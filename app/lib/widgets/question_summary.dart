@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:wits_overflow/screens/questions_and_answers_screen.dart';
 
 class QuestionSummary extends StatelessWidget {
+
+  final Map<String, dynamic> data;
+
+  QuestionSummary({required this.data}) ;
   
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,7 @@ class QuestionSummary extends StatelessWidget {
                   height: double.infinity,
                   width: 100,
                   child: Center(child: 
-                    Text('12254\nvotes', textAlign: TextAlign.center
+                    Text("${(this.data['votes'] != null) ? this.data['votes'] : 0}\nvotes", textAlign: TextAlign.center
                   )),
                 ),
 
@@ -44,7 +48,7 @@ class QuestionSummary extends StatelessWidget {
                     children: [
 
                       Text(
-                        'C# exporting arabic strings to a pdf from a user control s reversing the characters and some more text',
+                        this.data['title'],
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

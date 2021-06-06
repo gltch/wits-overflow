@@ -9,7 +9,7 @@ class FavouritesTab extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.all(10),
       children: [
-        QuestionSummary()
+        //QuestionSummary()
       ],
     );
 

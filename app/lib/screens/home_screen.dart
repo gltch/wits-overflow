@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:wits_overflow/utils/wits_overflow_data.dart';
 import 'package:wits_overflow/widgets/favourites_tab.dart';
 import 'package:wits_overflow/widgets/my_posts_tab.dart';
-import 'package:wits_overflow/widgets/question_summary.dart';
 import 'package:wits_overflow/widgets/recent_activity_tab.dart';
 import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
