@@ -58,11 +58,17 @@ class WitsOverflowData {
 
   }
 
-  Future<List<Map<String, dynamic>>> fetchModules() async {
+  Future<List<Map<String, dynamic>>> fetchModules([String? courseId]) async {
 
     List<Map<String, dynamic>> results = List.empty(growable: true);
 
-    await modules
+    Query<Map<String, dynamic>> ref = modules;
+
+    if (courseId != null && courseId != "") {
+       ref = ref.where("courseId", isEqualTo: courseId);
+    }
+
+    await ref
     .get()
     .then((snapshot) => {
       snapshot.docs.forEach((doc) {
@@ -86,23 +92,23 @@ class WitsOverflowData {
 
     String? courseId;
 
-    await courses.add({ 'name': 'Computer Science' }).then((doc) {
+    await courses.add({ 'code': 'COMS', 'name': 'Computer Science' }).then((doc) {
       courseId = doc.id;
     });
 
-    await modules.add({ 'courseId': courseId, 'name': 'Software Design' });
-    await modules.add({ 'courseId': courseId, 'name': 'Machine Learning' });
-    await modules.add({ 'courseId': courseId, 'name': 'Computer Graphics and Visualization' });
-    await modules.add({ 'courseId': courseId, 'name': 'Formal Languages and Automata' });
+    await modules.add({ 'courseId': courseId, 'code': 'COMS3009', 'name': 'Software Design' });
+    await modules.add({ 'courseId': courseId, 'code': 'COMS3007', 'name': 'Machine Learning' });
+    await modules.add({ 'courseId': courseId, 'code': 'COMS3006', 'name': 'Computer Graphics and Visualization' });
+    await modules.add({ 'courseId': courseId, 'code': 'COMS3003', 'name': 'Formal Languages and Automata' });
 
-    await courses.add({ 'name': 'Mathematics' }).then((doc) {
+    await courses.add({ 'code': 'MATH', 'name': 'Mathematics' }).then((doc) {
       courseId = doc.id;
     });
 
-    await modules.add({ 'courseId': courseId, 'name': 'Abstract Mathematics' });
-    await modules.add({ 'courseId': courseId, 'name': 'Basic Analysis' });
-    await modules.add({ 'courseId': courseId, 'name': 'Number Theory' });
-    await modules.add({ 'courseId': courseId, 'name': 'Calculus' });
+    await modules.add({ 'courseId': courseId, 'code': 'MATH2007', 'name': 'Multivariable Calculus' });
+    await modules.add({ 'courseId': courseId, 'code': 'MATH2019', 'name': 'Linear Algebra' });
+    await modules.add({ 'courseId': courseId, 'code': 'MATH2025', 'name': 'Transition to Abstract Maths' });
+    await modules.add({ 'courseId': courseId, 'code': 'MATH2001', 'name': 'Basic Analysis' });
 
   }
 
