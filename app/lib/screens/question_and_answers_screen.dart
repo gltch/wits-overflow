@@ -6,10 +6,12 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:wits_overflow/forms/question_answer_form.dart';
 import 'package:wits_overflow/forms/question_comment_form.dart';
 import 'package:wits_overflow/utils/functions.dart';
+import 'package:wits_overflow/utils/wits_overflow_data.dart';
 import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
 
@@ -276,6 +278,33 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
     else{
       final snackBar = SnackBar(content: Text('Already voted'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    }
+
+  }
+
+  void _notify(message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1
+    );
+  }
+
+  void _addFavouriteQuestion() {
+
+    if (FirebaseAuth.instance.currentUser != null) {
+
+      String questionId = this.id;
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+
+      WitsOverflowData().addFavouriteQuestion(
+        userId: userId, 
+        questionId: questionId
+      ).then((result) {
+          _notify('Favourite added.');
+      });
 
     }
 
@@ -741,29 +770,30 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                         ),
                       ),
                     ),
-                    padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    padding: EdgeInsets.all(15),
                     child: Text(
                       this.getQuestionBody(),
                     ),
                   ),
 
-                  Row(
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Row(
                     // mainAxisAlignment: MainAxisAlignment.start,
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     // mainAxisSize: MainAxisSize.,
                     children: [
 
                       // share button
-                      TextButton(
-                        child: Text(
-                          "Share",
+                      TextButton.icon(
+                        icon: Icon(Icons.favorite),
+                        label: Text(
+                          "Favourite",
                           style: TextStyle(
                             fontSize: 12,
                           ),
                         ),
-                        onPressed: (){
-                          print("[QUESTION SHARE BUTTON PRESSED]");
-                        },
+                        onPressed: () => { this._addFavouriteQuestion()},
                         style: TextButton.styleFrom(
                           minimumSize: Size(0, 0),
                           padding: EdgeInsets.all(1),
@@ -773,44 +803,45 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                       ),
 
                       // edit button
-                      TextButton(
-                        child: Text(
-                          "Edit",
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                        onPressed: (){
-                          print("[QUESTION EDIT BUTTON PRESSED]");
-                        },
-                        style: TextButton.styleFrom(
-                          minimumSize: Size(0, 0),
-                          padding: EdgeInsets.all(1),
-                          primary: Color.fromRGBO(32, 141, 149, 1.0),
-                          // backgroundColor: Colors.black12,
+                      // TextButton(
+                      //   child: Text(
+                      //     "Edit",
+                      //     style: TextStyle(
+                      //       fontSize: 12,
+                      //     ),
+                      //   ),
+                      //   onPressed: (){
+                      //     print("[QUESTION EDIT BUTTON PRESSED]");
+                      //   },
+                      //   style: TextButton.styleFrom(
+                      //     minimumSize: Size(0, 0),
+                      //     padding: EdgeInsets.all(1),
+                      //     primary: Color.fromRGBO(32, 141, 149, 1.0),
+                      //     // backgroundColor: Colors.black12,
 
-                        ),
-                      ),
+                      //   ),
+                      // ),
 
-                      // follow button
-                      TextButton(
-                        child: Text(
-                          "Follow",
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                        onPressed: (){
-                          print("[QUESTION FOLLOW BUTTON PRESSED]");
-                        },
-                        style: TextButton.styleFrom(
-                          minimumSize: Size(0, 0),
-                          padding: EdgeInsets.all(1),
-                          // backgroundColor: Colors.black12,
-                          primary: Color.fromRGBO(32, 141, 149, 1.0),
-                        ),
-                      ),
+                      // // follow button
+                      // TextButton(
+                      //   child: Text(
+                      //     "Follow",
+                      //     style: TextStyle(
+                      //       fontSize: 12,
+                      //     ),
+                      //   ),
+                      //   onPressed: (){
+                      //     print("[QUESTION FOLLOW BUTTON PRESSED]");
+                      //   },
+                      //   style: TextButton.styleFrom(
+                      //     minimumSize: Size(0, 0),
+                      //     padding: EdgeInsets.all(1),
+                      //     // backgroundColor: Colors.black12,
+                      //     primary: Color.fromRGBO(32, 141, 149, 1.0),
+                      //   ),
+                      // ),
                     ],
+                  ),
                   ),
 
                   /// user who asked question
