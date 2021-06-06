@@ -42,7 +42,7 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
 
 
   void getData() async{
-    this.question = await FirebaseFirestore.instance.collection('questions').doc(this.questionId).get();
+    this.question = await FirebaseFirestore.instance.collection('questions-2').doc(this.questionId).get();
 
     setState(() {
       this.isBusy = false;
@@ -68,7 +68,7 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
       'answeredAt': DateTime.now(),
     };
 
-    CollectionReference questionAnswersCollection = FirebaseFirestore.instance.collection('questions').doc(this.questionId).collection('answers');
+    CollectionReference questionAnswersCollection = FirebaseFirestore.instance.collection('questions-2').doc(this.questionId).collection('answers');
     questionAnswersCollection.add(data).then((onValue) {
       print("[QUESTION ADDED]");
       ScaffoldMessenger.of(context).showSnackBar(
