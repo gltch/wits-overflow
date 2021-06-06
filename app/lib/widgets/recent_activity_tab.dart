@@ -7,7 +7,9 @@ class RecentActivityTab extends StatelessWidget {
   late Future<List<Map<String, dynamic>>> questions;
 
   RecentActivityTab() {
-    questions = WitsOverflowData().fetchQuestions();
+
+    questions = WitsOverflowData().fetchLatestQuestions(3);
+
   }
 
   @override
@@ -25,7 +27,7 @@ class RecentActivityTab extends StatelessWidget {
                 return QuestionSummary(data: data);
               }
               else {
-                return Text('No recent activity2');
+                return SizedBox.shrink();
               }
 
             }

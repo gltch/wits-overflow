@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wits_overflow/screens/questions_and_answers_screen.dart';
+import 'package:wits_overflow/screens/question_and_answers_screen.dart';
 
 class QuestionSummary extends StatelessWidget {
 
@@ -13,10 +13,33 @@ class QuestionSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    Widget _createBadges() {
+      
+      List<Widget> list = <Widget>[];
+
+      if (this.data.containsKey('tags')) {
+        for(var i = 0; i < this.data['tags'].length; i++){
+
+          list.add(new Container(
+            margin: EdgeInsets.only(right: 5),
+            color: Colors.lightBlue.shade50,
+            child: Padding(
+                padding: EdgeInsets.all(5),
+                child: Text(this.data['tags'][i])
+              ),
+          ));
+
+        }
+      }
+
+      return new Row(children: list);
+
+    }
+
     return GestureDetector(
           onTap: () => {
             Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => QuestionsAndAnswersScreen())),
+              MaterialPageRoute(builder: (context) => QuestionAndAnswersScreen(this.data['id']))),
           },
           child:
           Center(
@@ -60,32 +83,12 @@ class QuestionSummary extends StatelessWidget {
 
                       Divider(color: Colors.white, height: 4),
 
-                      Row(children: [
-
-                        Container(
-                          margin: EdgeInsets.only(right: 5),
-                          color: Colors.lightBlue.shade50,
-                          child: Padding(
-                              padding: EdgeInsets.all(5),
-                              child: (this.data['faculty'] != null) ? Text(this.data['faculty']) : SizedBox.shrink()
-                            ),
-                        ),
-
-                        Container(
-                          margin: EdgeInsets.only(right: 5),
-                          color: Colors.lightBlue.shade50,
-                          child: Padding(
-                              padding: EdgeInsets.all(5),
-                              child: (this.data['courseCode'] != null) ? Text(this.data['courseCode']) : SizedBox.shrink()
-                            ),
-                        ),
-                        
-                      ]),
+                      _createBadges(),
 
                       Divider(color: Colors.white, height: 5),
 
-                      (this.data['updatedAt'] == null) ? SizedBox.shrink() : 
-                      Text((this.data['updatedAt'] as Timestamp).toDate().toString(), style: TextStyle(
+                      (this.data['createdAt'] == null) ? SizedBox.shrink() : 
+                      Text((this.data['createdAt'] as Timestamp).toDate().toString(), style: TextStyle(
                         color: Theme.of(context).disabledColor
                       ))
 

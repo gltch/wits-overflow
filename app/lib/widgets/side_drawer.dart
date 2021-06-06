@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wits_overflow/screens/module_questions_screen.dart';
 import 'package:wits_overflow/screens/post_question_screen.dart';
 import 'package:wits_overflow/screens/user_info_screen.dart';
 
@@ -144,12 +145,12 @@ class SideDrawer extends StatelessWidget {
                                                 onTap: () => {
                                                   Navigator.pushReplacement(context,
                                                       MaterialPageRoute(
-                                                        builder: (context) => HomeScreen(module: moduleData['id']))),
+                                                        builder: (context) => ModuleQuestionsScreen(moduleId: moduleData['id']))),
                                                 },
                                               );
                                               }
                                               else {
-                                                return Container();
+                                                return SizedBox.shrink();
                                               }
                                               
                                             }
