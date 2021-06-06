@@ -7,10 +7,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:wits_overflow/screens/home_screen.dart';
-//import 'package:wits_overflow/screens/home_screen.dart';
-//import 'package:wits_overflow/screens/user_info_screen.dart';
+
 import 'package:wits_overflow/utils/storage.dart';
-import 'package:wits_overflow/screens/api_request_example.dart';
 
 // TODO: storage is not working well on my pc
 // TODO: enter user information in the database
@@ -19,29 +17,32 @@ import 'package:wits_overflow/screens/api_request_example.dart';
 class Authentication {
 
 
-  static Future<FirebaseApp> initializeFirebase({
-    required BuildContext context,
-  }) async {
+  static Future<FirebaseApp> initializeFirebase({required BuildContext context,}) async {
+    print('[INITIALISING FIREBASE]');
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
+      print('[USER IS NOT NULL]');
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           //builder: (context) => UserInfoScreen(
           //  user: user,
           //),
-          //builder: (context) => HomeScreen(),
           builder: (context) => HomeScreen(),
+          // builder: (context) => ApiRequestExampleScreen(),
         ),
       );
     }
+
+    print('[USER IS NULL]');
 
     return firebaseApp;
   }
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
+
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
@@ -76,7 +77,7 @@ class Authentication {
       //     await googleSignIn.signIn();
 
       final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-
+      print('[googleSignIn.clientId: ${googleSignIn.clientId}]');
 
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
@@ -123,7 +124,7 @@ class Authentication {
       var email = user.email;
 
       print('[USER DISPLAY NAME: ${user
-          .displayName}, USER ACCESS TOKEN ${await user.getIdToken()}]');
+          .displayName}, USER ID TOKEN ${await user.getIdToken()}]');
       Map<String, String> data = {
         'displayName': user.displayName.toString(),
         'email': user.email.toString(),
@@ -132,25 +133,25 @@ class Authentication {
           data);
 
 
-      if (email != null && !email.endsWith('wits.ac.za')) {
-        // Sign out
-        user = null; // Important
-        await signOut(context: context);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          Authentication.customSnackBar(
-            content: 'Only Wits users are permitted at this stage!',
-          ),
-        );
-      }
-
-      else {
-      // //   // Save details to secure storage:
+      // if (email != null && !email.endsWith('wits.ac.za')) {
+      //   // Sign out
+      //   user = null; // Important
+      //   await signOut(context: context);
+      //
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     Authentication.customSnackBar(
+      //       content: 'Only Wits users are permitted at this stage!',
+      //     ),
+      //   );
+      // }
+      //
+      // else {
+      // Save details to secure storage:
         var token = await user.getIdToken();
         SecureStorage.write('user.email', user.email.toString());
         SecureStorage.write('user.name', user.displayName.toString());
         SecureStorage.write('user.token', token);
-      }
+      // }
     }
 
     return user;

@@ -519,6 +519,31 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/lib/screens/home_screen.dart",
+			"settings":
+			{
+				"buffer_size": 5497,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/lib/forms/question_answer_form.dart",
+			"settings":
+			{
+				"buffer_size": 8374,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/lib/forms/question_comment_form.dart",
+			"settings":
+			{
+				"buffer_size": 7856,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -769,15 +794,23 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/reube/Documents/projects/wits-overflow"
+		"/C/Users/reube/Documents/projects/wits-overflow",
+		"/C/Users/reube/Documents/projects/wits-overflow/app",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/forms",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/screens"
 	],
 	"file_history":
 	[
+		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/forms/question_comment_form.dart",
+		"/C/Users/reube/Documents/projects/wits-overflow/app/web/index.html",
+		"/C/Users/reube/Desktop/answer_correct_placeholder.svg",
+		"/C/Users/reube/Desktop/answer_correct.svg",
+		"/C/Users/reube/Desktop/caret-up.svg",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/startup/main_dev.dart",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/startup/main_prod.dart",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/screens/sign_in_screen.dart",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/startup/wits_overflow_app.dart",
-		"/C/Users/reube/Documents/projects/wits-overflow/app/web/index.html",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/generated_plugin_registrant.dart",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/models/question.dart",
 		"/C/Users/reube/Documents/projects/wits-overflow/app/lib/screens/api_request_example.dart",
@@ -896,11 +929,7 @@
 		"/C/Users/reube/Documents/SCHOOL/2019/semester_1/COMS3006 CGandV/Web/computerG/index.html",
 		"/C/Users/reube/Documents/projects/thuto/venv/Lib/site-packages/django/contrib/auth/mixins.py",
 		"/C/Users/reube/Documents/projects/scripts/dictionary.py",
-		"/C/Users/reube/Documents/projects/mysite/extras.py",
-		"/C/Users/reube/Documents/projects/thuto/thuto/wsgi.py",
-		"/C/Users/reube/Documents/projects/mysite_sublime_project.sublime-project",
-		"/C/Users/reube/Documents/projects/mysite/manage.py",
-		"/C/Users/reube/Documents/projects/mysite/thuto/wsgi.py"
+		"/C/Users/reube/Documents/projects/mysite/extras.py"
 	],
 	"find":
 	{
@@ -920,6 +949,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"questionAnswersCollection",
 			"google_sign_in_button",
 			"googlesigninbutton",
 			"runApp",
@@ -942,8 +972,99 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/lib/screens/home_screen.dart",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5497,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4616,
+								4616
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Dart/Dart.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1364.8,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/lib/forms/question_answer_form.dart",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8374,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2376,
+								2376
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Dart/Dart.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 780.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/lib/forms/question_comment_form.dart",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7856,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2464,
+								2464
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Dart/Dart.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 819.2,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1048,7 +1169,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 242.0,
+	"side_bar_width": 436.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
