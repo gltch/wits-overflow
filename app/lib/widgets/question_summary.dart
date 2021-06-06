@@ -67,7 +67,7 @@ class QuestionSummary extends StatelessWidget {
                           color: Colors.lightBlue.shade50,
                           child: Padding(
                               padding: EdgeInsets.all(5),
-                              child: Text(this.data['faculty'])
+                              child: (this.data['faculty'] != null) ? Text(this.data['faculty']) : SizedBox.shrink()
                             ),
                         ),
 
@@ -76,7 +76,7 @@ class QuestionSummary extends StatelessWidget {
                           color: Colors.lightBlue.shade50,
                           child: Padding(
                               padding: EdgeInsets.all(5),
-                              child: Text(this.data['courseCode'])
+                              child: (this.data['courseCode'] != null) ? Text(this.data['courseCode']) : SizedBox.shrink()
                             ),
                         ),
                         
@@ -84,6 +84,7 @@ class QuestionSummary extends StatelessWidget {
 
                       Divider(color: Colors.white, height: 5),
 
+                      (this.data['updatedAt'] == null) ? SizedBox.shrink() : 
                       Text((this.data['updatedAt'] as Timestamp).toDate().toString(), style: TextStyle(
                         color: Theme.of(context).disabledColor
                       ))
