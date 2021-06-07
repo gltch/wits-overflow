@@ -26,13 +26,17 @@ class WitsOverflowData {
     Map<String, dynamic>? result;
 
     await questions
+    .doc(questionId)
     .get()
-    .then((snapshot) => {
-      snapshot.docs.forEach((doc) {
-        Map<String, dynamic> data = doc.data();
-        data['id'] = doc.id;
-        result = data;
-      })
+    .then((snapshot) {
+
+      if (snapshot.exists) {
+
+        result = snapshot.data();
+        result!['id'] = snapshot.id;
+
+      }
+     
     });
 
     return result;
@@ -166,20 +170,24 @@ class WitsOverflowData {
 
       await favourites.doc(userId).get().then((doc) async {
 
-      if (doc.exists) {
+        if (doc.exists) {
 
-        var fq = doc['favouriteQuestions'];
-        for (int i = 0; i < fq.length; i++) {
+          var fq = doc['favouriteQuestions'];
+          for (int i = 0; i < fq.length; i++) {
 
-          await fetchQuestion(fq[i]).then((question) {
-            if (question != null) {
-              results.add(question);
-            }
-          });
-          
+            var questionId = fq[i];
+            print(questionId);
+
+            await fetchQuestion(questionId).then((question) {
+              print(question);
+              if (question != null) {
+                results.add(question);
+              }
+            });
+            
+          }
+
         }
-
-      }
 
     });
 

@@ -47,7 +47,13 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
   bool isBusy = true;
 
   _QuestionState(this.id){
+    //this.getData();
+  }
+
+  @override
+  void initState() {
     this.getData();
+    super.initState();
   }
 
   Future<void> getData() async {
@@ -110,7 +116,6 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
       this.isBusy = false;
     });
   }
-
 
   Widget buildCommentsWidget(){
 
@@ -223,7 +228,7 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
      );
   }
 
-  void voteQuestion({required int value}) async{
+  void voteQuestion({required int value}) async {
     //Future<DocumentSnapshot<Map<String, dynamic>>> vote;
     Map<String, dynamic> data = {
       'value': value,
@@ -236,7 +241,8 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
 
     QuerySnapshot<Map<String, dynamic>> questionUserVote = await questionVotesCollection.where('user', isEqualTo: userUid).get();
     if(questionUserVote.docs.isEmpty){
-      questionVotesCollection.add(data).then((value){
+      questionVotesCollection.add(data).then((value) {
+
         final snackBar = SnackBar(
           content: Text(
             'Vote added',
@@ -275,12 +281,24 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
   }
 
   void _notify(message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 1
+
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        style: TextStyle(
+          color: Colors.green,
+        ),
+      ),
+      // backgroundColor: Colors.greenAccent,
     );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    // Fluttertoast.showToast(
+    //   msg: message,
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   gravity: ToastGravity.CENTER,
+    //   timeInSecForIosWeb: 1
+    // );
   }
 
   void _addFavouriteQuestion() {
@@ -596,13 +614,17 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                   Container(
                     child: Row(
                       children: [
+                        VerticalDivider(width: 5, color: Colors.transparent),
                         // user avatar image
-                        Container(
+                        ClipOval(
                           child: Image(
                             height: 25,
                             width: 25,
-                            image: AssetImage('assets/images/default_avatar.png'))
+                            //image: AssetImage('assets/images/default_avatar.png'))
+                            image:  NetworkImage(FirebaseAuth.instance.currentUser!.photoURL!))
                         ),
+
+                        VerticalDivider(width: 10, color: Colors.transparent),
 
                         // user information (display name, metadata)
                         Column(
@@ -628,14 +650,16 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
 
                   // datetime
                   Container(
+                    margin: EdgeInsets.only(right: 5),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'answeredAt',
+                          'answered at',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
+                            color: Theme.of(context).disabledColor
                             // backgroundColor: Colors.black12,
                           ),
                         ),
@@ -643,11 +667,13 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                           answeredAt,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
+                            color: Theme.of(context).disabledColor
                           ),
                         ),
                       ],
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -799,8 +825,8 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                         Expanded(
                           child: Container(
                             // color: Colors.black12,
-                            alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.all(5),
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.all(10),
                             child: Text(
                               this.getQuestionTitle(),
                               style: TextStyle(
@@ -929,14 +955,20 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                         Container(
                           child: Row(
                             children: [
+
+                              VerticalDivider(width: 5),
                               // user avatar image
-                              Container(
+                              ClipOval(
                                 child: Image(
                                   height: 25,
-                                  width: 25,
+                                  width: 25,  
+                                  //image: AssetImage('assets/images/default_avatar.png'))
+                                  image:  NetworkImage(FirebaseAuth.instance.currentUser!.photoURL!)
+                                )
 
-                                  image: AssetImage('assets/images/default_avatar.png'))
                               ),
+
+                              VerticalDivider(width: 10),
 
                               // user information (display name, metadata)
                               Column(
@@ -962,6 +994,7 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
 
                         // datetime
                         Container(
+                          margin: EdgeInsets.only(right: 5),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -970,6 +1003,7 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                                 'asked',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).disabledColor
                                   // backgroundColor: Colors.black12,
                                 ),
                               ),
@@ -977,6 +1011,7 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                                 formatDateTime(DateTime.fromMillisecondsSinceEpoch((this.question!.get('createdAt') as Timestamp).millisecondsSinceEpoch)),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).disabledColor
                                 ),
                               ),
                             ],
