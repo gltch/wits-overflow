@@ -32,11 +32,11 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
 
   final String id; // question id
 
-  DocumentSnapshot ? question;
+  DocumentSnapshot<Map<String, dynamic>> ? question;
 
   QuerySnapshot<Map<String, dynamic>> ? questionVotes;
-  QuerySnapshot<Map<String, dynamic>> ? comments;
-  QuerySnapshot<Map<String, dynamic>> ? answers;
+  QuerySnapshot<Map<String, dynamic>> ? questionComments;
+  QuerySnapshot<Map<String, dynamic>> ? questionAnswers;
 
   DocumentSnapshot<Map<String, dynamic>> ? questionUser;
 
@@ -50,11 +50,6 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
     this.getData();
   }
 
-
-  // bool userCanVote(){
-  //
-  // }
-
   Future<void> getData() async {
 
     // retrieve necessary data from firebase to view this page
@@ -64,11 +59,11 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
     // get votes information for each answer
     Future<Map<String, QuerySnapshot>> getAnswerVotes() async{
       Map<String, QuerySnapshot> votes = Map();
-      for(var i = 0; i < this.answers!.docs.length; i++){
+      for(var i = 0; i < this.questionAnswers!.docs.length; i++){
         votes.addAll({
-          this.answers!.docs[i].id: await FirebaseFirestore.instance.collection('questions-2')
+          this.questionAnswers!.docs[i].id: await FirebaseFirestore.instance.collection('questions-2')
           .doc(this.id).collection('answers')
-          .doc(this.answers!.docs[i].id)
+          .doc(this.questionAnswers!.docs[i].id)
           .collection('votes').get()
         });
       }
@@ -78,8 +73,8 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
     // get user information for each comment
     Future<Map<String, DocumentSnapshot<Map<String, dynamic>>>> getCommentsUsers() async{
       Map<String, DocumentSnapshot<Map<String, dynamic>>> commentsUsers = Map();
-      for(var i = 0; i < this.comments!.docs.length; i++){
-        commentsUsers.addAll({this.comments!.docs[i].id: await FirebaseFirestore.instance.collection('users').doc(this.comments!.docs[i].get('authorId')).get()});
+      for(var i = 0; i < this.questionComments!.docs.length; i++){
+        commentsUsers.addAll({this.questionComments!.docs[i].id: await FirebaseFirestore.instance.collection('users').doc(this.questionComments!.docs[i].get('authorId')).get()});
       }
       return commentsUsers;
     }
@@ -88,10 +83,10 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
     // get user information for each answer
     Future<Map<String, DocumentSnapshot<Map<String, dynamic>>>> getAnswersUsers() async{
       Map<String, DocumentSnapshot<Map<String, dynamic>>> answersUsers = Map();
-      for(var i = 0; i < this.answers!.docs.length; i++){
-        print('[ADDING USER INFORMATION TO ANSWER WITH ID: ${this.answers!.docs[i].id}]');
-        DocumentSnapshot<Map<String, dynamic>> user = await FirebaseFirestore.instance.collection('users').doc(this.answers!.docs[i].get('authorId')).get();
-        answersUsers.addAll({this.answers!.docs[i].id: user});
+      for(var i = 0; i < this.questionAnswers!.docs.length; i++){
+        print('[ADDING USER INFORMATION TO ANSWER WITH ID: ${this.questionAnswers!.docs[i].id}]');
+        DocumentSnapshot<Map<String, dynamic>> user = await FirebaseFirestore.instance.collection('users').doc(this.questionAnswers!.docs[i].get('authorId')).get();
+        answersUsers.addAll({this.questionAnswers!.docs[i].id: user});
         print('[USER: id: ${user.id}]');
         // print('[USER INFORMATION ADDED TO ANSWER WITH ID: ${this.answers!.docs[i].id}, user.uid: ${answersUsers[this.answers!.docs[i].id]!.id}, user.displayName: ${answersUsers[this.answers!.docs[i].id]!.get('displayName')}]');
       }
@@ -103,8 +98,8 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
     // stores information of the user that first asked the question
     this.questionUser = await FirebaseFirestore.instance.collection('users').doc(this.question!.get('authorId')).get();
     this.questionVotes = await FirebaseFirestore.instance.collection('questions-2').doc(this.id).collection('votes').get();
-    this.comments = await FirebaseFirestore.instance.collection('questions-2').doc(this.id).collection('comments').orderBy('createdAt', descending: true).get();
-    this.answers = await FirebaseFirestore.instance.collection('questions-2').doc(this.id).collection('answers').get();
+    this.questionComments = await FirebaseFirestore.instance.collection('questions-2').doc(this.id).collection('comments').get();
+    this.questionAnswers = await FirebaseFirestore.instance.collection('questions-2').doc(this.id).collection('answers').get();
 
     this.answerVotes = await getAnswerVotes();
     this.answersUsers = await getAnswersUsers();
@@ -120,8 +115,6 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
   Widget buildCommentsWidget(){
 
     // TODO: remote the following lines in production
-
-
     Widget buildCommentWidget({required String displayName, required String body, required DateTime createdAt }){
       return Container(
         padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
@@ -183,11 +176,11 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
         ),
       );
     }
-
+    print('[QUESTION COMMENTS LENGTH : ${this.questionComments!.docs.length.toString()}]');
     List<Widget> comments = <Widget>[];
-    for(var i = 0; i < this.comments!.docs.length; i++){
+    for(var i = 0; i < this.questionComments!.docs.length; i++){
     // this.comments!.docs.forEach((commentDoc) {
-      QueryDocumentSnapshot<Map<String, dynamic>> commentDoc = this.comments!.docs[i];
+      QueryDocumentSnapshot<Map<String, dynamic>> commentDoc = this.questionComments!.docs[i];
       print('[CREATING COMMENT WIDGET]');
       DocumentSnapshot<Map<String, dynamic>> commentUser = this.commentsUsers[commentDoc.id]!;
       String displayName;
@@ -230,8 +223,8 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
      );
   }
 
-  void vote({required int value}) async{
-    //Future<DocumentSnapshot<Map<String, dynamic>>> vote;
+  void voteQuestion({required int value}) async{
+    Future<DocumentSnapshot<Map<String, dynamic>>> vote;
     Map<String, dynamic> data = {
       'value': value,
       'user': FirebaseAuth.instance.currentUser!.uid,
@@ -239,13 +232,11 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
     };
 
     String userUid = FirebaseAuth.instance.currentUser!.uid;
-    CollectionReference<Map<String, dynamic>> questionVotesCollection = FirebaseFirestore.instance.collection('questions').doc(this.question!.id).collection('votes');
+    CollectionReference<Map<String, dynamic>> questionVotesCollection = FirebaseFirestore.instance.collection('questions-2').doc(this.question!.id).collection('votes');
 
     QuerySnapshot<Map<String, dynamic>> questionUserVote = await questionVotesCollection.where('user', isEqualTo: userUid).get();
     if(questionUserVote.docs.isEmpty){
       questionVotesCollection.add(data).then((value){
-        // TODO: show message that the user vote was successfully added to database
-
         final snackBar = SnackBar(
           content: Text(
             'Vote added',
@@ -310,6 +301,48 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
 
   }
 
+  void changeAnswerStatus({required String answerId}) async{
+    setState(() {
+      this.isBusy = true;
+    });
+    // if the user is the author of the question
+
+    // retrieve answer from database
+    CollectionReference<Map<String, dynamic>> questionAnswersCollection = FirebaseFirestore.instance.collection('questions-2').doc(this.id).collection('answers');
+    DocumentSnapshot<Map<String, dynamic>> answer = await questionAnswersCollection.doc(answerId).get();
+    bool accepted = (answer.data()!['accepted'] == null)  ? false : answer.data()!['accepted'];
+
+    bool value = false;
+    if( accepted == true){
+      // change answer
+      value = false;
+    }
+    else{
+      value = true;
+      // all other answer should change status
+      QuerySnapshot<Map<String, dynamic>> acceptedAnswer = await questionAnswersCollection.where('accepted', isEqualTo: true).get();
+      for(var i = 0; i < acceptedAnswer.docs.length; i++){
+        acceptedAnswer.docs.elementAt(i).reference.update({'accepted': false});
+      }
+    }
+
+    answer.reference.update({'accepted': value}).then((value){
+      _notify('Changed answer status');
+      Navigator.push(context, MaterialPageRoute(
+          builder: (BuildContext context){
+            return QuestionAndAnswersScreen(this.id);
+          }
+      ))
+      .catchError((error){
+        _notify('Error occurred');
+      });
+    });
+
+    setState(() {
+      this.isBusy = false;
+    });
+  }
+
 
   String getQuestionBody(){
     // TODO: get body field properly
@@ -328,9 +361,9 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
 
   QueryDocumentSnapshot getAnswer({required String answerId}){
     // returns answer (as QuerySnapsShot) from answers
-    for(var i = 0; i < this.answers!.docs.length; i++){
-      if(this.answers!.docs.elementAt(i).id == answerId){
-        return this.answers!.docs.elementAt(i);
+    for(var i = 0; i < this.questionAnswers!.docs.length; i++){
+      if(this.questionAnswers!.docs.elementAt(i).id == answerId){
+        return this.questionAnswers!.docs.elementAt(i);
       }
     }
     throw Exception("Could not find answer(id: $answerId) from available answers");
@@ -398,9 +431,45 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
   Widget buildAnswersWidget(){
     
     
-    Widget buildAnswerWidget({required String body, required String votes, required answeredAt, required String answerId}){
+    Widget buildAnswerWidget({required String body, required String votes, required answeredAt, required String answerId, bool accepted = false}){
       print('[BUILDING AN ANSWER WIDGET answerId \'$answerId\']');
       /// answer widget
+      
+      Widget getAnswerStatus(){
+        if(accepted == true){
+          // // if answer is correct
+          return GestureDetector(
+            onTap: (){this.changeAnswerStatus(answerId: answerId);},
+            child: SvgPicture.asset(
+              'assets/icons/answer_correct.svg',
+              semanticsLabel: 'Feed button',
+              placeholderBuilder: (context) {
+                return Icon(Icons.error, color: Colors.deepOrange);
+              },
+              height: 25,
+            ),
+          );
+
+        }else{
+          if(this.question!.data()!['authorId'] == FirebaseAuth.instance.currentUser!.uid){
+            return GestureDetector(
+              onTap: (){this.changeAnswerStatus(answerId: answerId);},
+              child: SvgPicture.asset(
+                'assets/icons/answer_correct.svg',
+                semanticsLabel: 'Feed button',
+                placeholderBuilder: (context) {
+                  return Icon(Icons.error, color: Colors.deepOrange);
+                },
+                height: 25,
+              ),
+            );
+          }
+          else{
+            return Padding(padding: EdgeInsets.all(0),);
+          }
+        }
+      }
+      
       return Container(
         decoration: BoxDecoration(
           border: Border(
@@ -482,6 +551,9 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                               height: 12.5,
                             ),
                           ),
+
+                          // answer status
+                          
                         ],
                       ),
                     ),
@@ -596,14 +668,16 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
     
     
     List<Widget> answers = <Widget>[];
-    for(var i = 0; i < this.answers!.docs.length; i++){
-      print('[GETTING QUESTION ANSWER VOTES WITH ID: ${this.answers!.docs[i].id.toString()}, this.answerVotes.keys().toString: ${this.answerVotes.keys.toString()}]');
+    for(var i = 0; i < this.questionAnswers!.docs.length; i++){
+      print('[GETTING QUESTION ANSWER VOTES WITH ID: ${this.questionAnswers!.docs[i].id.toString()}, this.answerVotes.keys().toString: ${this.answerVotes.keys.toString()}]');
+      bool ? accepted = this.questionAnswers!.docs.elementAt(i).data()['accepted'];
       answers.add(
         buildAnswerWidget(
-          votes: this.answerVotes[this.answers!.docs[i].id.toString()]!.docs.length.toString(),
-          body: this.answers!.docs[i].get('body'),
-          answeredAt: formatDateTime(DateTime.fromMillisecondsSinceEpoch((this.answers!.docs.elementAt(i).get('answeredAt') as Timestamp).millisecondsSinceEpoch)),
-          answerId: this.answers!.docs.elementAt(i).id,
+          votes: this.answerVotes[this.questionAnswers!.docs[i].id.toString()]!.docs.length.toString(),
+          body: this.questionAnswers!.docs[i].get('body'),
+          answeredAt: formatDateTime(DateTime.fromMillisecondsSinceEpoch((this.questionAnswers!.docs.elementAt(i).get('answeredAt') as Timestamp).millisecondsSinceEpoch)),
+          answerId: this.questionAnswers!.docs.elementAt(i).id,
+          accepted: accepted == null ? false : accepted,
         ),
       );
     }
@@ -659,14 +733,14 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Container(
-                              // color: Color.fromRGBO(214, 217, 220, 0.2),
+                              color: Color.fromRGBO(214, 217, 220, 0.2),
                               child: Column(
                                 // mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
 
                                   TextButton(
                                     onPressed: () {
-                                      this.vote(value: 1);
+                                      this.voteQuestion(value: 1);
                                     },
                                     style: TextButton.styleFrom(
                                       minimumSize: Size(0, 0),
@@ -695,7 +769,7 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                                   TextButton(
 
                                     onPressed: () {
-                                      this.vote(value: -1);
+                                      this.voteQuestion(value: -1);
                                     },
                                     style: TextButton.styleFrom(
                                       minimumSize: Size(0, 0),
@@ -970,7 +1044,7 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      '${this.answers!.docs.length.toString()} answers',
+                      '${this.questionAnswers!.docs.length.toString()} answers',
                       style: TextStyle(
                         fontSize: 25,
                       ),

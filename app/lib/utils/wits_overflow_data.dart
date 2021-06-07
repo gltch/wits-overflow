@@ -162,9 +162,9 @@ class WitsOverflowData {
 
   Future<List<Map<String, dynamic>>> fetchUserFavouriteQuestions({required String userId}) async {
 
-     List<Map<String, dynamic>> results = List.empty(growable: true);
+      List<Map<String, dynamic>> results = List.empty(growable: true);
 
-    await favourites.doc(userId).get().then((doc) async {
+      await favourites.doc(userId).get().then((doc) async {
 
       if (doc.exists) {
 
@@ -187,9 +187,8 @@ class WitsOverflowData {
 
   }
 
-  Future<void> addQuestion(Map<String, dynamic> data) async {
-
-    await questions.add(data);
+  Future<DocumentReference<Map<String, dynamic>>> addQuestion(Map<String, dynamic> data) async {
+    return questions.add(data);
 
   }
 

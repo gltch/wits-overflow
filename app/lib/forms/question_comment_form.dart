@@ -42,7 +42,7 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
 
 
   void getData() async{
-    this.question = await FirebaseFirestore.instance.collection('questions').doc(this.questionId).get();
+    this.question = await FirebaseFirestore.instance.collection('questions-2').doc(this.questionId).get();
 
     setState(() {
       this.isBusy = false;
@@ -61,12 +61,12 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
     });
 
     Map<String, dynamic> data = {
-      'user': FirebaseAuth.instance.currentUser!.uid,
+      'authorId': FirebaseAuth.instance.currentUser!.uid,
       'body': body,
       'commentedAt': DateTime.now(),
     };
 
-    CollectionReference questionCommentsCollection = FirebaseFirestore.instance.collection('questions').doc(this.questionId).collection('comments');
+    CollectionReference questionCommentsCollection = FirebaseFirestore.instance.collection('questions-2').doc(this.questionId).collection('comments');
     questionCommentsCollection.add(data).then((onValue) {
 
       print("[COMMENT ADDED]");
