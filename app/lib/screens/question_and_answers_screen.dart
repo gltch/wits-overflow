@@ -224,7 +224,7 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
   }
 
   void voteQuestion({required int value}) async{
-    Future<DocumentSnapshot<Map<String, dynamic>>> vote;
+    //Future<DocumentSnapshot<Map<String, dynamic>>> vote;
     Map<String, dynamic> data = {
       'value': value,
       'user': FirebaseAuth.instance.currentUser!.uid,
@@ -435,40 +435,40 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
       print('[BUILDING AN ANSWER WIDGET answerId \'$answerId\']');
       /// answer widget
       
-      Widget getAnswerStatus(){
-        if(accepted == true){
-          // // if answer is correct
-          return GestureDetector(
-            onTap: (){this.changeAnswerStatus(answerId: answerId);},
-            child: SvgPicture.asset(
-              'assets/icons/answer_correct.svg',
-              semanticsLabel: 'Feed button',
-              placeholderBuilder: (context) {
-                return Icon(Icons.error, color: Colors.deepOrange);
-              },
-              height: 25,
-            ),
-          );
+      // Widget getAnswerStatus(){
+      //   if(accepted == true){
+      //     // // if answer is correct
+      //     return GestureDetector(
+      //       onTap: (){this.changeAnswerStatus(answerId: answerId);},
+      //       child: SvgPicture.asset(
+      //         'assets/icons/answer_correct.svg',
+      //         semanticsLabel: 'Feed button',
+      //         placeholderBuilder: (context) {
+      //           return Icon(Icons.error, color: Colors.deepOrange);
+      //         },
+      //         height: 25,
+      //       ),
+      //     );
 
-        }else{
-          if(this.question!.data()!['authorId'] == FirebaseAuth.instance.currentUser!.uid){
-            return GestureDetector(
-              onTap: (){this.changeAnswerStatus(answerId: answerId);},
-              child: SvgPicture.asset(
-                'assets/icons/answer_correct.svg',
-                semanticsLabel: 'Feed button',
-                placeholderBuilder: (context) {
-                  return Icon(Icons.error, color: Colors.deepOrange);
-                },
-                height: 25,
-              ),
-            );
-          }
-          else{
-            return Padding(padding: EdgeInsets.all(0),);
-          }
-        }
-      }
+      //   }else{
+      //     if(this.question!.data()!['authorId'] == FirebaseAuth.instance.currentUser!.uid){
+      //       return GestureDetector(
+      //         onTap: (){this.changeAnswerStatus(answerId: answerId);},
+      //         child: SvgPicture.asset(
+      //           'assets/icons/answer_correct.svg',
+      //           semanticsLabel: 'Feed button',
+      //           placeholderBuilder: (context) {
+      //             return Icon(Icons.error, color: Colors.deepOrange);
+      //           },
+      //           height: 25,
+      //         ),
+      //       );
+      //     }
+      //     else{
+      //       return Padding(padding: EdgeInsets.all(0),);
+      //     }
+      //   }
+      // }
       
       return Container(
         decoration: BoxDecoration(
