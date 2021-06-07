@@ -1,36 +1,42 @@
-# wits_overflow
+<p align="center">
+  <img src="../assets/images/logo_square_small.jpg?raw=true" alt="Wits University"/>
+</p>
 
-This is the client application for the Wits Software Design project 2021.
+# Wits Overflow (Website & Mobile App)
 
-#### Getting started
+This section contains the code for the client application(s) of the Wits Software Design project 2021.
 
-For a description on how to get up and running, see the wiki article:
-[https://github.com/gltch/wits-overflow/wiki/Getting-Started](https://github.com/gltch/wits-overflow/wiki/Getting-Started)
+## Getting started
 
-#### Flutter commands:
+> This section is also available [here](https://github.com/gltch/wits-overflow/wiki/Getting-Started#app).
 
-- Check that Flutter is installed correctly
+### Getting the Flutter app up and running.
 
-    ``flutter doctor``
+Follow the Flutter installation guide here: https://flutter.dev/docs/get-started/install.
 
-- Run tests:
+> Note you will probably have to open the Flutter app directory as the root directory in your IDE because at this time Flutter doesn't support launching apps from sub-directories...
 
-    ``flutter test``
-    
-- Build the website: 
+Run the following command to check that everything installed correctly:
 
-    ``flutter build web``
+````
+flutter doctor
+````
 
-- Build android apk:
+In the app directory, run the following command to install the Flutter dependencies:
 
-    ``flutter build apk --split-per-abi``
+````
+flutter pub get
+````
 
-#### Docker commands:
+Run the following command to test the app:
 
-- Create the docker image: 
+````
+flutter test
+````
 
-    ``docker build -t wits-overflow:v0.0.1 .``
+Once this is done you should be able to debug the flutter app by pressing F5 as usual.
 
-- Create and run the docker container: 
+## Useful Information
 
-    ``docker run --name wits-overflow -e PORT=80 -d -p 5555:80 wits-overflow:v0.0.1``
+- https://github.com/gltch/wits-overflow/wiki/Useful-Links
+- https://github.com/gltch/wits-overflow/wiki/Useful-Commands

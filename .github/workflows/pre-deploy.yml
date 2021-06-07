@@ -38,7 +38,7 @@ jobs:
 
       # Build web 
       - name: Build the web app
-        run: flutter build web
+        run: flutter build web -t lib/startup/main_pre.dart
       
       # Deploy to Heroku
       - name: Deploy Web App to Heroku (Pre-Release Environment)
@@ -105,7 +105,7 @@ jobs:
     
       # Build android apk 
       - name: Build the Android app
-        run: flutter build apk --split-per-abi
+        run: flutter build apk -t lib/startup/main_pre.dart --split-per-abi
 
       # Upload output to artifacts
       - name: Upload the APK files as build artifacts
@@ -132,100 +132,3 @@ jobs:
           prerelease: true
           automatic_release_tag: "v_${{ github.run_id }}_${{ github.run_number }}"
           files: app/build/app/outputs/flutter-apk/*
-
-  # NodeJs Api
-  api:
-    name: Pre-Release Api
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./api
-
-    steps:
-      - uses: actions/checkout@v2
-
-      # Install dependencies
-      - name: Install dependencies
-        run: npm install
-
-      #Deploy API to Heroku
-      - name: Deploy Api to Heroku (Pre-Release Environment)
-        id: deploy1
-        continue-on-error: true
-        uses: gonuit/heroku-docker-deploy@v1.3.2
-        with:
-          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API_PRE }}
-          dockerfile_directory: ./api
-          dockerfile_name: Dockerfile
-          docker_options: "--no-cache"
-          process_type: web
-
-      #Deploy API to Heroku
-      - name: Deploy Api to Heroku (Pre-Release Environment) - Retry 1
-        if: steps.deploy1.outcome=='failure'
-        id: retry1
-        continue-on-error: true
-        uses: gonuit/heroku-docker-deploy@v1.3.2
-        with:
-          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API_PRE }}
-          dockerfile_directory: ./api
-          dockerfile_name: Dockerfile
-          docker_options: "--no-cache"
-          process_type: web
-
-      #Deploy API to Heroku
-      - name: Deploy Api to Heroku (Pre-Release Environment) - Retry 2
-        if: steps.retry1.outcome=='failure'
-        id: retry2
-        continue-on-error: true
-        uses: gonuit/heroku-docker-deploy@v1.3.2
-        with:
-          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API_PRE }}
-          dockerfile_directory: ./api
-          dockerfile_name: Dockerfile
-          docker_options: "--no-cache"
-          process_type: web
-
-      #Deploy API to Heroku
-      - name: Deploy Api to Heroku (Pre-Release Environment) - Final Retry
-        if: steps.retry2.outcome=='failure'
-        uses: gonuit/heroku-docker-deploy@v1.3.2
-        with:
-          email: ${{ secrets.HEROKU_EMAIL_ADDRESS }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_API_PRE }}
-          dockerfile_directory: ./api
-          dockerfile_name: Dockerfile
-          docker_options: "--no-cache"
-          process_type: web
-
-  # PostgreSql Database
-  db:
-    name: Pre-Release Database
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./api/data
-
-    steps:
-      - uses: actions/checkout@v2
-
-      # Install dependencies
-      - name: Install dependencies
-        run: npm install
-
-      # Migrage database changes
-      - name: Migrate database changes
-        env:
-          DB_PRE_HOST: ${{ secrets.DB_PRE_HOST }}
-          DB_PRE_NAME: ${{ secrets.DB_PRE_NAME }}
-          DB_PRE_USER: ${{ secrets.DB_PRE_USER }}
-          DB_PRE_PASSWORD: ${{ secrets.DB_PRE_PASSWORD }}
-        run: npx sequelize-cli db:migrate --env pre
-

@@ -1,8 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wits_overflow">
+
+   <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
         android:label="wits_overflow"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -38,4 +42,17 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+    </queries>
+    
 </manifest>

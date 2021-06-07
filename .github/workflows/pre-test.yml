@@ -33,7 +33,7 @@ jobs:
 
       # Check for any formatting issues in the code.
       - name: Check for any formatting issues in the code
-        run: flutter format --set-exit-if-changed .
+        run: flutter format -n --set-exit-if-changed .
 
       # Statically analyze the code for any errors.
       - name: Analyse the code for any errors
@@ -50,28 +50,3 @@ jobs:
         with: 
           token: ${{ secrets.CODECOV_TOKEN }} 
           file: ./app/coverage/lcov.info
-
-  api-test:
-    name: Api Testing (Pre-Release)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./api
-
-    steps:
-      - uses: actions/checkout@v2
-
-      # Install dependencies
-      - name: Install dependencies
-        run: npm install
-
-      # Run unit tests
-      - name: Run unit tests
-        run: npm run test
-
-      # Code coverage
-      - name: Deploy code coverage to codecov.io
-        uses: codecov/codecov-action@v1 
-        with: 
-          token: ${{ secrets.CODECOV_TOKEN }} 
-          file: ./api/coverage.lcov
