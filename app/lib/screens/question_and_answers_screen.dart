@@ -452,7 +452,6 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
     Widget buildAnswerWidget({required String body, required String votes, required answeredAt, required String answerId, bool accepted = false}){
       print('[BUILDING AN ANSWER WIDGET answerId \'$answerId\']');
       /// answer widget
-      
       // Widget getAnswerStatus(){
       //   if(accepted == true){
       //     // // if answer is correct
@@ -487,6 +486,40 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
       //     }
       //   }
       // }
+      Widget getAnswerStatus(){
+        if(accepted == true){
+          // // if answer is correct
+          return GestureDetector(
+            onTap: (){this.changeAnswerStatus(answerId: answerId);},
+            child: SvgPicture.asset(
+              'assets/icons/answer_correct.svg',
+              semanticsLabel: 'Feed button',
+              placeholderBuilder: (context) {
+                return Icon(Icons.error, color: Colors.deepOrange);
+              },
+              height: 25,
+            ),
+          );
+
+        }else{
+          if(this.question!.data()!['authorId'] == FirebaseAuth.instance.currentUser!.uid){
+            return GestureDetector(
+              onTap: (){this.changeAnswerStatus(answerId: answerId);},
+              child: SvgPicture.asset(
+                'assets/icons/answer_correct_placeholder.svg',
+                semanticsLabel: 'Feed button',
+                placeholderBuilder: (context) {
+                  return Icon(Icons.error, color: Colors.deepOrange);
+                },
+                height: 25,
+              ),
+            );
+          }
+          else{
+            return Padding(padding: EdgeInsets.all(0),);
+          }
+        }
+      }
       
       return Container(
         decoration: BoxDecoration(
@@ -571,6 +604,7 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
                           ),
 
                           // answer status
+                          getAnswerStatus(),
                           
                         ],
                       ),

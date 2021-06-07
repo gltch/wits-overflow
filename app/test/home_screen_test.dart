@@ -1,17 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
 
 void main() {
+
+
   testWidgets('Test Home Screen', (WidgetTester tester) async {
+
     Widget testWidget = new MediaQuery(
-        data: new MediaQueryData(),
-        child: new MaterialApp(home: new HomeScreen()));
+      data: new MediaQueryData(),
+        child: new MaterialApp(home: new HomeScreen(),
+      ),
+    );
 
     await tester.pumpWidget(testWidget);
 
-    final textFinder = find.text('Wits Overflow Home Screen');
+    final textFinder = find.textContaining('flow');
 
-    expect(textFinder, findsWidgets);
+  expect(textFinder, findsWidgets);
   });
+  
 }
