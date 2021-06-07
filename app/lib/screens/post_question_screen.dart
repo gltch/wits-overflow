@@ -1,209 +1,231 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wits_overflow/utils/sidebar.dart';
-import 'package:wits_overflow/utils/wits_overflow_api.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wits_overflow/screens/question_and_answers_screen.dart';
+import 'package:wits_overflow/utils/wits_overflow_data.dart';
+import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
 class PostQuestionScreen extends StatefulWidget {
-  PostQuestionScreen({Key? key}) : super(key: key);
+  late final Future<List<Map<String, dynamic>>> coursesFuture;
 
-  @override
-  _PostQuestionState createState() => _PostQuestionState();
-}
-
-// GLobal Variable
-String valueChoose = "None";
-
-List listItem = [
-  "None",
-  "COMS1015",
-  "COMS1016",
-  "COMS1017",
-  "COMS1018",
-  "MATH1036"
-];
-
-Map<String, int> moduleMap = {
-  "None": 0,
-  "COMS1015": 1,
-  "COMS1016": 2,
-  "COMS1017": 3,
-  "COMS1018": 4,
-  "MATH1036": 5
-};
-
-class _PostQuestionState extends State<PostQuestionScreen> {
-  // Setting value of valueCHoose for dropdown button
-  void _setValueChoose(String nV) {
-    setState(() {
-      valueChoose = nV.toString();
-    });
+  PostQuestionScreen() {
+    coursesFuture = WitsOverflowData().fetchCourses();
   }
 
-  // Variable Declarations
+  @override
+  _PostQuestionScreenState createState() => _PostQuestionScreenState();
+}
+
+class _PostQuestionScreenState extends State<PostQuestionScreen> {
+  late List<Map<String, dynamic>>? _courses;
+  late List<Map<String, dynamic>>? _modules;
+
+  late Future<List<Map<String, dynamic>>> modulesFuture;
+
+  String? _selectedCourseId;
+  String? _selectedCourseCode;
+  String? _selectedModuleId;
+  String? _selectedModuleCode;
+
   final titleController = new TextEditingController();
-  final questionController = new TextEditingController();
+  final bodyController = new TextEditingController();
 
-  // Post Question Function
-  void _postQuestion() {
-    setState(() {
-      // Check for empty fields
-      if (titleController.text == "") {
-        // Show error toast message
-        Fluttertoast.showToast(
-            msg: 'Missing Title',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1);
-      } else if (questionController.text == "") {
-        // Show error toast message
-        Fluttertoast.showToast(
-            msg: 'Missing Question Body',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1);
-      } else if (valueChoose == "None") {
-        // Show error toast message
-        Fluttertoast.showToast(
-            msg: 'Select A Module',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1);
-      } else {
-        int module = moduleMap[valueChoose]!;
-        // Actually post the question
-        WitsOverflowApi.postQuestions(
-            titleController.text, questionController.text, module);
-        // Show toast message saying posted or not posted
-        Fluttertoast.showToast(
-            msg: 'Posted',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1);
+  void _notify(message) {
+    // Fluttertoast.showToast(
+    //   msg: message,
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   gravity: ToastGravity.CENTER,
+    //   timeInSecForIosWeb: 1
+    // );
 
-        questionController.clear();
-        titleController.clear();
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        style: TextStyle(
+          color: Colors.green,
+        ),
+      ),
+      // backgroundColor: Colors.greenAccent,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  bool _validQuestion() {
+    bool valid = true;
+
+    if (_selectedCourseId == null || _selectedCourseId == "") {
+      valid = false;
+      _notify('Please select a course.');
+    }
+
+    if (_selectedModuleId == null || _selectedModuleId == "") {
+      valid = false;
+      _notify('Please select a module.');
+    }
+
+    if (titleController.text == "") {
+      valid = false;
+      _notify('Please supply a title.');
+    }
+
+    if (bodyController.text == "") {
+      valid = false;
+      _notify('Please supply details for your question.');
+    }
+
+    return valid;
+  }
+
+  void _addQuestion() {
+    if (_validQuestion()) {
+      WitsOverflowData().addQuestion({
+        'createdAt': DateTime.now(),
+        'courseId': _selectedCourseId,
+        'moduleId': _selectedModuleId,
+        'title': titleController.text,
+        'body': bodyController.text,
+        'authorId': FirebaseAuth.instance.currentUser!.uid,
+        'tags': [_selectedCourseCode, _selectedModuleCode]
+      }).then((DocumentReference<Map<String, dynamic>> question) {
+        _notify('Question added.');
+        Navigator.push(context, MaterialPageRoute(
+          builder: (BuildContext context) {
+            return QuestionAndAnswersScreen(question.id);
+          },
+        ));
+      }).catchError((error) {
+        _notify("Error occurred");
+      });
+    }
+  }
+
+  void _selectCourse(String? courseId) {
+    this._selectedCourseId = courseId;
+    this._courses!.forEach((course) {
+      if (course['id'] == courseId) {
+        this._selectedCourseCode = course['code'];
       }
     });
+
+    setState(() {});
+  }
+
+  void _selectModule(String? moduleId) {
+    this._selectedModuleId = moduleId;
+    this._modules!.forEach((module) {
+      if (module['id'] == moduleId) {
+        this._selectedModuleCode = module['code'];
+      }
+    });
+
+    setState(() {});
+  }
+
+  @override
+  void setState(fn) {
+    modulesFuture = WitsOverflowData().fetchModules(this._selectedCourseId);
+    super.setState(fn);
+  }
+
+  @override
+  void initState() {
+    modulesFuture = WitsOverflowData().fetchModules(this._selectedCourseId);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Declare global variable posted
-    // Question Title SingleText Field
-    Widget _buildTitleTextField() {
-      return Padding(
-        key: ValueKey(1),
-        padding: const EdgeInsets.all(8.0),
-        child: TextField(
-          controller: titleController,
-          decoration: InputDecoration(
-              labelText: 'Title',
-              hintText: 'Enter title here',
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(35))),
-        ),
-      );
-    }
+    return WitsOverflowScaffold(
+        body: Container(
+            padding: EdgeInsets.all(10),
+            child: Form(
+                child: Column(
+              children: [
+                FutureBuilder<List<Map<String, dynamic>>>(
+                    future: widget.coursesFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      }
 
-    // Main Question MultipleText Field
-    Widget _buildMultipleTextField() {
-      return Expanded(
-        child: Padding(
-          key: ValueKey(2),
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: questionController,
-            decoration: InputDecoration(
-                labelText: 'Question',
-                alignLabelWithHint: true,
-                hintText: 'Enter question here',
-                border: OutlineInputBorder()),
-            maxLines: 40,
-          ),
-        ),
-      );
-    }
+                      if (snapshot.hasData) {
+                        this._courses = snapshot.data;
 
-    // Drop down button build widget
+                        return DropdownButtonFormField<String?>(
+                          onChanged: (String? courseId) {
+                            setState(() {
+                              _selectCourse(courseId);
+                            });
+                          },
+                          items: snapshot.data!.map((course) {
+                            return DropdownMenuItem<String?>(
+                                value: course['id'],
+                                child: Text(course['name']));
+                          }).toList(),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                        );
+                      } else {
+                        return Text('Please load courses');
+                      }
+                    }),
+                Divider(color: Colors.white, height: 10),
+                FutureBuilder<List<Map<String, dynamic>>>(
+                    future: modulesFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      }
 
-    Widget _buildDropdownMenu() {
-      return Expanded(
-        child: Padding(
-          key: ValueKey(2),
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: DropdownButton(
-              hint: Text("Select Module: "),
-              dropdownColor: Colors.blue,
-              isExpanded: true,
-              value: valueChoose,
-              onChanged: (newValue) {
-                _setValueChoose(newValue.toString());
-              },
-              items: listItem.map((valueItem) {
-                return DropdownMenuItem(
-                  value: valueItem,
-                  child: Text(valueItem),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      );
-    }
+                      if (snapshot.hasData) {
+                        this._modules = snapshot.data;
 
-    // Gesture Detector is an on tap listener to dismiss the keyboard
-    return GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Scaffold(
-          drawer: SideDrawer(),
-          appBar: AppBar(
-            // Here we take the value from the MyPostQuestionsPage object that was created by
-            // the App.build method, and use it to set our appbar title.
-            title: Text('Wits Overflow'),
-          ),
-          body: Center(
-            // Center is a layout widget. It takes a single child and positions it
-            // in the middle of the parent.
-            child: Column(
-              // Column is also a layout widget. It takes a list of children and
-              // arranges them vertically. By default, it sizes itself to fit its
-              // children horizontally, and tries to be as tall as its parent.
-              //
-              // Invoke "debug painting" (press "p" in the console, choose the
-              // "Toggle Debug Paint" action from the Flutter Inspector in Android
-              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-              // to see the wireframe for each widget.
-              //
-              // Column has various properties to control how it sizes itself and
-              // how it positions its children. Here we use mainAxisAlignment to
-              // center the children vertically; the main axis here is the vertical
-              // axis because Columns are vertical (the cross axis would be
-              // horizontal).
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 10),
-                _buildTitleTextField(),
-                SizedBox(height: 10),
-                _buildMultipleTextField(),
-                // SizedBox(height: 10),
-                _buildDropdownMenu(),
+                        return DropdownButtonFormField<String?>(
+                          onChanged: (String? moduleId) {
+                            setState(() {
+                              _selectModule(moduleId);
+                            });
+                          },
+                          items: snapshot.data!.map((module) {
+                            return DropdownMenuItem<String?>(
+                                value: module['id'],
+                                child: Text(module['name']));
+                          }).toList(),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                        );
+                      } else {
+                        return Text('Please load courses');
+                      }
+                    }),
+                Divider(color: Colors.white, height: 10),
+                TextFormField(
+                  controller: titleController,
+                  decoration: InputDecoration(
+                      labelText: 'Title',
+                      alignLabelWithHint: true,
+                      hintText: 'e.g. Is there a python function for...',
+                      border: OutlineInputBorder()),
+                ),
+                Divider(color: Colors.white, height: 10),
+                TextFormField(
+                  controller: bodyController,
+                  maxLines: 10,
+                  decoration: InputDecoration(
+                      labelText: 'Question',
+                      alignLabelWithHint: true,
+                      hintText: 'Include as much information as possible...',
+                      border: OutlineInputBorder()),
+                ),
+                Divider(color: Colors.white, height: 10),
+                ElevatedButton.icon(
+                  onPressed: () => {this._addQuestion()},
+                  icon: Icon(Icons.post_add),
+                  label: Text('Submit your question'),
+                )
               ],
-            ),
-          ),
-          floatingActionButton: FloatingActionButton.extended(
-            key: ValueKey(4),
-            onPressed: _postQuestion,
-            tooltip: 'Post Question',
-            label: Text('Post'),
-            icon: Icon(Icons.add),
-          ), // This trailing comma makes auto-formatting nicer for build methods.
-        ));
+            ))));
   }
 }

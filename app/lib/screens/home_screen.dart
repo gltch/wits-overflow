@@ -2,48 +2,63 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:wits_overflow/utils/sidebar.dart';
+import 'package:wits_overflow/utils/wits_overflow_data.dart';
+import 'package:wits_overflow/widgets/favourites_tab.dart';
+import 'package:wits_overflow/widgets/my_posts_tab.dart';
+import 'package:wits_overflow/widgets/recent_activity_tab.dart';
+import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
-// -----------------------------------------------------------------------------
-//             Dashboard class
-// -----------------------------------------------------------------------------
+// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
-  // final logoutAction;
+  String? module;
 
-  final state = HomeScreenState(CircularProgressIndicator());
-
-  HomeScreen() {
-    print('[DASHBOARD CONSTRUCTOR]');
-  }
+  HomeScreen({Key? key, this.module}) : super(key: key);
 
   @override
-  HomeScreenState createState() => state;
+  HomeScreenState createState() => HomeScreenState();
 }
 
-// -----------------------------------------------------------------------------
-//    DASHBOARD STATE CLASS
-// -----------------------------------------------------------------------------
 class HomeScreenState extends State<HomeScreen> {
-  Widget child;
+  late Future<List<Map<String, dynamic>>> questions;
 
-  HomeScreenState(this.child);
+  @override
+  void initState() {
+    super.initState();
+
+    questions = WitsOverflowData().fetchQuestions();
+
+    //WitsOverflowData().seedDatabase();
+  }
 
   @override
   Widget build(BuildContext context) {
-    print('[DASHBOARD STATE]');
-    // CollectionReference questions =
-    //     FirebaseFirestore.instance.collection('questions');
-    return Scaffold(
-      drawer: SideDrawer(),
-      backgroundColor: Colors.white,
-      appBar: AppBar(elevation: 0, backgroundColor: Colors.blue),
-      body: Center(child: Text("Wits Overflow Home Screen")),
+    return WitsOverflowScaffold(
+      body: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            flexibleSpace: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TabBar(
+                  tabs: [
+                    Tab(text: 'Recent Activity'),
+                    Tab(text: 'Favourites'),
+                    Tab(text: 'My Posts'),
+                  ],
+                )
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: [
+              RecentActivityTab(),
+              FavouritesTab(),
+              MyPostsTab(),
+            ],
+          ),
+        ),
+      ),
     );
-  }
-
-  void show(Widget widget) {
-    this.setState(() {
-      child = widget;
-    });
   }
 }
