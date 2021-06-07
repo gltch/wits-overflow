@@ -44,7 +44,7 @@ class _RecentActivityTabState extends State<RecentActivityTab> {
             itemBuilder: (context, index) {
               Map<String, dynamic>? data = snapshot.data?[index];
               if (data != null) {
-                return QuestionSummary(data: data);
+                return QuestionSummary(questionId: data['id'], data: data);
               }
               else {
                 return SizedBox.shrink();

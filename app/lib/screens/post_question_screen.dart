@@ -34,12 +34,24 @@ class _PostQuestionScreenState extends State<PostQuestionScreen> {
   final bodyController = new TextEditingController();
 
   void _notify(message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 1
+    // Fluttertoast.showToast(
+    //   msg: message,
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   gravity: ToastGravity.CENTER,
+    //   timeInSecForIosWeb: 1
+    // );
+
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        style: TextStyle(
+          color: Colors.green,
+        ),
+      ),
+      // backgroundColor: Colors.greenAccent,
     );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
   }
 
   bool _validQuestion() {

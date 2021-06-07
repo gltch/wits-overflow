@@ -43,6 +43,20 @@ class WitsOverflowData {
 
   }
 
+  Future<int> fetchQuestionVoteCount(String questionId) async {
+
+    return await FirebaseFirestore.instance
+    .collection('questions-2')
+    .doc(questionId)
+    .collection('votes')
+    .get()
+    .then((snapshot) {
+
+      return snapshot.size;
+
+    });
+
+  }
 
   Future<List<Map<String, dynamic>>> fetchQuestions() async {
 
@@ -176,10 +190,10 @@ class WitsOverflowData {
           for (int i = 0; i < fq.length; i++) {
 
             var questionId = fq[i];
-            print(questionId);
+            //print(questionId);
 
             await fetchQuestion(questionId).then((question) {
-              print(question);
+              //print(question);
               if (question != null) {
                 results.add(question);
               }

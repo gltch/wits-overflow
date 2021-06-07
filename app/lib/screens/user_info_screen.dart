@@ -38,7 +38,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             .where("authorId", isEqualTo: this.userId)
             .get()
             .then((docs){
-              print(docs.size);
+              //print(docs.size);
               this.questionCount += docs.size;
             });
 

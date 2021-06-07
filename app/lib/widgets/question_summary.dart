@@ -3,13 +3,31 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wits_overflow/screens/question_and_answers_screen.dart';
+import 'package:wits_overflow/utils/wits_overflow_data.dart';
 
-class QuestionSummary extends StatelessWidget {
+class QuestionSummary extends StatefulWidget {
 
+  final String questionId;
   final Map<String, dynamic> data;
 
-  QuestionSummary({required this.data}) ;
-  
+  QuestionSummary({required this.questionId, required this.data});
+
+  @override
+  _QuestionSummaryState createState() => _QuestionSummaryState();
+}
+
+class _QuestionSummaryState extends State<QuestionSummary> {
+
+  late Future<int> _fetchVotesCount;
+
+  @override
+  void initState() {
+    super.initState();
+
+    this._fetchVotesCount = WitsOverflowData().fetchQuestionVoteCount(this.widget.questionId);
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -17,15 +35,15 @@ class QuestionSummary extends StatelessWidget {
       
       List<Widget> list = <Widget>[];
 
-      if (this.data.containsKey('tags')) {
-        for(var i = 0; i < this.data['tags'].length; i++){
+      if (this.widget.data.containsKey('tags')) {
+        for(var i = 0; i < this.widget.data['tags'].length; i++){
 
           list.add(new Container(
             margin: EdgeInsets.only(right: 5),
             color: Colors.lightBlue.shade50,
             child: Padding(
                 padding: EdgeInsets.all(5),
-                child: Text(this.data['tags'][i])
+                child: Text(this.widget.data['tags'][i])
               ),
           ));
 
@@ -39,7 +57,7 @@ class QuestionSummary extends StatelessWidget {
     return GestureDetector(
           onTap: () => {
             Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => QuestionAndAnswersScreen(this.data['id']))),
+              MaterialPageRoute(builder: (context) => QuestionAndAnswersScreen(this.widget.data['id']))),
           },
           child:
           Center(
@@ -60,8 +78,20 @@ class QuestionSummary extends StatelessWidget {
                   height: double.infinity,
                   width: 100,
                   child: Center(child: 
-                    Text("${(this.data['votes'] != null) ? this.data['votes'] : 0}\nvotes", textAlign: TextAlign.center
-                  )),
+
+                    FutureBuilder(
+                      future: _fetchVotesCount,
+                      builder: (context, snapshot) {
+
+                        if (snapshot.hasData) {
+                          return Text('${snapshot.data}\nvotes', textAlign: TextAlign.center);
+                        }
+                        else {
+                          return Text('0\nvotes', textAlign: TextAlign.center);
+                        }
+
+                      })
+                  ),
                 ),
 
                 Expanded(child: Container(
@@ -72,7 +102,7 @@ class QuestionSummary extends StatelessWidget {
                     children: [
 
                       Text(
-                        this.data['title'],
+                        this.widget.data['title'],
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -87,8 +117,8 @@ class QuestionSummary extends StatelessWidget {
 
                       Divider(color: Colors.white, height: 5),
 
-                      (this.data['createdAt'] == null) ? SizedBox.shrink() : 
-                      Text((this.data['createdAt'] as Timestamp).toDate().toString(), style: TextStyle(
+                      (this.widget.data['createdAt'] == null) ? SizedBox.shrink() : 
+                      Text((this.widget.data['createdAt'] as Timestamp).toDate().toString(), style: TextStyle(
                         color: Theme.of(context).disabledColor
                       ))
 
@@ -101,5 +131,4 @@ class QuestionSummary extends StatelessWidget {
         );
     
   }
-
 }
