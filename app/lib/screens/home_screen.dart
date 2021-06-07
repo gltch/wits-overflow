@@ -10,7 +10,6 @@ import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
-
   String? module;
 
   HomeScreen({Key? key, this.module}) : super(key: key);
@@ -20,7 +19,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-
   late Future<List<Map<String, dynamic>>> questions;
 
   @override
@@ -30,7 +28,6 @@ class HomeScreenState extends State<HomeScreen> {
     questions = WitsOverflowData().fetchQuestions();
 
     //WitsOverflowData().seedDatabase();
-    
   }
 
   @override
@@ -43,17 +40,11 @@ class HomeScreenState extends State<HomeScreen> {
             flexibleSpace: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-               TabBar(
+                TabBar(
                   tabs: [
-                    Tab(
-                      text: 'Recent Activity'
-                    ),
-                    Tab(
-                      text: 'Favourites'
-                    ),
-                    Tab(
-                      text: 'My Posts'
-                    ),
+                    Tab(text: 'Recent Activity'),
+                    Tab(text: 'Favourites'),
+                    Tab(text: 'My Posts'),
                   ],
                 )
               ],
@@ -68,8 +59,6 @@ class HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
     );
   }
-
 }

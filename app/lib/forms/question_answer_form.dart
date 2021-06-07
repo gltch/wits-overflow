@@ -10,7 +10,6 @@ import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 //                      QUESTION CREATE FORM
 // -----------------------------------------------------------------------------
 class QuestionAnswerForm extends StatefulWidget {
-
   final String questionId;
   final String questionTitle;
   final String questionBody;
@@ -19,7 +18,8 @@ class QuestionAnswerForm extends StatefulWidget {
 
   @override
   _QuestionAnswerFormState createState() {
-    return _QuestionAnswerFormState(this.questionId, this.questionTitle, this.questionBody);
+    return _QuestionAnswerFormState(
+        this.questionId, this.questionTitle, this.questionBody);
   }
 }
 
@@ -27,40 +27,36 @@ class QuestionAnswerForm extends StatefulWidget {
 //                      QUESTION CREATE FORM STATE
 // -----------------------------------------------------------------------------
 class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
-
-
   final _formKey = GlobalKey<FormState>();
   final String questionId;
   final String questionTitle;
   final String questionBody;
 
   bool isBusy = true;
-  DocumentSnapshot<Map<String, dynamic>> ? question;
-
+  DocumentSnapshot<Map<String, dynamic>>? question;
 
   final bodyController = TextEditingController();
 
-
-  void getData() async{
-    this.question = await FirebaseFirestore.instance.collection('questions-2').doc(this.questionId).get();
+  void getData() async {
+    this.question = await FirebaseFirestore.instance
+        .collection('questions-2')
+        .doc(this.questionId)
+        .get();
 
     setState(() {
       this.isBusy = false;
     });
   }
 
-
-  _QuestionAnswerFormState(this.questionId, this.questionTitle, this.questionBody){
+  _QuestionAnswerFormState(
+      this.questionId, this.questionTitle, this.questionBody) {
     this.getData();
   }
 
   void submitAnswer(String body) {
-
-
     setState(() {
       isBusy = true;
     });
-
 
     Map<String, dynamic> data = {
       'authorId': FirebaseAuth.instance.currentUser!.uid,
@@ -68,7 +64,10 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
       'answeredAt': DateTime.now(),
     };
 
-    CollectionReference questionAnswersCollection = FirebaseFirestore.instance.collection('questions-2').doc(this.questionId).collection('answers');
+    CollectionReference questionAnswersCollection = FirebaseFirestore.instance
+        .collection('questions-2')
+        .doc(this.questionId)
+        .collection('answers');
     questionAnswersCollection.add(data).then((onValue) {
       print("[QUESTION ADDED]");
       ScaffoldMessenger.of(context).showSnackBar(
@@ -82,15 +81,12 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
         ),
       );
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context){
-            return QuestionAndAnswersScreen(this.questionId);
-          },
-        )
-      );
-    }).catchError((error){
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return QuestionAndAnswersScreen(this.questionId);
+        },
+      ));
+    }).catchError((error) {
       // if error occurs while submitting user answer
       print("[FAILED TO ADD QUESTION]: $error");
       ScaffoldMessenger.of(context).showSnackBar(
@@ -109,14 +105,13 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
 
     // TODO: include courses dropdown list
 
-    if(this.isBusy){
+    if (this.isBusy) {
       return WitsOverflowScaffold(
         body: Center(
           child: CircularProgressIndicator(),
@@ -132,7 +127,6 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
       body: ListView(
         padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
         children: [
-
           Container(
             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
             alignment: Alignment.centerLeft,
@@ -145,11 +139,10 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
                   alignment: Alignment.centerLeft,
                   decoration: BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black12,
-                        width: 0.5,
-                      )
-                    ),
+                        bottom: BorderSide(
+                      color: Colors.black12,
+                      width: 0.5,
+                    )),
                   ),
                   child: Text(
                     this.questionTitle,
@@ -160,7 +153,6 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
                     ),
                   ),
                 ),
-
                 Container(
                   padding: EdgeInsets.all(5),
                   margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -174,21 +166,17 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
               ],
             ),
           ),
-
           Container(
             padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
             color: Color.fromARGB(100, 220, 220, 220),
-            child:Text(
+            child: Text(
               'Post answer',
               style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w600,
-                  color: Color.fromARGB(100, 16, 16, 16)
-              ),
+                  color: Color.fromARGB(100, 16, 16, 16)),
             ),
           ),
-
-
           Center(
             child: Form(
               key: _formKey,
@@ -209,7 +197,6 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
                         decoration: InputDecoration(
                           border: UnderlineInputBorder(),
                           labelText: 'answer',
-
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -219,15 +206,13 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
                         },
                       ),
                     ),
-
                     Container(
-
                       width: double.infinity,
                       // color:Color.fromARGB(1000, 100, 100, 100),
                       // alignment: Alignment.bottomCenter,
                       margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: ElevatedButton(
-                        onPressed: (){
+                        onPressed: () {
                           // when the user wants to submit his/her answer to the question
                           // if(submitAnswer(bodyController.text.toString()) != null){
                           //   // redirect to question page
@@ -241,7 +226,8 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
                           //   );
                           // }
 
-                          this.submitAnswer(this.bodyController.text.toString());
+                          this.submitAnswer(
+                              this.bodyController.text.toString());
                         },
                         child: Text('post'),
                       ),
@@ -256,5 +242,3 @@ class _QuestionAnswerFormState extends State<QuestionAnswerForm> {
     );
   }
 }
-
-

@@ -10,7 +10,6 @@ import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 //                      QUESTION CREATE FORM
 // -----------------------------------------------------------------------------
 class QuestionCommentForm extends StatefulWidget {
-
   final String questionId;
   final String questionTitle;
   final String questionBody;
@@ -19,7 +18,8 @@ class QuestionCommentForm extends StatefulWidget {
 
   @override
   _QuestionCommentFormState createState() {
-    return _QuestionCommentFormState(this.questionId, this.questionTitle, this.questionBody);
+    return _QuestionCommentFormState(
+        this.questionId, this.questionTitle, this.questionBody);
   }
 }
 
@@ -27,35 +27,33 @@ class QuestionCommentForm extends StatefulWidget {
 //                      QUESTION CREATE FORM STATE
 // -----------------------------------------------------------------------------
 class _QuestionCommentFormState extends State<QuestionCommentForm> {
-
-
   final _formKey = GlobalKey<FormState>();
   final String questionId;
   final String questionTitle;
   final String questionBody;
 
   bool isBusy = true;
-  DocumentSnapshot<Map<String, dynamic>> ? question;
-
+  DocumentSnapshot<Map<String, dynamic>>? question;
 
   final bodyController = TextEditingController();
 
-
-  void getData() async{
-    this.question = await FirebaseFirestore.instance.collection('questions-2').doc(this.questionId).get();
+  void getData() async {
+    this.question = await FirebaseFirestore.instance
+        .collection('questions-2')
+        .doc(this.questionId)
+        .get();
 
     setState(() {
       this.isBusy = false;
     });
   }
 
-
-  _QuestionCommentFormState(this.questionId, this.questionTitle, this.questionBody){
+  _QuestionCommentFormState(
+      this.questionId, this.questionTitle, this.questionBody) {
     this.getData();
   }
 
   void submitComment(String body) {
-
     setState(() {
       isBusy = true;
     });
@@ -66,9 +64,11 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
       'commentedAt': DateTime.now(),
     };
 
-    CollectionReference questionCommentsCollection = FirebaseFirestore.instance.collection('questions-2').doc(this.questionId).collection('comments');
+    CollectionReference questionCommentsCollection = FirebaseFirestore.instance
+        .collection('questions-2')
+        .doc(this.questionId)
+        .collection('comments');
     questionCommentsCollection.add(data).then((onValue) {
-
       print("[COMMENT ADDED]");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -81,15 +81,12 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
         ),
       );
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context){
-            return QuestionAndAnswersScreen(this.questionId);
-          },
-        )
-      );
-    }).catchError((error){
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return QuestionAndAnswersScreen(this.questionId);
+        },
+      ));
+    }).catchError((error) {
       // if error occurs while submitting user answer
       print("[FAILED TO ADD COMMENT]: $error");
       ScaffoldMessenger.of(context).showSnackBar(
@@ -109,14 +106,13 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
 
     // TODO: include courses dropdown list
 
-    if(this.isBusy){
+    if (this.isBusy) {
       return WitsOverflowScaffold(
         body: Center(
           child: CircularProgressIndicator(),
@@ -129,10 +125,9 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
     // }
 
     return WitsOverflowScaffold(
-        body: ListView(
+      body: ListView(
         padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
         children: [
-
           Container(
             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
             alignment: Alignment.centerLeft,
@@ -159,11 +154,9 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
                       color: Color.fromARGB(1000, 70, 70, 70),
-
                     ),
                   ),
                 ),
-
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
                   // color: Colors.black12,
@@ -177,21 +170,17 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
               ],
             ),
           ),
-
           Container(
             padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
             color: Color.fromARGB(100, 220, 220, 220),
-            child:Text(
+            child: Text(
               'Post comment',
               style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w600,
-                  color: Color.fromARGB(100, 16, 16, 16)
-              ),
+                  color: Color.fromARGB(100, 16, 16, 16)),
             ),
           ),
-
-
           Center(
             child: Form(
               key: _formKey,
@@ -212,7 +201,6 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
                         decoration: InputDecoration(
                           border: UnderlineInputBorder(),
                           labelText: 'comment',
-
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -222,15 +210,13 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
                         },
                       ),
                     ),
-
                     Container(
-
                       width: double.infinity,
                       // color:Color.fromARGB(1000, 100, 100, 100),
                       // alignment: Alignment.bottomCenter,
                       margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: ElevatedButton(
-                        onPressed: (){
+                        onPressed: () {
                           this.submitComment(bodyController.text.toString());
                         },
                         child: Text('post'),
@@ -246,5 +232,3 @@ class _QuestionCommentFormState extends State<QuestionCommentForm> {
     );
   }
 }
-
-

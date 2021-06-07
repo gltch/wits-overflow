@@ -8,7 +8,6 @@ import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
 // ignore: must_be_immutable
 class ModuleQuestionsScreen extends StatefulWidget {
-
   final String moduleId;
 
   ModuleQuestionsScreen({Key? key, required this.moduleId}) : super(key: key);
@@ -18,7 +17,6 @@ class ModuleQuestionsScreen extends StatefulWidget {
 }
 
 class _ModuleQuestionsScreenState extends State<ModuleQuestionsScreen> {
-
   late bool _loading;
 
   late Future<List<Map<String, dynamic>>> questions;
@@ -29,49 +27,37 @@ class _ModuleQuestionsScreenState extends State<ModuleQuestionsScreen> {
 
     this._loading = true;
 
-    questions = WitsOverflowData().fetchModuleQuestions(
-      moduleId: this.widget.moduleId
-    );
-
+    questions =
+        WitsOverflowData().fetchModuleQuestions(moduleId: this.widget.moduleId);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return WitsOverflowScaffold(
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: questions,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
+        body: FutureBuilder<List<Map<String, dynamic>>>(
+            future: questions,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                this._loading = false;
 
-            this._loading = false;
-            
-            return ListView.builder(
-              itemCount: snapshot.data?.length,
-              itemBuilder: (context, index) {
-                Map<String, dynamic>? data = snapshot.data?[index];
-                if (data != null) {
-                  return QuestionSummary(questionId: data['id'], data: data);
+                return ListView.builder(
+                    itemCount: snapshot.data?.length,
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic>? data = snapshot.data?[index];
+                      if (data != null) {
+                        return QuestionSummary(
+                            questionId: data['id'], data: data);
+                      } else {
+                        return SizedBox.shrink();
+                      }
+                    });
+              } else {
+                if (this._loading == true) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return Text('No questions in module.');
                 }
-                else {
-                  return SizedBox.shrink();
-                }
-
               }
-            );
-          }
-          else {
-            if (this._loading == true) {
-              return Center(child: CircularProgressIndicator());
-            }
-            else {
-              return Text('No questions in module.');
-            }
-            
-          }
-        }
-      )
-    );
+            }));
   }
-
 }

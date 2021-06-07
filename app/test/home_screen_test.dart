@@ -5,13 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wits_overflow/screens/home_screen.dart';
 
 void main() {
-
-
   testWidgets('Test Home Screen', (WidgetTester tester) async {
-
     Widget testWidget = new MediaQuery(
       data: new MediaQueryData(),
-        child: new MaterialApp(home: new HomeScreen(),
+      child: new MaterialApp(
+        home: new HomeScreen(),
       ),
     );
 
@@ -19,7 +17,6 @@ void main() {
 
     final textFinder = find.textContaining('flow');
 
-  expect(textFinder, findsWidgets);
+    expect(textFinder, findsWidgets);
   });
-  
 }

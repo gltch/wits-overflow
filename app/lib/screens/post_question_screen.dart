@@ -7,7 +7,6 @@ import 'package:wits_overflow/utils/wits_overflow_data.dart';
 import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
 class PostQuestionScreen extends StatefulWidget {
-
   late final Future<List<Map<String, dynamic>>> coursesFuture;
 
   PostQuestionScreen() {
@@ -19,7 +18,6 @@ class PostQuestionScreen extends StatefulWidget {
 }
 
 class _PostQuestionScreenState extends State<PostQuestionScreen> {
-
   late List<Map<String, dynamic>>? _courses;
   late List<Map<String, dynamic>>? _modules;
 
@@ -51,11 +49,9 @@ class _PostQuestionScreenState extends State<PostQuestionScreen> {
       // backgroundColor: Colors.greenAccent,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
   }
 
   bool _validQuestion() {
-
     bool valid = true;
 
     if (_selectedCourseId == null || _selectedCourseId == "") {
@@ -79,13 +75,10 @@ class _PostQuestionScreenState extends State<PostQuestionScreen> {
     }
 
     return valid;
-
   }
 
   void _addQuestion() {
-    
     if (_validQuestion()) {
-
       WitsOverflowData().addQuestion({
         'createdAt': DateTime.now(),
         'courseId': _selectedCourseId,
@@ -93,42 +86,32 @@ class _PostQuestionScreenState extends State<PostQuestionScreen> {
         'title': titleController.text,
         'body': bodyController.text,
         'authorId': FirebaseAuth.instance.currentUser!.uid,
-        'tags': [
-          _selectedCourseCode,
-          _selectedModuleCode
-        ]
-      }).then((DocumentReference<Map<String, dynamic>> question){
+        'tags': [_selectedCourseCode, _selectedModuleCode]
+      }).then((DocumentReference<Map<String, dynamic>> question) {
         _notify('Question added.');
         Navigator.push(context, MaterialPageRoute(
-          builder: (BuildContext context){
+          builder: (BuildContext context) {
             return QuestionAndAnswersScreen(question.id);
           },
         ));
-
-      })
-      .catchError((error){
+      }).catchError((error) {
         _notify("Error occurred");
       });
-
-
     }
-
   }
 
   void _selectCourse(String? courseId) {
-
     this._selectedCourseId = courseId;
     this._courses!.forEach((course) {
       if (course['id'] == courseId) {
         this._selectedCourseCode = course['code'];
       }
     });
-    
+
     setState(() {});
   }
 
   void _selectModule(String? moduleId) {
-
     this._selectedModuleId = moduleId;
     this._modules!.forEach((module) {
       if (module['id'] == moduleId) {
@@ -140,10 +123,10 @@ class _PostQuestionScreenState extends State<PostQuestionScreen> {
   }
 
   @override
-    void setState(fn) {
-      modulesFuture = WitsOverflowData().fetchModules(this._selectedCourseId);
-      super.setState(fn);
-    }
+  void setState(fn) {
+    modulesFuture = WitsOverflowData().fetchModules(this._selectedCourseId);
+    super.setState(fn);
+  }
 
   @override
   void initState() {
@@ -153,124 +136,97 @@ class _PostQuestionScreenState extends State<PostQuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return WitsOverflowScaffold(
-      body:
-      Container(
-        padding: EdgeInsets.all(10),
-        child: Form(
-        child: Column(children: [
+        body: Container(
+            padding: EdgeInsets.all(10),
+            child: Form(
+                child: Column(
+              children: [
+                FutureBuilder<List<Map<String, dynamic>>>(
+                    future: widget.coursesFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      }
 
-          FutureBuilder<List<Map<String, dynamic>>>(
-            
-            future: widget.coursesFuture,
-            builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        this._courses = snapshot.data;
 
-              if(snapshot.hasError) {
-                return Text(snapshot.error.toString());
-              }
+                        return DropdownButtonFormField<String?>(
+                          onChanged: (String? courseId) {
+                            setState(() {
+                              _selectCourse(courseId);
+                            });
+                          },
+                          items: snapshot.data!.map((course) {
+                            return DropdownMenuItem<String?>(
+                                value: course['id'],
+                                child: Text(course['name']));
+                          }).toList(),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                        );
+                      } else {
+                        return Text('Please load courses');
+                      }
+                    }),
+                Divider(color: Colors.white, height: 10),
+                FutureBuilder<List<Map<String, dynamic>>>(
+                    future: modulesFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      }
 
-              if (snapshot.hasData) {
+                      if (snapshot.hasData) {
+                        this._modules = snapshot.data;
 
-                this._courses = snapshot.data;
-
-                return DropdownButtonFormField<String?>(
-                  onChanged: (String? courseId) {
-                    setState(() { 
-                      _selectCourse(courseId);
-                    });
-                  },
-                  items: snapshot.data!.map((course) {
-                     return  DropdownMenuItem<String?>(value: course['id'], child: Text(course['name']) );
-                  }).toList(),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
-                );
-
-              } 
-              else {
-                return Text('Please load courses');
-              }
-
-            }
-          ),
-
-          Divider(color: Colors.white, height: 10),
-
-          FutureBuilder<List<Map<String, dynamic>>>(
-            
-            future: modulesFuture,
-            builder: (context, snapshot) {
-
-              if(snapshot.hasError) {
-                return Text(snapshot.error.toString());
-              }
-
-              if (snapshot.hasData) {
-
-                this._modules = snapshot.data;
-
-                return DropdownButtonFormField<String?>(
-                  onChanged: (String? moduleId) {
-                    setState(() { 
-                      _selectModule(moduleId);
-                    });
-                  },
-                  items: snapshot.data!.map((module) {
-                     return  DropdownMenuItem<String?>(value: module['id'], child: Text(module['name']) );
-                  }).toList(),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
-                );
-
-              } 
-              else {
-                return Text('Please load courses');
-              }
-
-            }
-          ),
-
-          Divider(color: Colors.white, height: 10),
-
-          TextFormField(
-            controller: titleController,
-            decoration: InputDecoration(
-                labelText: 'Title',
-                alignLabelWithHint: true,
-                hintText: 'e.g. Is there a python function for...',
-                border: OutlineInputBorder()
-            ),
-          ),
-
-          Divider(color: Colors.white, height: 10),
-          
-          TextFormField(
-            controller: bodyController,
-            maxLines: 10,
-            decoration: InputDecoration(
-                labelText: 'Question',
-                alignLabelWithHint: true,
-                hintText: 'Include as much information as possible...',
-                border: OutlineInputBorder()
-            ),
-          ),
-
-          Divider(color: Colors.white, height: 10),
-
-          ElevatedButton.icon(
-              onPressed: () => {
-                this._addQuestion()
-              },
-              icon: Icon(Icons.post_add),
-              label: Text('Submit your question'),
-          )
-
-      ],))
-    ));
-
+                        return DropdownButtonFormField<String?>(
+                          onChanged: (String? moduleId) {
+                            setState(() {
+                              _selectModule(moduleId);
+                            });
+                          },
+                          items: snapshot.data!.map((module) {
+                            return DropdownMenuItem<String?>(
+                                value: module['id'],
+                                child: Text(module['name']));
+                          }).toList(),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                        );
+                      } else {
+                        return Text('Please load courses');
+                      }
+                    }),
+                Divider(color: Colors.white, height: 10),
+                TextFormField(
+                  controller: titleController,
+                  decoration: InputDecoration(
+                      labelText: 'Title',
+                      alignLabelWithHint: true,
+                      hintText: 'e.g. Is there a python function for...',
+                      border: OutlineInputBorder()),
+                ),
+                Divider(color: Colors.white, height: 10),
+                TextFormField(
+                  controller: bodyController,
+                  maxLines: 10,
+                  decoration: InputDecoration(
+                      labelText: 'Question',
+                      alignLabelWithHint: true,
+                      hintText: 'Include as much information as possible...',
+                      border: OutlineInputBorder()),
+                ),
+                Divider(color: Colors.white, height: 10),
+                ElevatedButton.icon(
+                  onPressed: () => {this._addQuestion()},
+                  icon: Icon(Icons.post_add),
+                  label: Text('Submit your question'),
+                )
+              ],
+            ))));
   }
 }
-
