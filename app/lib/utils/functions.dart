@@ -40,7 +40,7 @@ dynamic getField(Map<String, dynamic> ? map, String field, {dynamic onError, dyn
   try{
     return map[field] == null ? onNull : map[field];
   }
-  catch(e, s){
+  catch(e){
     return onError;
   }
 }
@@ -105,10 +105,8 @@ Future<void> updateQuestions() async{
     // - 'answeredAt' new answer posted
     // - 'updatedAt' update of answer
     // - 'commentedAt' (from answer's comments) new comment added to the answer
-    Timestamp latestFromQuestionAnswers;
 
     // here in the loop, try to get answer with latest comment post
-    QueryDocumentSnapshot<Map<String, dynamic>> ? latestAnswerComment;
     for(var i = 0; i < answers.docs.length; i++){
 
       // so far we don't have comments for answers

@@ -231,7 +231,7 @@ class _QuestionState extends State<QuestionAndAnswersScreen> {
   }
 
   void vote({required int value}) async{
-    Future<DocumentSnapshot<Map<String, dynamic>>> vote;
+    //Future<DocumentSnapshot<Map<String, dynamic>>> vote;
     Map<String, dynamic> data = {
       'value': value,
       'user': FirebaseAuth.instance.currentUser!.uid,

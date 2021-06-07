@@ -8,6 +8,7 @@ import 'package:wits_overflow/widgets/my_posts_tab.dart';
 import 'package:wits_overflow/widgets/recent_activity_tab.dart';
 import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
 
   String? module;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wits_overflow/utils/wits_overflow_data.dart';
 import 'package:wits_overflow/widgets/question_summary.dart';
 
+// ignore: must_be_immutable
 class RecentActivityTab extends StatefulWidget {
 
   late Future<List<Map<String, dynamic>>> questions;
