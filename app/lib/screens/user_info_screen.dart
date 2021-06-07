@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wits_overflow/screens/sign_in_screen.dart';
 import 'package:wits_overflow/utils/authentication.dart';
+import 'package:wits_overflow/utils/wits_overflow_data.dart';
 import 'package:wits_overflow/widgets/wits_overflow_scaffold.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -16,14 +17,64 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   
   String userId = FirebaseAuth.instance.currentUser!.uid;
 
-  String questionCount = "";
-  String answerCount = "";
-  String favoriteCount = "";
+  int questionCount = 0;
+  int answerCount = 0;
+  int favoriteCount = 0;
 
   var authorName = "failed to retrieve author name";
   var authorEmail = "failed to retrieve author email";
 
   bool _isSigningOut = false;
+
+  getData() async {
+
+       this.questionCount = 0;
+       this.answerCount = 0;
+       this.favoriteCount = 0;
+
+       await FirebaseFirestore
+            .instance
+            .collection('questions-2')
+            .where("authorId", isEqualTo: this.userId)
+            .get()
+            .then((docs){
+              print(docs.size);
+              this.questionCount += docs.size;
+            });
+
+        WitsOverflowData().fetchUserQuestions(userId: this.userId)
+        .then((questions) {
+
+            questions.forEach((question) async {
+              var questionId = question['id'];
+
+              await FirebaseFirestore.instance
+              .collection('questions-2')
+              .doc(questionId)
+              .collection('answers')
+              .get().then((docs){
+                this.answerCount += docs.size;
+              });
+
+            });
+
+        });
+
+        await FirebaseFirestore.instance
+            .collection('favourites-2')
+            .doc(this.userId)
+            .get()
+            .then((doc) {
+
+              if (doc.exists) {
+
+                this.favoriteCount += (doc['favouriteQuestions'].length as int);
+
+              }
+
+            });
+        
+      }
 
   Route _routeToSignInScreen() {
     return PageRouteBuilder(
@@ -45,44 +96,15 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   }
 
   @override
+    void initState() {
+      
+      this.getData();
+
+      super.initState();
+    }
+
+  @override
   Widget build(BuildContext context) {
-     
-     getData() async{
-
-       await  FirebaseFirestore
-            .instance
-            .collection('questions-2')
-            .where("authorId", isEqualTo: this.userId)
-            .get()
-            .then((docs){
-              this.questionCount = docs.size.toString();
-            });
-
-        await FirebaseFirestore.instance
-            .collection('answers')
-            .where("authorId", isEqualTo: this.userId)
-            .get()
-            .then((docs){
-              this.answerCount = docs.size.toString();
-            });
-        await FirebaseFirestore.instance
-            .collection('favourites-2')
-            .doc(this.userId)
-            .get()
-            .then((doc) {
-
-              if (doc.exists) {
-
-                this.favoriteCount = doc['favouriteQuestions'].length.toString();
-
-              }
-
-            });
-        
-      }
-
-      getData();
-
 
     Future<DocumentSnapshot> user = FirebaseFirestore.instance
         .collection('users')
@@ -230,15 +252,15 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     children: [
                       SizedBox(height: 40),
 
-                      Text(this.questionCount),
+                      Text(this.questionCount.toString()),
                       
                       SizedBox(height: 10),
 
-                      Text(this.answerCount),
+                      Text(this.answerCount.toString()),
 
                       SizedBox(height: 10),
 
-                      Text(this.favoriteCount),
+                      Text(this.favoriteCount.toString()),
 
                       SizedBox(height: 10),
                     ],
