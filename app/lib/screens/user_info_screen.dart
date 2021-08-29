@@ -28,53 +28,46 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
   getData() async {
 
-       this.questionCount = 0;
-       this.answerCount = 0;
-       this.favoriteCount = 0;
+    this.questionCount = 0;
+    this.answerCount = 0;
+    this.favoriteCount = 0;
 
-       await FirebaseFirestore
-            .instance
-            .collection('questions-2')
-            .where("authorId", isEqualTo: this.userId)
-            .get()
-            .then((docs){
-              print(docs.size);
-              this.questionCount += docs.size;
-            });
-
-        WitsOverflowData().fetchUserQuestions(userId: this.userId)
-        .then((questions) {
-
-            questions.forEach((question) async {
-              var questionId = question['id'];
-
-              await FirebaseFirestore.instance
-              .collection('questions-2')
-              .doc(questionId)
-              .collection('answers')
-              .get().then((docs){
-                this.answerCount += docs.size;
-              });
-
-            });
-
+    await FirebaseFirestore
+        .instance
+        .collection('questions-2')
+        .where("authorId", isEqualTo: this.userId)
+        .get()
+        .then((docs){
+          print(docs.size);
+          this.questionCount += docs.size;
         });
 
-        await FirebaseFirestore.instance
-            .collection('favourites-2')
-            .doc(this.userId)
-            .get()
-            .then((doc) {
+    WitsOverflowData().fetchUserQuestions(userId: this.userId)
+    .then((questions) {
 
-              if (doc.exists) {
+        questions.forEach((question) async {
+          var questionId = question['id'];
 
-                this.favoriteCount += (doc['favouriteQuestions'].length as int);
+          await FirebaseFirestore.instance
+            .collection('questions-2')
+            .doc(questionId)
+            .collection('answers')
+            .get().then((docs){
+              this.answerCount += docs.size;
+          });
+        });
+    });
 
-              }
-
-            });
-        
-      }
+    await FirebaseFirestore.instance
+        .collection('favourites-2')
+        .doc(this.userId)
+        .get()
+        .then((doc) {
+          if (doc.exists) {
+            this.favoriteCount += (doc['favouriteQuestions'].length as int);
+          }
+        });
+  }
 
   Route _routeToSignInScreen() {
     return PageRouteBuilder(
@@ -96,12 +89,10 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   }
 
   @override
-    void initState() {
-      
-      this.getData();
-
-      super.initState();
-    }
+  void initState() {
+    this.getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +103,12 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
         .get();
 
     _getUserId() {
-       user.then((questionDocumentSnapshot) {
-         setState(() {
-         this.authorName = questionDocumentSnapshot["displayName"];
-         this.authorEmail = questionDocumentSnapshot["email"];
-         });
-       });
+      user.then((questionDocumentSnapshot) {
+        setState(() {
+          this.authorName = questionDocumentSnapshot["displayName"];
+          this.authorEmail = questionDocumentSnapshot["email"];
+        });
+      });
     }
 
     _getUserId();
@@ -125,183 +116,191 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     return WitsOverflowScaffold(
       body: Container(
         child: Column(
-            children: [
+          children: [
 
-              SizedBox(height: 5,),
+            SizedBox(height: 5,),
 
-              Container(
-                width: 100,
-                height: 100,
-                margin: EdgeInsets.only(top: 10),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      // Change code to get profile image of user
-                      image: NetworkImage(
-                          FirebaseAuth.instance.currentUser!.photoURL!
-                          ),
-                      fit: BoxFit.fill),
+            // user profile image
+            Container(
+              width: 100,
+              height: 100,
+              margin: EdgeInsets.only(top: 10),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  // Change code to get profile image of user
+                  image: NetworkImage(
+                    FirebaseAuth.instance.currentUser!.photoURL!
+                  ),
+                  fit: BoxFit.fill
                 ),
               ),
+            ),
 
-              ListTile(
-                      title: Container(
-                        height: 40,
-                        child: Text(
-                          "Name",
-                          style: TextStyle(
-                            fontSize: 20,
-                           ),
-                        ),
-                      ),
-                      subtitle: Container(
-                         alignment: Alignment.center,
-                         padding: EdgeInsets.all(15.0),
-                         height: 50,
-                         decoration: BoxDecoration(
-                            border: Border.all(
-                            color: Colors.blue,
-                            width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                        child: Text(
-                          authorName,
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),)),
+            // user display name
+            ListTile(
+              title: Container(
+                height: 40,
+                child: Text(
+                  "Name",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              subtitle: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(15.0),
+                height: 50,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                  color: Colors.blue,
+                  width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  authorName,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                )
+              ),
+            ),
+
+            SizedBox(height: 20,),
+
+            // user email address
+            ListTile(
+              title: Container(
+                height: 40,
+                child: Text(
+                  'Email',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              subtitle: Container(
+                padding: EdgeInsets.all(15.0),
+                alignment: Alignment.center,
+                height: 50,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                  color: Colors.blue,
+                  width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  authorEmail,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                )
+              ),
+            ),
+
+            SizedBox(height: 30,),
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 150,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    "PROFILE HISTORY",
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                ),
+              ]
+            ),
 
-              SizedBox(height: 20,),
+            // user meta information
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20),
 
-              ListTile(
-                      title: Container(
-                        height: 40,
-                        child: Text(
-                          'Email',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                      subtitle: Container(
-                         padding: EdgeInsets.all(15.0),
-                         alignment: Alignment.center,
-                         height: 50,
-                         decoration: BoxDecoration(
-                            border: Border.all(
-                            color: Colors.blue,
-                            width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                        child: Text(
-                          authorEmail,
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),)),
-                    ),
+                    Text("questions asked"),
 
-              SizedBox(height: 30,),
+                    SizedBox(height: 10),
 
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                    Text("questions answered"),
+
+                    SizedBox(height: 10),
+
+                    Text("favourite courses"),
+
+                    SizedBox(height: 10),
+                  ]
+                ),
+
+                SizedBox(width:  240,),
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(height: 40),
+
+                    Text(this.questionCount.toString()),
+                    
+                    SizedBox(height: 10),
+
+                    Text(this.answerCount.toString()),
+
+                    SizedBox(height: 10),
+
+                    Text(this.favoriteCount.toString()),
+
+                    SizedBox(height: 10),
+                  ],
+                )
+              ],
+            ),
+
+            SizedBox(height: 30),
                 
-                children: [
-                  Container(
-                    width: 150,
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(10.0),
-                    child: Text(
-                      "PROFILE HISTORY",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ]
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 20),
-
-                      Text("questions asked"),
-
-                      SizedBox(height: 10),
-
-                      Text("questions answered"),
-
-                      SizedBox(height: 10),
-
-                      Text("favourite courses"),
-
-                      SizedBox(height: 10),
-                    ]
-                  ),
-
-                  SizedBox(width:  240,),
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(height: 40),
-
-                      Text(this.questionCount.toString()),
-                      
-                      SizedBox(height: 10),
-
-                      Text(this.answerCount.toString()),
-
-                      SizedBox(height: 10),
-
-                      Text(this.favoriteCount.toString()),
-
-                      SizedBox(height: 10),
-                    ],
+            _isSigningOut
+                ? CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   )
-                ],
-              ),
-
-              SizedBox(height: 30),
-                  
-              _isSigningOut
-                  ? CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    )
-                  : Container(
-                    alignment: Alignment.center,
-                    child: TextButton.icon(
-                        icon: Icon(Icons.power_settings_new_outlined),
-                        label: Text("logout"),
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
+                : Container(
+                  alignment: Alignment.center,
+                  child: TextButton.icon(
+                      icon: Icon(Icons.power_settings_new_outlined),
+                      label: Text("logout"),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        onPressed: () async {
-                          setState(() {
-                            _isSigningOut = true;
-                          });
-                          await Authentication.signOut(context: context);
-                          setState(() {
-                            _isSigningOut = false;
-                          });
-                          Navigator.of(context)
-                              .pushReplacement(_routeToSignInScreen());
-                        },
-                        ),
-                  ),
-            ],
-          ),
+                      ),
+                      onPressed: () async {
+                        setState(() {
+                          _isSigningOut = true;
+                        });
+                        await Authentication.signOut(context: context);
+                        setState(() {
+                          _isSigningOut = false;
+                        });
+                        Navigator.of(context)
+                            .pushReplacement(_routeToSignInScreen());
+                      },
+                      ),
+                ),
+          ],
         ),
+      ),
     );
   }
 }

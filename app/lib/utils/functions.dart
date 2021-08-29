@@ -1,6 +1,8 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 String toTitleCase(String string){
   /// return a string in a title format
@@ -149,9 +151,38 @@ Future<void> updateQuestions() async{
           print('[ERROR OCCURRED WHILE UPDATING QUESTIONS]');
     });
   }
-
-
-
 }
 
+/// function to show notification to user
+void showNotification(context, message, {type='primary'}) {
+
+  Color? bgColor;
+  if(type == 'error'){
+    bgColor = Colors.red;
+  }
+  else if(type == 'warning'){
+    bgColor = Colors.orange;
+  }
+  else{
+    bgColor = Colors.white;
+  }
+
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: message,
+    backgroundColor: bgColor,
+  ));
+}
+
+final Map COLLECTIONS = {
+  'questions': 'questions-2',
+  'favourites': 'favorites-2',
+  'courses': 'courses-2',
+  'modules': 'modules-2',
+};
+
+
+
+// final map STYLES = {
+//     'background_colour':
+// }
 

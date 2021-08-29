@@ -1,8 +1,8 @@
 
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wits_overflow/utils/functions.dart';
 
 class WitsOverflowData {
 
@@ -38,7 +38,6 @@ class WitsOverflowData {
     return result;
 
   }
-
 
   Future<List<Map<String, dynamic>>> fetchQuestions() async {
 
@@ -220,6 +219,58 @@ class WitsOverflowData {
 
     });
 
+  }
+
+  void voteQuestion({required context, required int value, required questionId, required userId}) async{
+    /// handler function when a user votes on a question
+
+    Map<String, dynamic> data = {
+      'value': value,
+      'user': userId,
+      'votedAt': DateTime.now(),
+    };
+
+    CollectionReference<Map<String, dynamic>> questionVotesCollection = FirebaseFirestore.instance.collection('questions-2').doc(questionId).collection('votes');
+    QuerySnapshot<Map<String, dynamic>> questionUserVote = await questionVotesCollection.where('user', isEqualTo: userId).get();
+
+    if(questionUserVote.docs.isEmpty){
+      questionVotesCollection.add(data).then((value){
+        showNotification(context, "Vote added");
+
+      }).catchError((error){
+        showNotification(context, 'Error occurred');
+      });
+    }
+    else{
+      showNotification(context, 'Already voted');
+    }
+  }
+
+  Future voteAnswer({required context, required String questionId, required String answerId, required int value, required String userId}) async{
+    // check if user has already voted on this answer
+    String userUid = FirebaseAuth.instance.currentUser!.uid;
+    DocumentSnapshot<Map<String, dynamic>> answer = await FirebaseFirestore.instance.collection(COLLECTIONS['questions']).doc(questionId).collection('answers').doc(answerId).get();
+    CollectionReference<Map<String, dynamic>> answerVotesReference = answer.reference.collection('votes');
+    QuerySnapshot<Map<String, dynamic>> userVote = await answerVotesReference.where('user', isEqualTo: userId).limit(1).get();
+
+    if(userVote.docs.isEmpty){
+      // then the user can vote
+      Map<String, dynamic> data = {
+        'votedAt': DateTime.now(),
+        'user': userUid,
+        'value': value,
+      };
+
+      answerVotesReference.add(data).then((value){
+        // show that the vote was successful
+        showNotification(context, "Vote added");
+      }).catchError((error){
+        showNotification(context, "Error occurred");
+      });
+    }
+    else{
+      showNotification(context, 'Already voted');
+    }
   }
 
   Future<void> seedDatabase() async {
